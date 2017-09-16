@@ -43,7 +43,8 @@ public class VumarkTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        //Uncomment if you want the camera to appear on the phone
+        VumarkRecognition vumark = new VumarkRecognition(/*hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName())*/);
         vumark.initVumark();
         waitForStart();
 

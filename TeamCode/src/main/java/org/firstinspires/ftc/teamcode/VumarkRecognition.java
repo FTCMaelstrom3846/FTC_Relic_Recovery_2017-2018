@@ -22,13 +22,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //@Disabled
 public class VumarkRecognition {
 
-
+    //Uncomment if you want the camera to appear on the phone
+/*
     public VumarkRecognition(int cameraMonitorViewId) {
         this.cameraMonitorViewId = cameraMonitorViewId;
     }
 
     int cameraMonitorViewId;
-
+*/
     private VuforiaLocalizer vuforia;
 
     private VuforiaTrackable relicTemplate;
@@ -43,13 +44,13 @@ public class VumarkRecognition {
     private double rY;
     private double rZ;
 
-    private boolean stop = false;
-
     public void initVumark() {
 
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        //Uncomment if you want the camera to appear on the phone
+        //VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        //VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        //Comment out the below line if you want the camera to appear on the phone
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = "AVl6gwP/////AAAAGa8jT/RfpE26ushJ0mWKbf4CupRXGv5ChA0n1XlqbXmcEYXNp4wlDA4CDpTqEifWDpOf5uXTtcj4u/stgQP/2SC6LVRmejm/xIkPmB/6qvQbs12GsEJ3u6560xCSdeZdZKw8BG178BYnzH3pYtsoZk5He4j73287s19mFq2WUsfzj+DTfu3tJuUH3NnCJ2uNgRqXzrYERs82A/RMLcYh3tHsUjqTOU0y9MGO8WNWwQiq4DMj9L0pr59ltzPp3qwIHN5xU3xK5sxng0Y78vGvCPQlwsrUizD6Wek4NNE1LP/qEj8nAOnD+nYgYLNCUGtqHOWnGEAeuTA5iQ5UHKPz6cDsu7HjagFCmN5XbSzjyHg9\n";
 
@@ -96,12 +97,4 @@ public class VumarkRecognition {
     double getZRotation() {updatePos(); return rZ;}
 
     RelicRecoveryVuMark getColumn() {return vuMark;}
-
-    void stopVumarkRecognition() {
-        stop = true;
-    }
-
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
-    }
 }
