@@ -61,41 +61,39 @@ public class VumarkRecognition {
 
         relicTrackables.activate();
 
-        while (true) {
-
-            vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
-
-                if (pose != null) {
-                    VectorF trans = pose.getTranslation();
-                    Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                    tX = trans.get(0);
-                    tY = trans.get(1);
-                    tZ = trans.get(2);
-
-                    rX = rot.firstAngle;
-                    rY = rot.secondAngle;
-                    rZ = rot.thirdAngle;
-                }
-            }
-
-            if (stop) {
-                break;
-            }
-
-        }
     }
 
-    double getXTranslation() {return tX;}
-    double getYTranslation() {return tY;}
-    double getZTranslation() {return tZ;}
+    void updatePos() {
 
-    double getXRotation() {return rX;}
-    double getYRotation() {return rY;}
-    double getZRotation() {return rZ;}
+        vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+
+            OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
+
+            if (pose != null) {
+                VectorF trans = pose.getTranslation();
+                Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                tX = trans.get(0);
+                tY = trans.get(1);
+                tZ = trans.get(2);
+
+                rX = rot.firstAngle;
+                rY = rot.secondAngle;
+                rZ = rot.thirdAngle;
+            }
+        }
+
+
+    }
+
+    double getXTranslation() {updatePos(); return tX;}
+    double getYTranslation() {updatePos(); return tY;}
+    double getZTranslation() {updatePos(); return tZ;}
+
+    double getXRotation() {updatePos(); return rX;}
+    double getYRotation() {updatePos(); return rY;}
+    double getZRotation() {updatePos(); return rZ;}
 
     RelicRecoveryVuMark getColumn() {return vuMark;}
 
