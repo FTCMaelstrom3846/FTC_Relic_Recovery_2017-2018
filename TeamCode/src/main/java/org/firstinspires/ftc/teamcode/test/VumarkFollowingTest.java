@@ -2,13 +2,12 @@ package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.PID;
 
 
-@Autonomous(name="Test", group ="Test")
+@Autonomous(name="Vumark Following", group ="Test")
 //@Disabled
 
 public class VumarkFollowingTest extends LinearOpMode {
@@ -17,8 +16,6 @@ public class VumarkFollowingTest extends LinearOpMode {
     public void runOpMode() {
         Hardware robot = new Hardware();
         robot.init(hardwareMap);
-
-        BNO055_IMU imu = new BNO055_IMU("IMU", hardwareMap);
 
         VumarkRecognition vumark = new VumarkRecognition();
         vumark.initVumark();
@@ -35,6 +32,7 @@ public class VumarkFollowingTest extends LinearOpMode {
                 power += anglePID.power(vumark.getYRotation(), 0, .25, deltaTime);
                 robot.leftMotor.setPower(power);
                 robot.rightMotor.setPower(-power);
+                telemetry.addData("Power", power);
                 startTime = System.nanoTime();
             }
         }
