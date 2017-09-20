@@ -1,9 +1,5 @@
+package org.firstinspires.ftc.teamcode.sensors;
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
@@ -17,9 +13,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-
-
-//@Disabled
 public class VumarkRecognition {
 
     //Uncomment if you want the camera to appear on the phone
@@ -88,13 +81,13 @@ public class VumarkRecognition {
 
     }
 
-    double getXTranslation() {updatePos(); return tX;}
-    double getYTranslation() {updatePos(); return tY;}
-    double getZTranslation() {updatePos(); return tZ;}
+    public double getXTranslation() {updatePos(); return tX;}
+    public double getYTranslation() {updatePos(); return tY;}
+    public double getZTranslation() {updatePos(); return tZ;}
 
-    double getXRotation() {updatePos(); return rX;}
-    double getYRotation() {updatePos(); return rY;}
-    double getZRotation() {updatePos(); return rZ;}
+    public double getXRotation() {updatePos(); return rX;}
+    public double getYRotation() {updatePos(); return rY;}
+    public double getZRotation() {updatePos(); return rZ;}
 
-    RelicRecoveryVuMark getColumn() {return vuMark;}
+    public RelicRecoveryVuMark getColumn() {updatePos(); return vuMark;}
 }
