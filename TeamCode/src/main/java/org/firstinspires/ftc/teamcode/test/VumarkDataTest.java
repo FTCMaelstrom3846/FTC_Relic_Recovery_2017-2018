@@ -29,7 +29,7 @@ public class VumarkDataTest extends LinearOpMode {
             telemetry.addData("Y rotation", vumark.getYRotation());
             telemetry.addData("Z rotation", vumark.getZRotation());
 
-            telemetry.addData("Vumark", vumark.getColumn());
+            telemetry.addData("Vumark", vumark.getColumnString());
 
             telemetry.update();
         }

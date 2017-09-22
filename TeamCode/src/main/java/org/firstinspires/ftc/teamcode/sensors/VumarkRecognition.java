@@ -90,4 +90,5 @@ public class VumarkRecognition {
     public double getZRotation() {updatePos(); return rZ;}
 
     public RelicRecoveryVuMark getColumn() {updatePos(); return vuMark;}
+    public String getColumnString() {updatePos(); return vuMark.toString();}
 }
