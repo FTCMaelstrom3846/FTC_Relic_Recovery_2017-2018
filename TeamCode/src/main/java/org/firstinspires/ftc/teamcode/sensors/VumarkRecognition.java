@@ -57,7 +57,7 @@ public class VumarkRecognition {
 
     }
 
-    void updatePos() {
+    private void updatePos() {
 
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
