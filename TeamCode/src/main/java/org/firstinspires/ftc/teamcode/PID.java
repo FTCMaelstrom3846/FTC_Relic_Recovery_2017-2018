@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public class PID
-{
+public class PID {
     private double i = 0, d = 0, KP, KI,
             KD, previousError = 0, minI, maxI;
     
