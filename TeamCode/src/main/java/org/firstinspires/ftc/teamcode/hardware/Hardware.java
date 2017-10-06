@@ -10,22 +10,32 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hardware {
 
-    public DcMotor leftMotor;
-    public DcMotor rightMotor;
+    public DcMotor LFMotor;
+    public DcMotor LBMotor;
+    public DcMotor RFMotor;
+    public DcMotor RBMotor;
 
-    public Servo rightGripper;
-    public Servo leftGripper;
+/*    public DcMotor conveyor;
+    public DcMotor leftLift;
+    public DcMotor rightLift;
+    public DcMotor relicExtender;*/
 
     HardwareMap hwMap;
 
     public void init(HardwareMap hardwareMap) {
         this.hwMap = hardwareMap;
 
-        leftMotor = hwMap.dcMotor.get("leftMotor");
-        rightMotor = hwMap.dcMotor.get("rightMotor");
+        LFMotor = hwMap.dcMotor.get("leftFrontMotor");
+        LBMotor = hwMap.dcMotor.get("leftBackMotor");
+        RFMotor = hwMap.dcMotor.get("rightFrontMotor");
+        RBMotor = hwMap.dcMotor.get("rightBackMotor");
 
-        rightGripper = hwMap.servo.get("rightGripperServo");
-        leftGripper = hwMap.servo.get("leftGripperServo");
+/*
+        conveyor = hwMap.dcMotor.get("conveyor");
+        leftLift = hwMap.dcMotor.get("leftLift");
+        rightLift = hwMap.dcMotor.get("rightLift");
+        relicExtender = hwMap.dcMotor.get("relicExtender");
+*/
 
     }
 

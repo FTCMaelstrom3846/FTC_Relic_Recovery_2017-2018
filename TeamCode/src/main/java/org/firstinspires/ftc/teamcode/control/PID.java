@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.control;
 
 public class PID {
     private double i = 0, d = 0, KP, KI,

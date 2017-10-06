@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode.opModes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.hardware.MinibotHardware;
 
 @TeleOp(name = "Test Teleop")
 public class MinibotTeleop extends OpMode {
 
-    Hardware robot = new Hardware();
+    MinibotHardware robot = new MinibotHardware();
     public void init() {
 
         robot.init(hardwareMap);

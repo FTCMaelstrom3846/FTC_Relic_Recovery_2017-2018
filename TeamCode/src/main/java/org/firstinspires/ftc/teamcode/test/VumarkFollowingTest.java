@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.test;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
-import org.firstinspires.ftc.teamcode.hardware.Hardware;
-import org.firstinspires.ftc.teamcode.PID;
+import org.firstinspires.ftc.teamcode.hardware.MinibotHardware;
+import org.firstinspires.ftc.teamcode.control.PID;
 
 
 @Autonomous(name="Vumark Following", group ="Test")
@@ -14,7 +14,7 @@ public class VumarkFollowingTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Hardware robot = new Hardware();
+        MinibotHardware robot = new MinibotHardware();
         robot.init(hardwareMap);
 
         VumarkRecognition vumark = new VumarkRecognition();
