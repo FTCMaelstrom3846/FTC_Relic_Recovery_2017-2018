@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 import org.firstinspires.ftc.teamcode.hardware.MinibotHardware;
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.teamcode.control.PID;
 
 
 @Autonomous(name="Vumark Following", group ="Test")
-//@Disabled
+@Disabled
 
 public class VumarkFollowingTest extends LinearOpMode {
 

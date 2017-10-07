@@ -12,6 +12,8 @@ public class MinibotTeleop extends OpMode {
     public void init() {
 
         robot.init(hardwareMap);
+
+        robot.relicGrabber.setPosition(.25);
     }
 
     public void loop() {
@@ -26,6 +28,26 @@ public class MinibotTeleop extends OpMode {
         if (gamepad1.right_bumper) {
             robot.rightGripper.setPosition(0.5);
             robot.leftGripper.setPosition(0.5);
+        }
+
+        if (gamepad1.right_trigger > 0) {
+            robot.lift.setPower(1);
+        } else if (gamepad1.left_trigger > 0) {
+            robot.lift.setPower(-1);
+        } else {
+            robot.lift.setPower(0);
+        }
+
+        if (gamepad1.dpad_up) {
+            robot.relicWrist.setPosition(.5);
+        } else if (gamepad1.dpad_down) {
+            robot.relicWrist.setPosition(0);
+        }
+
+        if (gamepad1.dpad_right) {
+            robot.relicGrabber.setPosition(.8);
+        } else if (gamepad1.dpad_left) {
+            robot.relicGrabber.setPosition(.25);
         }
 
     }
