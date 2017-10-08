@@ -47,10 +47,12 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -108,13 +110,89 @@ import org.firstinspires.ftc.robotcore.internal.ui.UILocation;
 import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo;
 import org.firstinspires.ftc.robotcore.internal.webserver.WebServer;
 import org.firstinspires.inspection.RcInspectionActivity;
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.JavaCameraView;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import ftc.vision.FrameGrabber;
+
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
   {
+      ////////////// START VISION PROCESSING CODE //////////////
+
+      // Loads camera view of OpenCV for us to use. This lets us see using OpenCV
+      private CameraBridgeViewBase cameraBridgeViewBase;
+
+      void myOnCreate(){
+          getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+          cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.show_camera_activity_java_surface_view);
+          new FrameGrabber(cameraBridgeViewBase);
+      }
+
+      //when the "Grab" button is pressed
+      public void frameButtonOnClick(View v){
+      }
+
+      void myOnPause(){
+          if (cameraBridgeViewBase != null) {
+              cameraBridgeViewBase.disableView();
+          }
+      }
+
+      void myOnResume(){
+          if (!OpenCVLoader.initDebug()) {
+              Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+              OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
+          } else {
+              Log.d(TAG, "OpenCV library found inside package. Using it!");
+              mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+          }
+      }
+
+      public void myOnDestroy() {
+          if (cameraBridgeViewBase != null) {
+              cameraBridgeViewBase.disableView();
+          }
+      }
+
+      private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+          @Override
+          public void onManagerConnected(int status) {
+              switch (status) {
+                  case LoaderCallbackInterface.SUCCESS:
+                      Log.i(TAG, "OpenCV Manager Connected");
+                      //from now onwards, you can use OpenCV API
+//          Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
+                      cameraBridgeViewBase.enableView();
+                      break;
+                  case LoaderCallbackInterface.INIT_FAILED:
+                      Log.i(TAG, "Init Failed");
+                      break;
+                  case LoaderCallbackInterface.INSTALL_CANCELED:
+                      Log.i(TAG, "Install Cancelled");
+                      break;
+                  case LoaderCallbackInterface.INCOMPATIBLE_MANAGER_VERSION:
+                      Log.i(TAG, "Incompatible Version");
+                      break;
+                  case LoaderCallbackInterface.MARKET_ERROR:
+                      Log.i(TAG, "Market Error");
+                      break;
+                  default:
+                      Log.i(TAG, "OpenCV Manager Install");
+                      super.onManagerConnected(status);
+                      break;
+              }
+          }
+      };
+
+      ////////////// END VISION PROCESSING CODE //////////////
   public static final String TAG = "RCActivity";
   public String getTag() { return TAG; }
 
@@ -247,6 +325,10 @@ public class FtcRobotControllerActivity extends Activity
 
     setContentView(R.layout.activity_ftc_controller);
 
+      ////////////// START VISION PROCESSING CODE //////////////
+      myOnCreate();
+      ////////////// END VISION PROCESSING CODE //////////////
+
     preferencesHelper = new PreferencesHelper(TAG, context);
     preferencesHelper.writeBooleanPrefIfDifferent(context.getString(R.string.pref_rc_connected), true);
     preferencesHelper.getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferencesListener);
@@ -345,12 +427,22 @@ public class FtcRobotControllerActivity extends Activity
   @Override
   protected void onResume() {
     super.onResume();
+
+      ////////////// START VISION PROCESSING CODE //////////////
+      myOnResume();
+      ////////////// END VISION PROCESSING CODE //////////////
+
     RobotLog.vv(TAG, "onResume()");
   }
 
   @Override
   protected void onPause() {
     super.onPause();
+
+      ////////////// START VISION PROCESSING CODE //////////////
+      myOnPause();
+      ////////////// END VISION PROCESSING CODE //////////////
+
     RobotLog.vv(TAG, "onPause()");
     if (programmingModeController.isActive()) {
       programmingModeController.stopProgrammingMode();
@@ -369,6 +461,10 @@ public class FtcRobotControllerActivity extends Activity
   protected void onDestroy() {
     super.onDestroy();
     RobotLog.vv(TAG, "onDestroy()");
+
+      ////////////// START VISION PROCESSING CODE //////////////
+      myOnDestroy();
+      ////////////// END VISION PROCESSING CODE //////////////
 
     shutdownRobot();  // Ensure the robot is put away to bed
     if (callback != null) callback.close();
