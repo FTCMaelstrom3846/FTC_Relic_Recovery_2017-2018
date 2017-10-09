@@ -8,6 +8,81 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Drivetrain {
 
+
+    public void drive() {
+        x = gamepad1.left_stick_y;
+        y = -gamepad1.left_stick_x;
+        if (x != 0) {
+            angle = Math.atan(y/x);
+        }
+        else {
+            angle = 0;
+        }
+        if (x < 0 && y > 0) {
+            angle = angle + Math.PI;
+        }
+        else if (x < 0 && y <= 0) {
+            angle = angle + Math.PI;
+        }
+        else if (x > 0 && y < 0) {
+            angle = angle + (2*Math.PI);
+        }
+        else if (x == 0 && y > 0 ) {
+            angle = Math.PI/2;
+        }
+        else if (x == 0 && y < 0 ) {
+            angle = (3 * Math.PI) / 2;
+        }
+
+        telemetry.addData("angle:", angle*180/Math.PI);
+
+        speedMagnitude = Math.hypot(x, y);
+        frontLeft = -(Math.sin(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
+        backLeft = -(Math.cos(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
+        frontRight = (Math.cos(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
+        backRight = (Math.sin(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
+
+
+        telemetry.addData("x" , gamepad1.right_stick_x);
+
+
+        driveScaleFactor = Math.abs(Math.max(
+                Math.max(frontLeft, frontRight),
+                Math.max(backLeft, backRight)))
+                != 0 ? Math.abs(Math.max(
+                Math.max(frontLeft, frontRight),
+                Math.max(backLeft, backRight))) : 1
+        ;
+
+
+        frontLeft /= driveScaleFactor;
+        frontRight /= driveScaleFactor;
+        backLeft /= driveScaleFactor;
+        backRight /= driveScaleFactor;
+
+        telemetry.addData("FrontLeft: ", frontLeft);
+        telemetry.addData("FrontRight: ", frontRight);
+        telemetry.addData("BackLeft: ", backLeft);
+        telemetry.addData("BackRight: ", backRight);
+
+        if (halfSpeed) {
+            robot.frontLeftMotor.setPower(0.5*frontLeft);
+            robot.backLeftMotor.setPower(0.5*backLeft);
+            robot.frontRightMotor.setPower(0.5*frontRight);
+            robot.backRightMotor.setPower(0.5*backRight);
+        }
+        else {
+            robot.frontLeftMotor.setPower(frontLeft);
+            robot.backLeftMotor.setPower(backLeft);
+            robot.frontRightMotor.setPower(frontRight);
+            robot.backRightMotor.setPower(backRight);
+        }
+
+    }
+
+
+
+
     DcMotor LFMotor,  LBMotor, RFMotor, RBMotor;
 
     public Drivetrain (DcMotor LFMotor, DcMotor LBMotor, DcMotor RFMotor, DcMotor RBMotor) {
