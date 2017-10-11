@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Ramsey on 10/15/2016.
@@ -10,10 +9,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hardware {
 
-    public DcMotor LFMotor;
-    public DcMotor LBMotor;
-    public DcMotor RFMotor;
-    public DcMotor RBMotor;
+    public DcMotor FLMotor;
+    public DcMotor BLMotor;
+    public DcMotor FRMotor;
+    public DcMotor BRMotor;
 
 /*    public DcMotor conveyor;
     public DcMotor leftLift;
@@ -25,10 +24,10 @@ public class Hardware {
     public void init(HardwareMap hardwareMap) {
         this.hwMap = hardwareMap;
 
-        LFMotor = hwMap.dcMotor.get("leftFrontMotor");
-        LBMotor = hwMap.dcMotor.get("leftBackMotor");
-        RFMotor = hwMap.dcMotor.get("rightFrontMotor");
-        RBMotor = hwMap.dcMotor.get("rightBackMotor");
+        FLMotor = hwMap.dcMotor.get("leftFrontMotor");
+        BLMotor = hwMap.dcMotor.get("leftBackMotor");
+        FRMotor = hwMap.dcMotor.get("rightFrontMotor");
+        BRMotor = hwMap.dcMotor.get("rightBackMotor");
 
 /*
         conveyor = hwMap.dcMotor.get("conveyor");

@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import org.firstinspires.ftc.teamcode.hardware.Hardware;
+
 
 /**
  * Created by Ramsey on 10/5/2017.
@@ -8,45 +11,40 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Drivetrain {
 
+    Gamepad gamepad1;
+    DcMotor FLMotor, BLMotor, FRMotor, BRMotor;
+    boolean halfSpeed;
+
+    public Drivetrain (Gamepad gamepad1, Hardware hardware, boolean halfSpeed) {
+        this.gamepad1 = gamepad1;
+        this.BLMotor = hardware.BLMotor;
+        this.FLMotor = hardware.FLMotor;
+        this.BRMotor = hardware.BRMotor;
+        this.FRMotor = hardware.FRMotor;
+        this.halfSpeed = halfSpeed;
+    }
+
+    public Drivetrain (Hardware hardware) {
+        this.BLMotor = hardware.BLMotor;
+        this.FLMotor = hardware.FLMotor;
+        this.BRMotor = hardware.BRMotor;
+        this.FRMotor = hardware.FRMotor;
+    }
 
     public void drive() {
-        x = gamepad1.left_stick_y;
-        y = -gamepad1.left_stick_x;
-        if (x != 0) {
-            angle = Math.atan(y/x);
-        }
-        else {
-            angle = 0;
-        }
-        if (x < 0 && y > 0) {
-            angle = angle + Math.PI;
-        }
-        else if (x < 0 && y <= 0) {
-            angle = angle + Math.PI;
-        }
-        else if (x > 0 && y < 0) {
-            angle = angle + (2*Math.PI);
-        }
-        else if (x == 0 && y > 0 ) {
-            angle = Math.PI/2;
-        }
-        else if (x == 0 && y < 0 ) {
-            angle = (3 * Math.PI) / 2;
-        }
 
-        telemetry.addData("angle:", angle*180/Math.PI);
+        double x = gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y;
+        double angle = Math.atan2(y, x);
+        angle -= Math.PI/4;
 
-        speedMagnitude = Math.hypot(x, y);
-        frontLeft = -(Math.sin(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
-        backLeft = -(Math.cos(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
-        frontRight = (Math.cos(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
-        backRight = (Math.sin(angle + (Math.PI/4))) * speedMagnitude + gamepad1.right_stick_x;
+        double speedMagnitude = Math.hypot(x, y);
+        double frontLeft = -(Math.sin(angle) * speedMagnitude) + gamepad1.right_stick_x;
+        double backLeft = -(Math.cos(angle) * speedMagnitude) + gamepad1.right_stick_x;
+        double frontRight = (Math.cos(angle) * speedMagnitude) + gamepad1.right_stick_x;
+        double backRight = (Math.sin(angle) * speedMagnitude) + gamepad1.right_stick_x;
 
-
-        telemetry.addData("x" , gamepad1.right_stick_x);
-
-
-        driveScaleFactor = Math.abs(Math.max(
+        double driveScaleFactor = Math.abs(Math.max(
                 Math.max(frontLeft, frontRight),
                 Math.max(backLeft, backRight)))
                 != 0 ? Math.abs(Math.max(
@@ -60,37 +58,23 @@ public class Drivetrain {
         backLeft /= driveScaleFactor;
         backRight /= driveScaleFactor;
 
-        telemetry.addData("FrontLeft: ", frontLeft);
-        telemetry.addData("FrontRight: ", frontRight);
-        telemetry.addData("BackLeft: ", backLeft);
-        telemetry.addData("BackRight: ", backRight);
-
-        if (halfSpeed) {
-            robot.frontLeftMotor.setPower(0.5*frontLeft);
-            robot.backLeftMotor.setPower(0.5*backLeft);
-            robot.frontRightMotor.setPower(0.5*frontRight);
-            robot.backRightMotor.setPower(0.5*backRight);
+        if (!halfSpeed) {
+            FLMotor.setPower(frontLeft);
+            FRMotor.setPower(backLeft);
+            BLMotor.setPower(frontRight);
+            BRMotor.setPower(backRight);
         }
         else {
-            robot.frontLeftMotor.setPower(frontLeft);
-            robot.backLeftMotor.setPower(backLeft);
-            robot.frontRightMotor.setPower(frontRight);
-            robot.backRightMotor.setPower(backRight);
+            FLMotor.setPower(0.5*frontLeft);
+            FRMotor.setPower(0.5*backLeft);
+            BLMotor.setPower(0.5*frontRight);
+            BRMotor.setPower(0.5*backRight);
         }
 
     }
 
 
 
-
-    DcMotor LFMotor,  LBMotor, RFMotor, RBMotor;
-
-    public Drivetrain (DcMotor LFMotor, DcMotor LBMotor, DcMotor RFMotor, DcMotor RBMotor) {
-        this.LFMotor = LFMotor;
-        this.LBMotor = LBMotor;
-        this.RFMotor = RFMotor;
-        this.RBMotor = RBMotor;
-    }
 
     public void drive(int rightEncoder
 
