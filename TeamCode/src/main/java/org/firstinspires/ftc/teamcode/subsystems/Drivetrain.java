@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.opModes.Autonomous;
+import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 
 /**
@@ -14,6 +16,8 @@ public class Drivetrain {
     Gamepad gamepad1;
     DcMotor FLMotor, BLMotor, FRMotor, BRMotor;
     boolean halfSpeed;
+    BNO055_IMU imu;
+    Autonomous autonomous;
 
     public Drivetrain (Gamepad gamepad1, Hardware hardware, boolean halfSpeed) {
         this.gamepad1 = gamepad1;
@@ -24,11 +28,13 @@ public class Drivetrain {
         this.halfSpeed = halfSpeed;
     }
 
-    public Drivetrain (Hardware hardware) {
+    public Drivetrain (Hardware hardware, BNO055_IMU imu, Autonomous autonomous) {
         this.BLMotor = hardware.BLMotor;
         this.FLMotor = hardware.FLMotor;
         this.BRMotor = hardware.BRMotor;
         this.FRMotor = hardware.FRMotor;
+        this.imu = imu;
+        this.autonomous = autonomous
     }
 
     public void drive() {
@@ -107,48 +113,39 @@ public class Drivetrain {
         frontRight = (Math.cos(angle + (Math.PI / 4)));
         backRight = (Math.sin(angle + (Math.PI / 4)));
 
-        while (opModeIsActive() && (stopState <= 1000)) {
+        while (opModeIsActive && (stopState <= 1000)) {
             error = imu.getAngles()[0] - initialHeading;
-            telemetry.addData("Integral:", PID.i);
-
-            robot.frontLeftMotor.setPower((frontLeft * PID.EncoderPID(rightEncoder, robot.frontRightMotor.getCurrentPosition(), KP, KI)) + (corrKP * error));
-            robot.backLeftMotor.setPower((backLeft * PID.EncoderPID(rightEncoder, robot.frontRightMotor.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
-            robot.frontRightMotor.setPower((frontRight * PID.EncoderPID(rightEncoder, robot.frontRightMotor.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
-            robot.backRightMotor.setPower((backRight * PID.EncoderPID(rightEncoder, robot.frontRightMotor.getCurrentPosition(), KP, KI)) + (corrKP * error));
+            FLMotor.setPower((frontLeft * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) + (corrKP * error));
+            BLMotor.setPower((backLeft * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
+            FRMotor.setPower((frontRight * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
+            BRMotor.setPower((backRight * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) + (corrKP * error));
 
 /*
-            robot.frontRightMotor.setPower(PID.EncoderPID(encoder, robot.frontRightMotor.getCurrentPosition(), KP, KI));
-            robot.frontLeftMotor.setPower(-robot.frontRightMotor.getPower() + corrKP * error);
-            robot.backRightMotor.setPower(robot.frontRightMotor.getPower());
-            robot.backLeftMotor.setPower(-robot.frontRightMotor.getPower() + corrKP * error);
+            FRMotor.setPower(PID.EncoderPID(encoder, FRMotor.getCurrentPosition(), KP, KI));
+            FLMotor.setPower(-FRMotor.getPower() + corrKP * error);
+            BRMotor.setPower(FRMotor.getPower());
+            BLMotor.setPower(-FRMotor.getPower() + corrKP * error);
 */
-            //telemetry.addData("Front Left Encoder",robot.frontLeftMotor.getCurrentPosition());
-            //telemetry.addData("Back Left Encoder",robot.backLeftMotor.getCurrentPosition());
-            telemetry.addData("Front Right Encoder", robot.frontRightMotor.getCurrentPosition());
-            telemetry.addData("Back Left Encoder", robot.backLeftMotor.getCurrentPosition());
-            //telemetry.addData("Back Right Encoder",robot.backRightMotor.getCurrentPosition());
 
-            telemetry.addData("Front Right Power", robot.frontRightMotor.getPower());
-            /*
-            telemetry.addData("Back Right Power",robot.backRightMotor.getPower());
-            telemetry.addData("Front Left Power",robot.frontLeftMotor.getPower());
-            telemetry.addData("Back Left Power",robot.backLeftMotor.getPower());
-            */
-            //telemetry.addData("kI", KI);
-            telemetry.addData("PID:", PID.EncoderPID(rightEncoder, robot.frontRightMotor.getCurrentPosition(), KP, KI));
-            telemetry.addData("Error:", PID.tempError);
-            telemetry.update();
-
-            if ((robot.frontRightMotor.getCurrentPosition() >= (rightEncoder - 50)) &&
-                    (robot.frontRightMotor.getCurrentPosition() <= (rightEncoder + 50)) /*&&
-                (robot.backLeftMotor.getCurrentPosition() >= (leftEncoder - 50)) &&
-                (robot.backLeftMotor.getCurrentPosition() <= (leftEncoder + 50))*/) {
+            if ((FRMotor.getCurrentPosition() >= (rightEncoder - 50)) &&
+                    (FRMotor.getCurrentPosition() <= (rightEncoder + 50)) /*&&
+                (BLMotor.getCurrentPosition() >= (leftEncoder - 50)) &&
+                (BLMotor.getCurrentPosition() <= (leftEncoder + 50))*/) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
             }
-
-            sleep(1);
         }
+
     }
+
+    public void eReset() {
+
+    }
+
+    public boolean opModeIsActive() {
+        boolean opModeIsActive = ;
+        return opModeIsActive;
+    }
+
 }
