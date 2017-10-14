@@ -321,7 +321,7 @@ Version 2.30 (released on 16.10.05)
   * Vuforia
      - Fix deadlock / make camera data available while Vuforia is running.
      - Update to Vuforia 6.0.117 (recommended by Vuforia and Google to close security loophole).
-  * Fix for autonomous 30 second timer bug (where timer was in effect, even though it appeared to have timed out).
+  * Fix for auto 30 second timer bug (where timer was in effect, even though it appeared to have timed out).
   * opModeIsActive changes to allow cleanup after op mode is stopped (with enforced 2 second safety timeout).
   * Fix to avoid reading i2c twice.
   * Updated sample Op Modes.

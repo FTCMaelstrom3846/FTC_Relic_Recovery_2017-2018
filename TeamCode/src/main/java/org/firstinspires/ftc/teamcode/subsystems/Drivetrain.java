@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import org.firstinspires.ftc.teamcode.opModes.MaelstromAutonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
-import org.firstinspires.ftc.teamcode.opModes.Autonomous;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 
@@ -17,7 +17,7 @@ public class Drivetrain {
     DcMotor FLMotor, BLMotor, FRMotor, BRMotor;
     boolean halfSpeed;
     BNO055_IMU imu;
-    Autonomous autonomous;
+    MaelstromAutonomous auto;
 
     public Drivetrain (Gamepad gamepad1, Hardware hardware, boolean halfSpeed) {
         this.gamepad1 = gamepad1;
@@ -28,13 +28,13 @@ public class Drivetrain {
         this.halfSpeed = halfSpeed;
     }
 
-    public Drivetrain (Hardware hardware, BNO055_IMU imu, Autonomous autonomous) {
+    public Drivetrain (Hardware hardware, BNO055_IMU imu, MaelstromAutonomous auto) {
         this.BLMotor = hardware.BLMotor;
         this.FLMotor = hardware.FLMotor;
         this.BRMotor = hardware.BRMotor;
         this.FRMotor = hardware.FRMotor;
         this.imu = imu;
-        this.autonomous = autonomous
+        this.auto = auto;
     }
 
     public void drive() {
@@ -113,7 +113,7 @@ public class Drivetrain {
         frontRight = (Math.cos(angle + (Math.PI / 4)));
         backRight = (Math.sin(angle + (Math.PI / 4)));
 
-        while (opModeIsActive && (stopState <= 1000)) {
+        while (opModeIsActive() && (stopState <= 1000)) {
             error = imu.getAngles()[0] - initialHeading;
             FLMotor.setPower((frontLeft * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) + (corrKP * error));
             BLMotor.setPower((backLeft * PID.EncoderPID(rightEncoder, FRMotor.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
@@ -139,13 +139,24 @@ public class Drivetrain {
 
     }
 
-    public void eReset() {
+    void eReset() {
 
+        FLMotor.setPower(0);
+        BLMotor.setPower(0);
+        FRMotor.setPower(0);
+        BRMotor.setPower(0);
+
+        FRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        FRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public boolean opModeIsActive() {
-        boolean opModeIsActive = ;
-        return opModeIsActive;
-    }
+    public boolean opModeIsActive() {return auto.getOpModeIsActive();}
 
 }

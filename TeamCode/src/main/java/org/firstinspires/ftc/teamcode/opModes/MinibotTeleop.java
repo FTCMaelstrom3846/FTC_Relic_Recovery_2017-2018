@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.MinibotHardware;
 
-@TeleOp(name = "Test Teleop")
+@TeleOp(name = "MiniBot Teleop")
+@Disabled
 public class MinibotTeleop extends OpMode {
 
     MinibotHardware robot = new MinibotHardware();
