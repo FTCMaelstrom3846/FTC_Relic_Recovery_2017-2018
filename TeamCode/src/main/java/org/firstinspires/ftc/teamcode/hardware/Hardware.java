@@ -3,14 +3,18 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
+
 /**
  * Created by Ramsey on 10/15/2016.
  */
 
 public class Hardware {
 
-
-    public DcMotor frontLeft, backLeft, frontRight, backRight;
+    SpeedControlledMotor frontLeft = new SpeedControlledMotor(),
+            frontRight= new SpeedControlledMotor(),
+            backLeft= new SpeedControlledMotor(),
+            backRight= new SpeedControlledMotor();
 
 
 
@@ -25,19 +29,18 @@ public class Hardware {
 
         this.hwMap = hardwareMap;
 
-        frontLeft = hwMap.dcMotor.get("leftFrontMotor");
-        backLeft = hwMap.dcMotor.get("leftBackMotor");
-        frontRight = hwMap.dcMotor.get("rightFrontMotor");
-        backRight = hwMap.dcMotor.get("rightBackMotor");
+        frontLeft.init(hwMap, "frontLeft");
+        frontRight.init(hwMap, "frontRight");
+        backLeft.init(hwMap, "backLeft");
+        backRight.init(hwMap, "backRight");
 
-        DcMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
+        SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
-        for(DcMotor motor: motors) {
+        for(SpeedControlledMotor motor: motors) {
             motor.setPower(0);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-
 
 /*
         conveyor = hwMap.dcMotor.get("conveyor");

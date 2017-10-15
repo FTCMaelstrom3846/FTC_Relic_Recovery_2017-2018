@@ -1,3 +1,4 @@
 -Finish motor speed control
 -Measure actual RPM of Orbital Neverest 20 and adjust values
 -Finish distance based autonomous drive code
+-Implement max speed in drivetrain class

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.opModes.MaelstromAutonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 public class Drivetrain {
 
     Gamepad gamepad1;
-    DcMotor frontLeft, backLeft, frontRight, backRight;
+    SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
     boolean halfSpeed;
     BNO055_IMU imu;
     MaelstromAutonomous auto;
@@ -65,16 +66,16 @@ public class Drivetrain {
         backRight /= driveScaleFactor;
 
         if (!halfSpeed) {
-            this.frontLeft.setPower(frontLeft);
-            this.frontRight.setPower(backLeft);
-            this.backLeft.setPower(frontRight);
-            this.backRight.setPower(backRight);
+            this.frontLeft.setSpeed(frontLeft);
+            this.frontRight.setSpeed(backLeft);
+            this.backLeft.setSpeed(frontRight);
+            this.backRight.setSpeed(backRight);
         }
         else {
-            this.frontLeft.setPower(0.5*frontLeft);
-            this.frontRight.setPower(0.5*backLeft);
-            this.backLeft.setPower(0.5*frontRight);
-            this.backRight.setPower(0.5*backRight);
+            this.frontLeft.setSpeed(0.5*frontLeft);
+            this.frontRight.setSpeed(0.5*backLeft);
+            this.backLeft.setSpeed(0.5*frontRight);
+            this.backRight.setSpeed(0.5*backRight);
         }
 
     }
@@ -115,16 +116,16 @@ public class Drivetrain {
 
         while (opModeIsActive() && (stopState <= 1000)) {
             error = imu.getAngles()[0] - initialHeading;
-            this.frontLeft.setPower((frontLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
-            this.backLeft.setPower((backLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
-            this.frontRight.setPower((frontRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
-            this.backRight.setPower((backRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
+            this.frontLeft.setSpeed((frontLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
+            this.backLeft.setSpeed((backLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
+            this.frontRight.setSpeed((frontRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
+            this.backRight.setSpeed((backRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
 
 /*
-            frontRight.setPower(PIDController.EncoderPID(encoder, frontRight.getCurrentPosition(), KP, KI));
-            frontLeft.setPower(-frontRight.getPower() + corrKP * error);
-            backRight.setPower(frontRight.getPower());
-            backLeft.setPower(-frontRight.getPower() + corrKP * error);
+            frontRight.setSpeed(PIDController.EncoderPID(encoder, frontRight.getCurrentPosition(), KP, KI));
+            frontLeft.setSpeed(-frontRight.getPower() + corrKP * error);
+            backRight.setSpeed(frontRight.getPower());
+            backLeft.setSpeed(-frontRight.getPower() + corrKP * error);
 */
 
             if ((this.frontRight.getCurrentPosition() >= (rightEncoder - 50)) &&
@@ -144,7 +145,7 @@ public class Drivetrain {
         DcMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
         for(DcMotor motor: motors) {
-            motor.setPower(0);
+            motor.setSpeed(0);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
