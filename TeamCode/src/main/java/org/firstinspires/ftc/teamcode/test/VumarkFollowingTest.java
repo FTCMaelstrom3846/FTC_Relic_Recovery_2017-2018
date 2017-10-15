@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 import org.firstinspires.ftc.teamcode.hardware.MinibotHardware;
-import org.firstinspires.ftc.teamcode.control.PID;
+import org.firstinspires.ftc.teamcode.control.PIDController;
 
 
 @Autonomous(name="Vumark Following", group ="Test")
@@ -23,8 +23,8 @@ public class VumarkFollowingTest extends LinearOpMode {
 
         waitForStart();
 
-        PID distancePID = new PID(.0005, 0, 0, 0, 0);
-        PID anglePID = new PID(.0075, 0, 0, 0, 0);
+        PIDController distancePID = new PIDController(.0005, 0, 0, 0);
+        PIDController anglePID = new PIDController(.0075, 0, 0, 0);
         long startTime = System.nanoTime();
         while (opModeIsActive()) {
             double deltaTime = (System.nanoTime() - startTime)/1e6;

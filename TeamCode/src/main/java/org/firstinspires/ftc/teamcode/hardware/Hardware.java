@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Hardware {
 
-    public DcMotor FLMotor;
-    public DcMotor BLMotor;
-    public DcMotor FRMotor;
-    public DcMotor BRMotor;
+
+    public DcMotor frontLeft, backLeft, frontRight, backRight;
+
+
 
 /*    public DcMotor conveyor;
     public DcMotor leftLift;
@@ -22,28 +22,21 @@ public class Hardware {
     HardwareMap hwMap;
 
     public void init(HardwareMap hardwareMap) {
+
         this.hwMap = hardwareMap;
 
-        FLMotor = hwMap.dcMotor.get("leftFrontMotor");
-        BLMotor = hwMap.dcMotor.get("leftBackMotor");
-        FRMotor = hwMap.dcMotor.get("rightFrontMotor");
-        BRMotor = hwMap.dcMotor.get("rightBackMotor");
+        frontLeft = hwMap.dcMotor.get("leftFrontMotor");
+        backLeft = hwMap.dcMotor.get("leftBackMotor");
+        frontRight = hwMap.dcMotor.get("rightFrontMotor");
+        backRight = hwMap.dcMotor.get("rightBackMotor");
 
+        DcMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
-        FLMotor.setPower(0);
-        BLMotor.setPower(0);
-        FRMotor.setPower(0);
-        BRMotor.setPower(0);
-
-        FRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        FRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        for(DcMotor motor: motors) {
+            motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
 
 /*

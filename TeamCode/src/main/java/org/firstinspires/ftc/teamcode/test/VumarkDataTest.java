@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Vumark Data", group ="Test")
-@Disabled
+//@Disabled
 
 public class VumarkDataTest extends LinearOpMode {
 

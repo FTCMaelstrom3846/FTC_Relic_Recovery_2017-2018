@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 
 @TeleOp(name= "Telop")
-//@Disabled
+@Disabled
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
