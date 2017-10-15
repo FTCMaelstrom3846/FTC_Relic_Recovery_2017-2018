@@ -2,14 +2,16 @@ package org.firstinspires.ftc.teamcode.control;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.control.PIDConstants;
 
 
 public class SpeedControlledMotor {
     private DcMotor motor;
     private int NEVEREST_20_RPM = 340;
+    private double COUNTS_PER_REV = 537.6;
+    private double NANOSECONDS_PER_MINUTE = 6e+10;
     private int previousPos = 0;
-    double previousTime = 0;
+    private long previousTime = 0;
+    private double rpm = 0;
 
     private double
             KP = 0.005,
@@ -43,18 +45,22 @@ public class SpeedControlledMotor {
 
     public double getRPM() {
         int deltaPos = motor.getCurrentPosition() - previousPos;
-        double deltaTime = System.nanoTime() - previousTime;
-        previousPos = motor.getCurrentPosition();
-        previousTime = System.nanoTime();
-        return 6e4*(deltaPos/deltaTime)/1120;
+        double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
+        if (deltaTime*6e4 > 10) {
+            rpm = (deltaPos/COUNTS_PER_REV)/(deltaTime);
+            previousPos = motor.getCurrentPosition();
+            previousTime = System.nanoTime();
+        }
+        return rpm;
     }
 
     public void setSpeed(double speed) {
-        double RPM = NEVEREST_20_RPM*speed;
-        motor.setPower(PIDController.power(RPM, getRPM()));
+        double rpm = NEVEREST_20_RPM*speed;
+        motor.setPower(PIDController.power(rpm, getRPM()));
     }
 
-    public void setRPM(double RPM, double dt) {
+    public void setRPM(double rpm) {
+        motor.setPower(PIDController.power(rpm, getRPM()));
 
     }
 }
