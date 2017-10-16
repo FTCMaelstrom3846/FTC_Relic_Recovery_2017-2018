@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.control;
 
 public class PIDController {
-    private double i = 0, d = 0, KP, KI,
+    private double i = 0, d, KP, KI,
             KD, previousError = 0, maxI,
             previousTime = 0, NANOSECONDS_PER_MINUTE = 6e+10;
 
@@ -18,7 +18,7 @@ public class PIDController {
         double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
         i = Math.min(maxI, Math.max(-maxI, i + error*deltaTime));
         d = (error - previousError)/deltaTime;
-        double power = (KP*error) + (i/KI) + (KD*d);
+        double power = (KP*error) + (i*KI) + (KD*d);
         previousTime = System.nanoTime();
         previousError = error;
         return power;

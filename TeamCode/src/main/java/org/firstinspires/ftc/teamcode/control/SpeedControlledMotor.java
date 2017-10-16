@@ -6,15 +6,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class SpeedControlledMotor {
     private DcMotor motor;
-    private int NEVEREST_20_RPM = 340;
-    private double COUNTS_PER_REV = 537.6;
+    private int NEVEREST_20_RPM = 160;
+    private double COUNTS_PER_REV = 1120;
     private double NANOSECONDS_PER_MINUTE = 6e+10;
     private int previousPos = 0;
     private long previousTime = 0;
     private double rpm = 0;
 
     private double
-            KP = 0.005,
+            KP = 0.01,
             KI = 0,
             KD = 0,
             maxI = 4;
@@ -56,7 +56,10 @@ public class SpeedControlledMotor {
 
     public void setSpeed(double speed) {
         double rpm = NEVEREST_20_RPM*speed;
-        motor.setPower(PIDController.power(rpm, getRPM()));
+        motor.setPower(
+                ((PIDController.power(rpm, getRPM()) > 0 && rpm < 0) ||
+                (PIDController.power(rpm, getRPM()) < 0 && rpm > 0)) ?
+                0: (PIDController.power(rpm, getRPM())));
     }
 
     public void setRPM(double rpm) {

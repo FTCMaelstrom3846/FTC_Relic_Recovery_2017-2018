@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
@@ -8,9 +9,11 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 
+*/
 /**
  * Created by Ramsey on 10/5/2017.
- */
+ *//*
+
 
 public class Drivetrain {
 
@@ -89,7 +92,9 @@ public class Drivetrain {
 
 
 
-                      /*Change to dirstance*/
+                      */
+/*Change to dirstance*//*
+
 
 
 
@@ -117,21 +122,29 @@ public class Drivetrain {
         while (opModeIsActive() && (stopState <= 1000)) {
             error = imu.getAngles()[0] - initialHeading;
             this.frontLeft.setSpeed((frontLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
-            this.backLeft.setSpeed((backLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
-            this.frontRight.setSpeed((frontRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) /*+ (corrKP * error)*/);
+            this.backLeft.setSpeed((backLeft * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) */
+/*+ (corrKP * error)*//*
+);
+            this.frontRight.setSpeed((frontRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) */
+/*+ (corrKP * error)*//*
+);
             this.backRight.setSpeed((backRight * PID.EncoderPID(rightEncoder, this.frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
 
+*/
 /*
             frontRight.setSpeed(PIDController.EncoderPID(encoder, frontRight.getCurrentPosition(), KP, KI));
             frontLeft.setSpeed(-frontRight.getPower() + corrKP * error);
             backRight.setSpeed(frontRight.getPower());
             backLeft.setSpeed(-frontRight.getPower() + corrKP * error);
-*/
+*//*
+
 
             if ((this.frontRight.getCurrentPosition() >= (rightEncoder - 50)) &&
-                    (this.frontRight.getCurrentPosition() <= (rightEncoder + 50)) /*&&
+                    (this.frontRight.getCurrentPosition() <= (rightEncoder + 50)) */
+/*&&
                 (backLeft.getCurrentPosition() >= (leftEncoder - 50)) &&
-                (backLeft.getCurrentPosition() <= (leftEncoder + 50))*/) {
+                (backLeft.getCurrentPosition() <= (leftEncoder + 50))*//*
+) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
@@ -152,4 +165,4 @@ public class Drivetrain {
 
     public boolean opModeIsActive() {return auto.getOpModeIsActive();}
 
-}
+}*/
