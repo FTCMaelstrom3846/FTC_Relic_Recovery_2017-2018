@@ -11,10 +11,10 @@ import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 
 public class Hardware {
 
-    public SpeedControlledMotor frontLeft = new SpeedControlledMotor()/*,
+    public SpeedControlledMotor frontLeft = new SpeedControlledMotor(),
             frontRight= new SpeedControlledMotor(),
             backLeft= new SpeedControlledMotor(),
-            backRight= new SpeedControlledMotor()*/;
+            backRight= new SpeedControlledMotor();
 
 
 
@@ -30,11 +30,11 @@ public class Hardware {
         this.hwMap = hardwareMap;
 
         frontLeft.init(hwMap, "frontLeft");
-        /*frontRight.init(hwMap, "frontRight");
+        frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
-        backRight.init(hwMap, "backRight");*/
+        backRight.init(hwMap, "backRight");
 
-        SpeedControlledMotor[] motors = {frontLeft, /*backLeft, frontRight, backRight*/};
+        SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
         for(SpeedControlledMotor motor: motors) {
             motor.setPower(0);

@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class SpeedControlledMotor {
     private DcMotor motor;
-    private int NEVEREST_20_RPM = 160;
-    private double COUNTS_PER_REV = 1120;
+    private int NEVEREST_20_RPM = 340   ;
+    private double COUNTS_PER_REV = 537.6;
     private double NANOSECONDS_PER_MINUTE = 6e+10;
     private int previousPos = 0;
     private long previousTime = 0;
@@ -65,5 +65,9 @@ public class SpeedControlledMotor {
     public void setRPM(double rpm) {
         motor.setPower(PIDController.power(rpm, getRPM()));
 
+    }
+
+    public int getCurrentPosition() {
+        return motor.getCurrentPosition();
     }
 }

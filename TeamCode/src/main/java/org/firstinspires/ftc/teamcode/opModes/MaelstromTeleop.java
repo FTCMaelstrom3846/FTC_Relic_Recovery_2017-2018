@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 
 @TeleOp(name= "Telop")
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
+    Drivetrain drivetrain = new Drivetrain(gamepad1, robot);
 
 
     public void init() {
@@ -23,6 +25,7 @@ public class MaelstromTeleop extends OpMode {
     }
 
     public void loop() {
+        drivetrain.drive();
 
     }
 }
