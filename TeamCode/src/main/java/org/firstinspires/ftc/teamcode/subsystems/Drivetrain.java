@@ -14,14 +14,14 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 public class Drivetrain {
 
-    Gamepad gamepad1;
+    //Gamepad gamepad1;
     SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
     boolean halfSpeed = false;
     BNO055_IMU imu;
     MaelstromAutonomous auto;
 
-    public Drivetrain (Gamepad gamepad1, Hardware hardware/*, boolean halfSpeed*/) {
-        this.gamepad1 = gamepad1;
+    public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
+        //this.gamepad1 = gamepad1;
         this.backLeft = hardware.backLeft;
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
@@ -38,33 +38,33 @@ public class Drivetrain {
         this.auto = auto;
     }
 
-    public void drive() {
+    public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
 
-        double x = gamepad1.left_stick_x;
-        double y = gamepad1.left_stick_y;
+        double x = -gamepadLeftYRaw;
+        double y = -gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
-        angle -= Math.PI/4;
+        angle += Math.PI/4;
 
         double speedMagnitude = Math.hypot(x, y);
-        double frontLeftPower = -(Math.sin(angle) * speedMagnitude) + gamepad1.right_stick_x;
-        double backLeftPower = -(Math.cos(angle) * speedMagnitude) + gamepad1.right_stick_x;
-        double frontRightPower = (Math.cos(angle) * speedMagnitude) + gamepad1.right_stick_x;
-        double backRightPower = (Math.sin(angle) * speedMagnitude) + gamepad1.right_stick_x;
+        double frontLeftPower = -(Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
+        double backLeftPower = -(Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
+        double frontRightPower = (Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
+        double backRightPower = (Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
 
         double driveScaleFactor = Math.abs(Math.max(
                 Math.max(frontLeftPower, frontRightPower),
-                Math.max(backLeftPower, backRightPower)))
-                != 0 ? Math.abs(Math.max(
-                Math.max(frontLeftPower, frontRightPower),
-                Math.max(backLeftPower, backRightPower))) : 1
-        ;
+                Math.max(backLeftPower, backRightPower)));
+
+        if (driveScaleFactor == 0) {
+            driveScaleFactor = 1;
+        }
 
 
-        frontLeftPower /= driveScaleFactor;
+        /*frontLeftPower /= driveScaleFactor;
         frontRightPower /= driveScaleFactor; //this is a big meme i hate u archi
         backLeftPower /= driveScaleFactor;
         backRightPower /= driveScaleFactor;
-
+*/
         if (!halfSpeed) {
             frontLeft.setPower(frontLeftPower);
             frontRight.setPower(backLeftPower);

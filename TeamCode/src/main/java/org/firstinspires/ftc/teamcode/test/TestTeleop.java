@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
-@TeleOp(name = "Test Teleop")
-//@Disabled
+@TeleOp(name = "Speed Test Teleop")
+@Disabled
 public class TestTeleop extends OpMode {
 
     Hardware robot = new Hardware();

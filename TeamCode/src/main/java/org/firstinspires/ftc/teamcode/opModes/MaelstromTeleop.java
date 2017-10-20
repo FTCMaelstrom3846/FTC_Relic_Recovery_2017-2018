@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 
 @TeleOp(name= "Telop")
-@Disabled
+//@Disabled
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
-    Drivetrain drivetrain = new Drivetrain(gamepad1, robot);
+    Drivetrain drivetrain = new Drivetrain(/*gamepad1,*/ robot);
 
 
     public void init() {
@@ -25,7 +25,7 @@ public class MaelstromTeleop extends OpMode {
     }
 
     public void loop() {
-        drivetrain.drive();
+        drivetrain.drive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
     }
 }
