@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 
@@ -16,6 +17,8 @@ public class Hardware {
             backLeft= new SpeedControlledMotor(),
             backRight= new SpeedControlledMotor();
 
+    public Servo relicWrist;
+    public Servo relicGrabber;
 
 
 /*    public DcMotor conveyor;
@@ -33,6 +36,9 @@ public class Hardware {
         frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
+
+        relicWrist = hwMap.servo.get("relicWrist");
+        relicGrabber = hwMap.servo.get("relicGrabber");
 
         SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
