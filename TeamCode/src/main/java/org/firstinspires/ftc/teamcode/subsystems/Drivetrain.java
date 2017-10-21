@@ -20,6 +20,8 @@ public class Drivetrain {
     BNO055_IMU imu;
     MaelstromAutonomous auto;
 
+    double teleopAngle;
+
     public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
         //this.gamepad1 = gamepad1;
         this.backLeft = hardware.backLeft;
@@ -45,40 +47,37 @@ public class Drivetrain {
         double angle = Math.atan2(y, x);
         angle += Math.PI/4;
 
+        this.teleopAngle = angle;
+
         double speedMagnitude = Math.hypot(x, y);
-        double frontLeftPower = -(Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
-        double backLeftPower = -(Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
-        double frontRightPower = (Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
-        double backRightPower = (Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
+        double frontLeftPower = (Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
+        double backLeftPower = (Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
+        double frontRightPower = -(Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
+        double backRightPower = -(Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
 
-        double driveScaleFactor = Math.abs(Math.max(
-                Math.max(frontLeftPower, frontRightPower),
-                Math.max(backLeftPower, backRightPower)));
-
-        if (driveScaleFactor == 0) {
-            driveScaleFactor = 1;
-        }
+        double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
+        normalizeSpeeds(speeds);
 
 
-        /*frontLeftPower /= driveScaleFactor;
-        frontRightPower /= driveScaleFactor; //this is a big meme i hate u archi
-        backLeftPower /= driveScaleFactor;
-        backRightPower /= driveScaleFactor;
-*/
         if (!halfSpeed) {
-            frontLeft.setPower(frontLeftPower);
-            frontRight.setPower(backLeftPower);
-            backLeft.setPower(frontRightPower);
-            backRight.setPower(backRightPower);
+            frontLeft.setPower(speeds[0]);
+            backLeft.setPower(speeds[1]);
+            frontRight.setPower(speeds[2]);
+            backRight.setPower(speeds[3]);
         }
         else {
-            frontLeft.setPower(0.5*frontLeftPower);
-            frontRight.setPower(0.5*backLeftPower);
-            backLeft.setPower(0.5*frontRightPower);
-            backRight.setPower(0.5*backRightPower);
+            frontLeft.setPower(0.5 * speeds[0]);
+            backLeft.setPower(0.5 * speeds[1]);
+            frontRight.setPower(0.5 * speeds[2]);
+            backRight.setPower(0.5 * speeds[3]);
         }
 
     }
+
+    public double getTeleopAngle() {
+        return teleopAngle;
+    }
+
 
 
 //Everything below is retarded old stuff and needs to be fixed
@@ -152,5 +151,19 @@ public class Drivetrain {
     }
 
     public boolean opModeIsActive() {return auto.getOpModeIsActive();}
+
+    public void normalizeSpeeds (double[] speeds) {
+
+        double maxSpeed = 0;
+
+        for (int i = 0; i < speeds.length; i++) {
+            maxSpeed = Math.max(maxSpeed, Math.abs(speeds[i]));
+        }
+        if (maxSpeed > 1) {
+            for (int i = 0; i < speeds.length; i++) {
+                speeds[i] /= maxSpeed;
+            }
+        }
+    }
 
 }

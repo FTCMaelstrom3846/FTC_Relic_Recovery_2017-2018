@@ -8,3 +8,4 @@
 -Closed loop teleop drive (with speed PID)
 -Lazy power transition
 -Teleop Sensitivity filter
+-Remove teleopAngle in drivetrain
