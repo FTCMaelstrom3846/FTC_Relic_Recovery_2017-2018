@@ -45,15 +45,15 @@ public class Drivetrain {
         double x = -gamepadLeftYRaw;
         double y = -gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
-        angle += Math.PI/4;
+        double adjustedAngle = angle + Math.PI/4;
 
         this.teleopAngle = angle;
 
         double speedMagnitude = Math.hypot(x, y);
-        double frontLeftPower = (Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
-        double backLeftPower = (Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
-        double frontRightPower = -(Math.cos(angle) * speedMagnitude) + gamepadRightXRaw;
-        double backRightPower = -(Math.sin(angle) * speedMagnitude) + gamepadRightXRaw;
+        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
+        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
+        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
+        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);

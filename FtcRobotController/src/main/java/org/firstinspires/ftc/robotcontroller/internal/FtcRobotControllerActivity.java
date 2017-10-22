@@ -125,7 +125,7 @@ import ftc.vision.FrameGrabber;
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
   {
-    ////////////// START VISION PROCESSING CODE //////////////
+    /*////////////// START VISION PROCESSING CODE //////////////
 
     static final int FRAME_WIDTH_REQUEST = 176;
     static final int FRAME_HEIGHT_REQUEST = 144;
@@ -220,7 +220,7 @@ public class FtcRobotControllerActivity extends Activity
       }
     };
 
-    ////////////// END VISION PROCESSING CODE //////////////
+    ////////////// END VISION PROCESSING CODE //////////////*/
   public static final String TAG = "RCActivity";
   public String getTag() { return TAG; }
 
@@ -353,9 +353,9 @@ public class FtcRobotControllerActivity extends Activity
 
     setContentView(R.layout.activity_ftc_controller);
 
-      ////////////// START VISION PROCESSING CODE //////////////
+  /*    ////////////// START VISION PROCESSING CODE //////////////
       myOnCreate();
-      ////////////// END VISION PROCESSING CODE //////////////
+      ////////////// END VISION PROCESSING CODE //////////////*/
 
     preferencesHelper = new PreferencesHelper(TAG, context);
     preferencesHelper.writeBooleanPrefIfDifferent(context.getString(R.string.pref_rc_connected), true);
@@ -456,9 +456,9 @@ public class FtcRobotControllerActivity extends Activity
   protected void onResume() {
     super.onResume();
 
-      ////////////// START VISION PROCESSING CODE //////////////
+      /*////////////// START VISION PROCESSING CODE //////////////
       myOnResume();
-      ////////////// END VISION PROCESSING CODE //////////////
+      ////////////// END VISION PROCESSING CODE //////////////*/
 
     RobotLog.vv(TAG, "onResume()");
   }
@@ -467,9 +467,9 @@ public class FtcRobotControllerActivity extends Activity
   protected void onPause() {
     super.onPause();
 
-      ////////////// START VISION PROCESSING CODE //////////////
+     /* ////////////// START VISION PROCESSING CODE //////////////
       myOnPause();
-      ////////////// END VISION PROCESSING CODE //////////////
+      ////////////// END VISION PROCESSING CODE //////////////*/
 
     RobotLog.vv(TAG, "onPause()");
     if (programmingModeController.isActive()) {
@@ -490,9 +490,9 @@ public class FtcRobotControllerActivity extends Activity
     super.onDestroy();
     RobotLog.vv(TAG, "onDestroy()");
 
-      ////////////// START VISION PROCESSING CODE //////////////
+     /* ////////////// START VISION PROCESSING CODE //////////////
       myOnDestroy();
-      ////////////// END VISION PROCESSING CODE //////////////
+      ////////////// END VISION PROCESSING CODE //////////////*/
 
     shutdownRobot();  // Ensure the robot is put away to bed
     if (callback != null) callback.close();
@@ -551,9 +551,9 @@ public class FtcRobotControllerActivity extends Activity
   public void onWindowFocusChanged(boolean hasFocus){
     super.onWindowFocusChanged(hasFocus);
 
-    ////////////// START VISION PROCESSING CODE //////////////
+    /*////////////// START VISION PROCESSING CODE //////////////
     myOnWindowFocusChanged(hasFocus);
-    ////////////// END VISION PROCESSING CODE //////////////
+    ////////////// END VISION PROCESSING CODE //////////////*/
 
     // When the window loses focus (e.g., the action overflow is shown),
     // cancel any pending hide action. When the window gains focus,

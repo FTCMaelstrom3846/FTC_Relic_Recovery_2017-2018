@@ -1,4 +1,3 @@
--Fix weird phone error (try with and without instant run, see what changed)
 -Finish motor speed control
 -Measure actual RPM of Orbital Neverest 20 and adjust values
 -Finish distance based autonomous drive code
