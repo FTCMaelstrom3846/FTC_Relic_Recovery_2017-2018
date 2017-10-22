@@ -58,7 +58,6 @@ public class Drivetrain {
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
 
-
         if (!halfSpeed) {
             frontLeft.setPower(speeds[0]);
             backLeft.setPower(speeds[1]);
@@ -165,5 +164,15 @@ public class Drivetrain {
             }
         }
     }
+
+    /*public double[] smoothSpeeds(double[] speeds) {
+        for (int i = 0; i < speeds.length; i++) {
+            if (speeds[i] < currRightStickX) {
+                currRightStickX -= STEP_AMOUNT;
+            } else if (speeds[i] > currRightStickX) {
+                currRightStickX += STEP_AMOUNT;
+            }
+        }
+    }*/
 
 }

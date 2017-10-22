@@ -29,7 +29,6 @@ public class MaelstromTeleop extends OpMode {
     }
 
     public void loop() {
-        gamepadFilter.updateLazyTime();
         drivetrain.drive(gamepadFilter.lazyLeftStickY(gamepad1.left_stick_y),
                 gamepadFilter.lazyLeftStickX(gamepad1.left_stick_x), gamepadFilter.lazyRighStickX(gamepad1.right_stick_x));
         telemetry.addData("angle", drivetrain.getTeleopAngle());
