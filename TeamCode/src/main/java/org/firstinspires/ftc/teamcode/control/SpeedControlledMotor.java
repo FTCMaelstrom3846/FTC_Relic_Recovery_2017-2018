@@ -4,30 +4,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-public class SpeedControlledMotor {
+public class SpeedControlledMotor implements Constants{
     private DcMotor motor;
-    private int NEVEREST_20_RPM = 340   ;
-    private double COUNTS_PER_REV = 537.6;
-    private double NANOSECONDS_PER_MINUTE = 6e+10;
     private int previousPos = 0;
     private long previousTime = 0;
     private double rpm = 0;
 
-    private double
-            KP = 0.01,
-            KI = 0,
-            KD = 0,
-            maxI = 4;
-
-    PIDController PIDController = new PIDController(KP, KI, KD, maxI);
-
-    public SpeedControlledMotor() {}
+    PIDController PIDController;
 
     public SpeedControlledMotor(double KP, double KI, double KD, double maxI) {
-        this.KP = KP;
-        this.KI = KI;
-        this.KD = KD;
-        this.maxI = maxI;
+        this.PIDController = new PIDController(KP, KI, KD, maxI);
     }
 
 
@@ -47,7 +33,7 @@ public class SpeedControlledMotor {
         int deltaPos = motor.getCurrentPosition() - previousPos;
         double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
         if (deltaTime*6e4 > 10) {
-            rpm = (deltaPos/COUNTS_PER_REV)/(deltaTime);
+            rpm = (deltaPos/ NEVEREST_20_COUNTS_PER_REV)/(deltaTime);
             previousPos = motor.getCurrentPosition();
             previousTime = System.nanoTime();
         }
@@ -55,7 +41,7 @@ public class SpeedControlledMotor {
     }
 
     public void setSpeed(double speed) {
-        double rpm = NEVEREST_20_RPM*speed;
+        double rpm = NEVEREST_20_MAX_RPM *speed;
         motor.setPower(
                 ((PIDController.power(rpm, getRPM()) > 0 && rpm < 0) ||
                 (PIDController.power(rpm, getRPM()) < 0 && rpm > 0)) ?

@@ -38,6 +38,8 @@ public class MaelstromTeleop extends OpMode {
         telemetry.addData("Back left RPM:", robot.backLeft.getRPM());
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
 
+        //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
+
         /*if (gamepad1.dpad_up) {
             robot.relicWrist.setPosition(.5);
         } else if (gamepad1.dpad_down) {

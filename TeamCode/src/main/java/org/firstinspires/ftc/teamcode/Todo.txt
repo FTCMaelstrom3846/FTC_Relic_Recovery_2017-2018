@@ -2,9 +2,11 @@
 -Measure actual RPM of Orbital Neverest 20 and adjust values
 -Finish distance based autonomous drive code
 -Implement max speed in drivetrain class
--Fix passing gamepad to drivetrain
+-Fix passing gamepad to drivetrain, conveyor, intake
 -Fix scaling
 -Closed loop teleop drive (with speed PID)
 -Lazy power transition
 -Teleop Sensitivity filter
 -Remove teleopAngle in drivetrain
+-Rewrite Conveyor class with speed control
+-Re-add conveyor and intake in hardware and in their respective classes

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import org.firstinspires.ftc.teamcode.control.Constants;
+import org.firstinspires.ftc.teamcode.control.PIDController;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.opModes.MaelstromAutonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,13 +14,16 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
  * Created by Ramsey on 10/5/2017.
  */
 
-public class Drivetrain {
+public class Drivetrain implements Constants {
 
     //Gamepad gamepad1;
-    SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
-    boolean halfSpeed = false;
-    BNO055_IMU imu;
-    MaelstromAutonomous auto;
+    private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
+    private SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
+    private boolean halfSpeed = false;
+    //private BNO055_IMU imu;
+    private MaelstromAutonomous auto;
+
+    private PIDController PIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
 
     double teleopAngle;
 
@@ -28,32 +33,35 @@ public class Drivetrain {
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
+        //this.imu = hardware.imu;
         /*this.halfSpeed = halfSpeed;*/
     }
 
-    public Drivetrain (Hardware hardware, BNO055_IMU imu, MaelstromAutonomous auto) {
+    public Drivetrain (Hardware hardware, MaelstromAutonomous auto) {
         this.backLeft = hardware.backLeft;
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
-        this.imu = imu;
+        //this.imu = hardware.imu;
         this.auto = auto;
     }
 
     public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
 
         double x = -gamepadLeftYRaw;
-        double y = -gamepadLeftXRaw;
+        double y = gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
         double adjustedAngle = angle + Math.PI/4;
 
         this.teleopAngle = angle;
 
+        //double angleCorrection = PIDController.power(angle, imu.getAngles()[0]);
+
         double speedMagnitude = Math.hypot(x, y);
-        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
-        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
-        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
-        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw;
+        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
+        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
+        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
+        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
@@ -140,7 +148,6 @@ public class Drivetrain {
 
     void eReset() {
 
-        SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
 
         for(SpeedControlledMotor motor: motors) {
             motor.setPower(0);

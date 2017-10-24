@@ -1,24 +1,41 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
+import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 /**
  * Created by Ramsey on 10/15/2016.
  */
 
-public class Hardware {
+public class Hardware implements Constants {
 
-    public SpeedControlledMotor frontLeft = new SpeedControlledMotor(),
-            frontRight= new SpeedControlledMotor(),
-            backLeft= new SpeedControlledMotor(),
-            backRight= new SpeedControlledMotor();
+    public BNO055_IMU imu;
+
+    public SpeedControlledMotor frontLeft = new SpeedControlledMotor(frontLeftKP, frontLeftKI, frontLeftKD, frontLeftMaxI),
+            frontRight = new SpeedControlledMotor(frontRightKP, frontRightKI, frontRightKD, frontRightMaxI),
+            backLeft = new SpeedControlledMotor(backLeftKP, backLeftKI, backLeftKD, backLeftMaxI),
+            backRight = new SpeedControlledMotor(backRightKP, backRightKI, backRightKD, backRightMaxI);
+
+    public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
+
+    //public DcMotor intake;
 
     public Servo relicWrist;
     public Servo relicGrabber;
+
+/*    public CRServo conveyorTopRight;
+    public CRServo conveyorTopLeft;
+    public CRServo conveyorBottomRight;
+    public CRServo conveyorBottomLeft;
+
+    public CRServo[] conveyorServos = {conveyorTopRight, conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft};*/
 
 
 /*    public DcMotor conveyor;
@@ -32,22 +49,36 @@ public class Hardware {
 
         this.hwMap = hardwareMap;
 
+        imu = new BNO055_IMU("imu", hwMap);
+
         frontLeft.init(hwMap, "frontLeft");
         frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
 
+        //intake = hwMap.dcMotor.get("intake");
+
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
 
-        SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
+        /*conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
+        conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
+        conveyorBottomRight = hwMap.crservo.get("conveyorBottomRight");
+        conveyorBottomLeft = hwMap.crservo.get("conveyorBottomLeft");
 
-        for(SpeedControlledMotor motor: motors) {
+        conveyorTopRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        conveyorBottomRight.setDirection(DcMotorSimple.Direction.REVERSE);*/
+
+        for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setPower(0);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+       /* for(CRServo servo: conveyorServos) {
+            servo.setPower(0);
+        }
+*/
 /*
         conveyor = hwMap.dcMotor.get("conveyor");
         leftLift = hwMap.dcMotor.get("leftLift");

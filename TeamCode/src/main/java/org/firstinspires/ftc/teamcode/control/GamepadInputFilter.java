@@ -5,7 +5,7 @@ public class GamepadInputFilter {
     private double currLeftStickX = 0;
     private double currLeftStickY = 0;
     private double currRightStickX = 0;
-    private double STEP_AMOUNT = 0.04;
+    private double STEP_AMOUNT = 0.09;
 
     public double lazyLeftStickX(double leftStickX) {
         if (leftStickX < currLeftStickX) {
