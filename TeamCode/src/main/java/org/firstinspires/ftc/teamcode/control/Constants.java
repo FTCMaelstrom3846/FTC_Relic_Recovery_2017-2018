@@ -6,23 +6,23 @@ package org.firstinspires.ftc.teamcode.control;
 
 public interface Constants {
 
-    double frontLeftKP = 0.01;
-    double frontLeftKI = 0;
+    double frontLeftKP = 0.0033;
+    double frontLeftKI = 0.05;
     double frontLeftKD = 0;
     double frontLeftMaxI = 4;
 
-    double frontRightKP = 0.01;
-    double frontRightKI = 0;
+    double frontRightKP = 0.0033;
+    double frontRightKI = 0.05;
     double frontRightKD = 0;
     double frontRightMaxI = 4;
 
-    double backLeftKP = 0.01;
-    double backLeftKI = 0;
+    double backLeftKP = 0.0033;
+    double backLeftKI = 0.05;
     double backLeftKD = 0;
     double backLeftMaxI = 4;
 
-    double backRightKP = 0.01;
-    double backRightKI = 0;
+    double backRightKP = 0.0033;
+    double backRightKI = 0.05;
     double backRightKD = 0;
     double backRightMaxI = 4;
 

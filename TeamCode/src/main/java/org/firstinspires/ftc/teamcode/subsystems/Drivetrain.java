@@ -58,6 +58,12 @@ public class Drivetrain implements Constants {
         //double angleCorrection = PIDController.power(angle, imu.getAngles()[0]);
 
         double speedMagnitude = Math.hypot(x, y);
+
+/*
+        double yComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.sin(adjustedAngle)/Math.abs(Math.sin(adjustedAngle))) : Math.sin(adjustedAngle);
+        double xComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.cos(adjustedAngle)/Math.abs(Math.cos(adjustedAngle))) : Math.cos(adjustedAngle);
+*/
+
         double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
         double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
         double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;

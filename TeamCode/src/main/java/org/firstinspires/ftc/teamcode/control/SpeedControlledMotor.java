@@ -42,10 +42,10 @@ public class SpeedControlledMotor implements Constants{
 
     public void setSpeed(double speed) {
         double rpm = NEVEREST_20_MAX_RPM *speed;
-        motor.setPower(
-                ((PIDController.power(rpm, getRPM()) > 0 && rpm < 0) ||
+        motor.setPower(PIDController.power(rpm, getRPM())
+                /*((PIDController.power(rpm, getRPM()) > 0 && rpm < 0) ||
                 (PIDController.power(rpm, getRPM()) < 0 && rpm > 0)) ?
-                0: (PIDController.power(rpm, getRPM())));
+                0: (PIDController.power(rpm, getRPM()))*/);
     }
 
     public void setRPM(double rpm) {
