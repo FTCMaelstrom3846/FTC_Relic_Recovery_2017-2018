@@ -18,7 +18,7 @@ public class PIDController {
         double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
         i = Math.min(maxI, Math.max(-maxI, i + error*deltaTime));
         d = (error - previousError)/deltaTime;
-        double power = (KP*error) + (i*KI) + (KD*d);
+        double power = (KP*error) + (KI*i) + (KD*d);
         previousTime = System.nanoTime();
         previousError = error;
         return power;

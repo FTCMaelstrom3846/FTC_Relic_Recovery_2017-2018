@@ -73,16 +73,16 @@ public class Drivetrain implements Constants {
         normalizeSpeeds(speeds);
 
         if (!halfSpeed) {
-            frontLeft.setPower(speeds[0]);
-            backLeft.setPower(speeds[1]);
-            frontRight.setPower(speeds[2]);
-            backRight.setPower(speeds[3]);
+            frontLeft.setSpeed(speeds[0]);
+            backLeft.setSpeed(speeds[1]);
+            frontRight.setSpeed(speeds[2]);
+            backRight.setSpeed(speeds[3]);
         }
         else {
-            frontLeft.setPower(0.5 * speeds[0]);
-            backLeft.setPower(0.5 * speeds[1]);
-            frontRight.setPower(0.5 * speeds[2]);
-            backRight.setPower(0.5 * speeds[3]);
+            frontLeft.setSpeed(0.5 * speeds[0]);
+            backLeft.setSpeed(0.5 * speeds[1]);
+            frontRight.setSpeed(0.5 * speeds[2]);
+            backRight.setSpeed(0.5 * speeds[3]);
         }
 
     }

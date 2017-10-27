@@ -9,6 +9,7 @@ public class SpeedControlledMotor implements Constants{
     private int previousPos = 0;
     private long previousTime = 0;
     private double rpm = 0;
+    private double power;
 
     PIDController PIDController;
 
@@ -22,6 +23,7 @@ public class SpeedControlledMotor implements Constants{
     }
 
     public void setPower(double power) {
+        this.power = power;
         motor.setPower(power);
     }
 
@@ -42,18 +44,21 @@ public class SpeedControlledMotor implements Constants{
 
     public void setSpeed(double speed) {
         double rpm = NEVEREST_20_MAX_RPM *speed;
-        motor.setPower(PIDController.power(rpm, getRPM())
-                /*((PIDController.power(rpm, getRPM()) > 0 && rpm < 0) ||
-                (PIDController.power(rpm, getRPM()) < 0 && rpm > 0)) ?
-                0: (PIDController.power(rpm, getRPM()))*/);
+        power = PIDController.power(rpm, getRPM());
+        motor.setPower((power > 0 && getRPM() < 0) || (power < 0 && getRPM() > 0) ? 0: (power));
     }
 
     public void setRPM(double rpm) {
-        motor.setPower(PIDController.power(rpm, getRPM()));
+        power = PIDController.power(rpm, getRPM());
+        motor.setPower(power);
 
     }
 
     public int getCurrentPosition() {
         return motor.getCurrentPosition();
+    }
+
+    public double getPower() {
+        return power;
     }
 }
