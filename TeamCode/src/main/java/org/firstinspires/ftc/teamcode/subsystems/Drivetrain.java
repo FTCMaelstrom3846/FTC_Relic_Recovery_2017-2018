@@ -20,10 +20,13 @@ public class Drivetrain implements Constants {
     private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
     private SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
     private boolean halfSpeed = false;
-    //private BNO055_IMU imu;
+    private BNO055_IMU imu;
     private MaelstromAutonomous auto;
 
-    private PIDController PIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
+    private PIDController angularPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
+
+    private PIDController distanceIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
+
 
     double teleopAngle;
 
@@ -95,17 +98,7 @@ public class Drivetrain implements Constants {
 
 //Everything below is retarded old stuff and needs to be fixed
 
-    /*public void drive(int rightEncoder
-
-
-
-
-
-                      *//*Change to dirstance*//*
-
-
-
-                      , double angle, double KP, double KI) {
+    public void drive(int distance/*Change to dirstance*/, double angle) {
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
@@ -113,44 +106,38 @@ public class Drivetrain implements Constants {
 
         eReset();
 
-        double error;
+        double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
+        double headingError;
         long startTime = System.nanoTime();
         long stopState = 0;
-        rightEncoder = -rightEncoder;
-        PID.i = 0;
         double initialHeading = imu.getAngles()[0];
         double corrKP = 0.01;
-        angle = angle * (Math.PI / 180);
+        angle *= (Math.PI / 180);
         frontLeftPower = -(Math.sin(angle + (Math.PI / 4)));
         backLeftPower = -(Math.cos(angle + (Math.PI / 4)));
         frontRightPower = (Math.cos(angle + (Math.PI / 4)));
         backRightPower = (Math.sin(angle + (Math.PI / 4)));
 
         while (opModeIsActive() && (stopState <= 1000)) {
-            error = imu.getAngles()[0] - initialHeading;
-            frontLeft.setPower((frontLeftPower * PID.EncoderPID(rightEncoder, frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
-            backLeft.setPower((backLeftPower * PID.EncoderPID(rightEncoder, frontRight.getCurrentPosition(), KP, KI)) *//*+ (corrKP * error)*//*);
-            frontRight.setPower((frontRightPower * PID.EncoderPID(rightEncoder, frontRight.getCurrentPosition(), KP, KI)) *//*+ (corrKP * error)*//*);
-            backRight.setPower((backRightPower * PID.EncoderPID(rightEncoder, frontRight.getCurrentPosition(), KP, KI)) + (corrKP * error));
+            headingError = imu.getAngles()[0] - initialHeading;
+            frontLeft.setPower((frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + (corrKP * headingError)));
+            backLeft.setPower((backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
+            frontRight.setPower((frontRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
+            backRight.setPower((backRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
 
-*//*
-            frontRight.setPower(PID.EncoderPID(encoder, frontRight.getCurrentPosition(), KP, KI));
-            frontLeft.setPower(-frontRight.getPower() + corrKP * error);
-            backRight.setPower(frontRight.getPower());
-            backLeft.setPower(-frontRight.getPower() + corrKP * error);
-*//*
 
-            if ((frontRight.getCurrentPosition() >= (rightEncoder - 50)) &&
-                    (frontRight.getCurrentPosition() <= (rightEncoder + 50)) *//*&&
-                (backLeft.getCurrentPosition() >= (leftEncoder - 50)) &&
-                (backLeft.getCurrentPosition() <= (leftEncoder + 50))*//*) {
+
+            if ((frontRight.getCurrentPosition() >= (ticks - 50)) &&
+                    (frontRight.getCurrentPosition() <= (ticks + 50)) &&
+                (backLeft.getCurrentPosition() >= (ticks - 50)) &&
+                (backLeft.getCurrentPosition() <= (ticks + 50))) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
             }
         }
 
-    }*/
+    }
 
     void eReset() {
 

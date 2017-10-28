@@ -25,23 +25,21 @@ public class Hardware implements Constants {
 
     public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
 
-    //public DcMotor intake;
+    public DcMotor intake;
+    public DcMotor leftLift;
+    public DcMotor rightLift;
+    public DcMotor relicExtender;
 
     public Servo relicWrist;
     public Servo relicGrabber;
 
-/*    public CRServo conveyorTopRight;
+    public CRServo conveyorTopRight;
     public CRServo conveyorTopLeft;
     public CRServo conveyorBottomRight;
     public CRServo conveyorBottomLeft;
 
-    public CRServo[] conveyorServos = {conveyorTopRight, conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft};*/
+    public CRServo[] conveyorServos = {conveyorTopRight, conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft};
 
-
-/*    public DcMotor conveyor;
-    public DcMotor leftLift;
-    public DcMotor rightLift;
-    public DcMotor relicExtender;*/
 
     HardwareMap hwMap;
 
@@ -56,18 +54,22 @@ public class Hardware implements Constants {
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
 
-        //intake = hwMap.dcMotor.get("intake");
+        intake = hwMap.dcMotor.get("intake");
+        leftLift = hwMap.dcMotor.get("leftLift");
+        rightLift = hwMap.dcMotor.get("rightLift");
+        relicExtender = hwMap.dcMotor.get("relicExtender");
+
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
 
-        /*conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
+        conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
         conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
         conveyorBottomRight = hwMap.crservo.get("conveyorBottomRight");
         conveyorBottomLeft = hwMap.crservo.get("conveyorBottomLeft");
 
         conveyorTopRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        conveyorBottomRight.setDirection(DcMotorSimple.Direction.REVERSE);*/
+        conveyorBottomRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setPower(0);
@@ -75,17 +77,9 @@ public class Hardware implements Constants {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-       /* for(CRServo servo: conveyorServos) {
+        for(CRServo servo: conveyorServos) {
             servo.setPower(0);
         }
-*/
-/*
-        conveyor = hwMap.dcMotor.get("conveyor");
-        leftLift = hwMap.dcMotor.get("leftLift");
-        rightLift = hwMap.dcMotor.get("rightLift");
-        relicExtender = hwMap.dcMotor.get("relicExtender");
-*/
-
     }
 
 }

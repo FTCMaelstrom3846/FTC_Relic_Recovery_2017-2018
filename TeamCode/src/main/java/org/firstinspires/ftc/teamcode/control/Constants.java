@@ -6,6 +6,11 @@ package org.firstinspires.ftc.teamcode.control;
 
 public interface Constants {
 
+    double NANOSECONDS_PER_MINUTE = 6e+10;
+    int NEVEREST_20_MAX_RPM = 290;
+    double NEVEREST_20_COUNTS_PER_REV = 537.6;
+    double WHEEL_DIAMETER = 4;
+
     double frontLeftKP = 0.008;
     double frontLeftKI = 0;
     double frontLeftKD = 0/*1.92426108e-6*/;
@@ -26,12 +31,13 @@ public interface Constants {
     double backRightKD = 0;
     double backRightMaxI = 1;
 
-    double NANOSECONDS_PER_MINUTE = 6e+10;
-    int NEVEREST_20_MAX_RPM = 290;
-    double NEVEREST_20_COUNTS_PER_REV = 537.6;
-
     double angleCorrectionKP = 0.01;
     double angleCorrectionKI = 0;
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
+
+    double distanceKP = 0.01;
+    double distanceKI = 0;
+    double distanceKD = 0;
+    double distanceMaxI = 0;
 }
