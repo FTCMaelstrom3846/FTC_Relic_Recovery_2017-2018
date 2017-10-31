@@ -11,14 +11,17 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class Conveyor {
 
-    CRServo intakeTopRight;
-    CRServo intakeTopLeft;
-    CRServo intakeBottomRight;
-    CRServo intakeBottomLeft;
+    CRServo conveyorTopRight;
+    CRServo conveyorTopLeft;
+    CRServo conveyorBottomRight;
+    CRServo conveyorBottomLeft;
 
-    public CRServo[] intakeServos = {intakeTopRight, intakeTopLeft, intakeBottomRight, intakeBottomLeft};
+    public CRServo[] conveyorServos = {/*conveyorTopRight, conveyorTopLeft,*/ conveyorBottomRight, conveyorBottomLeft};
 
     public Conveyor (Hardware hardware) {
+/*
+        this.conveyorServos = hardware.conveyorServos;
+*/
         //this.gamepad1 = gamepad1;
         /*this.intakeTopRight = hardware.conveyorTopRight;
         this.intakeTopLeft = hardware.conveyorTopLeft;
@@ -28,7 +31,7 @@ public class Conveyor {
 
 
     public void run(double speed) {
-        for(CRServo servo: intakeServos) {
+        for (CRServo servo: conveyorServos) {
             servo.setPower(speed);
         }
     }

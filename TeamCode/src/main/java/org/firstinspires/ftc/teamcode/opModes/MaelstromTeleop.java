@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
-    Drivetrain drivetrain = new Drivetrain(/*gamepad1,*/ robot);
     //GamepadInputFilter gamepadFilter = new GamepadInputFilter();
 
 
@@ -29,14 +28,25 @@ public class MaelstromTeleop extends OpMode {
     }
 
     public void loop() {
-        drivetrain.drive(/*gamepadFilter.lazyLeftStickY*/(gamepad1.left_stick_y),
+        robot.drivetrain.drive(/*gamepadFilter.lazyLeftStickY*/(gamepad1.left_stick_y),
                 /*gamepadFilter.lazyLeftStickX*/(gamepad1.left_stick_x), /*gamepadFilter.lazyRighStickX*/(gamepad1.right_stick_x));
-        telemetry.addData("angle", drivetrain.getTeleopAngle());
+        telemetry.addData("angle", robot.drivetrain.getTeleopAngle());
 
         telemetry.addData("Front left RPM:", robot.frontLeft.getRPM());
         telemetry.addData("Front right RPM:", robot.frontRight.getRPM());
         telemetry.addData("Back left RPM:", robot.backLeft.getRPM());
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
+
+        if (gamepad1.right_bumper) {
+            robot.conveyorBottomLeft.setPower(1);
+            robot.conveyorBottomRight.setPower(1);
+        } else if (gamepad1.left_bumper) {
+            robot.conveyorBottomLeft.setPower(-1);
+            robot.conveyorBottomRight.setPower(-1);
+        } else {
+            robot.conveyorBottomLeft.setPower(0);
+            robot.conveyorBottomRight.setPower(0);
+        }
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
 
