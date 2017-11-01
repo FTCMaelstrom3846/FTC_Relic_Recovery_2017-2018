@@ -9,9 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
-/*
 import org.firstinspires.ftc.teamcode.subsystems.Conveyor;
-*/
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 /**
@@ -37,22 +35,14 @@ public class Hardware implements Constants {
     public Servo relicWrist;
     public Servo relicGrabber;*/
 
-/*    public CRServo conveyorTopRight;
-    public CRServo conveyorTopLeft;*/
-    public CRServo conveyorBottomRight;
-    public CRServo conveyorBottomLeft;
+    //public CRServo conveyorTopRight;
+    public CRServo conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft;
 
-/*
-    public CRServo[] conveyorServos = {*/
-/*conveyorTopRight, conveyorTopLeft,*//*
- conveyorBottomRight, conveyorBottomLeft};
-*/
+    public CRServo[] conveyorServos = new CRServo[3];
 
     public Drivetrain drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
-/*
     public Conveyor conveyor = new Conveyor(this);
-*/
 
 
 
@@ -78,15 +68,17 @@ public class Hardware implements Constants {
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");*/
 
-        /*conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
-        conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");*/
+        //conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
+        conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
         conveyorBottomRight = hwMap.crservo.get("conveyorBottomRight");
         conveyorBottomLeft = hwMap.crservo.get("conveyorBottomLeft");
 
-/*
-        conveyorTopRight.setDirection(DcMotorSimple.Direction.REVERSE);
-*/
         conveyorBottomRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        conveyorTopLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        conveyorServos[0] = conveyorBottomLeft;
+        conveyorServos[1] = conveyorBottomRight;
+        conveyorServos[2] = conveyorTopLeft;
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setPower(0);
@@ -94,9 +86,7 @@ public class Hardware implements Constants {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        /*for(CRServo servo: conveyorServos) {
-            servo.setPower(0);
-        }*/
+       conveyor.run(0);
     }
 
 }

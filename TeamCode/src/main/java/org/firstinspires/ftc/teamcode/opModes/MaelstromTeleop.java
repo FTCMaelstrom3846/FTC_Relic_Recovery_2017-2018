@@ -37,16 +37,23 @@ public class MaelstromTeleop extends OpMode {
         telemetry.addData("Back left RPM:", robot.backLeft.getRPM());
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
 
+
         if (gamepad1.right_bumper) {
-            robot.conveyorBottomLeft.setPower(1);
-            robot.conveyorBottomRight.setPower(1);
+            /*robot.conveyorBottomLeft.setPower(0.75);
+            robot.conveyorBottomRight.setPower(0.75);
+            robot.conveyorTopLeft.setPower(0.75);*/
+            robot.conveyor.run(0.75);
         } else if (gamepad1.left_bumper) {
-            robot.conveyorBottomLeft.setPower(-1);
-            robot.conveyorBottomRight.setPower(-1);
+            robot.conveyor.run(-0.75);
+            /*robot.conveyorBottomLeft.setPower(-0.75);
+            robot.conveyorBottomRight.setPower(-0.75);
+            robot.conveyorTopLeft.setPower(-0.75);*/
         } else {
-            robot.conveyorBottomLeft.setPower(0);
+            robot.conveyor.run(0);
+            /*robot.conveyorBottomLeft.setPower(0);
             robot.conveyorBottomRight.setPower(0);
-        }
+            robot.conveyorTopLeft.setPower(0);
+*/        }
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
 
