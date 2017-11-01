@@ -16,7 +16,7 @@ public class Conveyor {
     CRServo conveyorBottomRight;
     CRServo conveyorBottomLeft;
 
-    public CRServo[] conveyorServos = {/*conveyorTopRight,*/ conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft};
+    public CRServo[] conveyorServos = {conveyorTopRight, conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft};
 
     public Conveyor (Hardware hardware) {
         this.conveyorServos = hardware.conveyorServos;

@@ -27,18 +27,17 @@ public class Hardware implements Constants {
 
     public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
 
-    /*public DcMotor intake;
+/*    public DcMotor intake;
     public DcMotor leftLift;
-    public DcMotor rightLift;
-    public DcMotor relicExtender;
+    public DcMotor rightLift;*/
+/*    public DcMotor relicExtender;
 
     public Servo relicWrist;
     public Servo relicGrabber;*/
 
-    //public CRServo conveyorTopRight;
-    public CRServo conveyorTopLeft, conveyorBottomRight, conveyorBottomLeft;
+    public CRServo conveyorTopLeft, conveyorTopRight, conveyorBottomRight, conveyorBottomLeft;
 
-    public CRServo[] conveyorServos = new CRServo[3];
+    public CRServo[] conveyorServos = new CRServo[4];
 
     public Drivetrain drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
@@ -58,17 +57,17 @@ public class Hardware implements Constants {
         frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
-/*
-        intake = hwMap.dcMotor.get("intake");
+
+        /*intake = hwMap.dcMotor.get("intake");
         leftLift = hwMap.dcMotor.get("leftLift");
-        rightLift = hwMap.dcMotor.get("rightLift");
-        relicExtender = hwMap.dcMotor.get("relicExtender");
+        rightLift = hwMap.dcMotor.get("rightLift");*/
+/*      relicExtender = hwMap.dcMotor.get("relicExtender");
 
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");*/
 
-        //conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
+        conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
         conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
         conveyorBottomRight = hwMap.crservo.get("conveyorBottomRight");
         conveyorBottomLeft = hwMap.crservo.get("conveyorBottomLeft");
@@ -79,6 +78,7 @@ public class Hardware implements Constants {
         conveyorServos[0] = conveyorBottomLeft;
         conveyorServos[1] = conveyorBottomRight;
         conveyorServos[2] = conveyorTopLeft;
+        conveyorServos[3] = conveyorTopRight;
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setPower(0);
