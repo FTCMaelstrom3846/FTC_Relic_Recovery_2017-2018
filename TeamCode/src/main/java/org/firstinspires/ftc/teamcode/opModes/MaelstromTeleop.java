@@ -57,6 +57,10 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.stop();
         }
 
+        if (gamepad1.a) {
+            robot.frontLeft.setPower(0);
+        }
+
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
 
         /*if (gamepad1.dpad_up) {

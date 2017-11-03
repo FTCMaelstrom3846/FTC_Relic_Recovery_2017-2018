@@ -40,7 +40,7 @@ public interface Constants {
     double backRightKD = 0;
     double backRightMaxI = 1;
 
-    double angleCorrectionKP = 0.01;
+    double angleCorrectionKP = -0.01;
     double angleCorrectionKI = 0;
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;

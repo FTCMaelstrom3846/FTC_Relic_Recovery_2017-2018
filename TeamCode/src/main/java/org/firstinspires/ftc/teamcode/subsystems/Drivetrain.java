@@ -56,8 +56,8 @@ public class Drivetrain implements Constants {
 
     public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
 
-        double x = gamepadLeftYRaw;
-        double y = -gamepadLeftXRaw;
+        double x = -gamepadLeftYRaw;
+        double y = gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
         double adjustedAngle = angle + Math.PI/4;
 
@@ -74,12 +74,12 @@ public class Drivetrain implements Constants {
             desiredAngle = imu.getAngles()[0];
         }
 
-        double angleCorrection = angularPIDController.power(desiredAngle, imu.getAngles()[0]);
+        double angleCorrection = gamepadRightXRaw == 0 ?  angularPIDController.power(desiredAngle, imu.getAngles()[0]) : 0;
 
-        double frontLeftPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
-        double backLeftPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
-        double frontRightPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
-        double backRightPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
+        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
+        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
+        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
+        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
@@ -90,16 +90,16 @@ public class Drivetrain implements Constants {
         speed4 = speeds[3];
 
         if (!halfSpeed) {
-            frontLeft.setSpeed(speeds[0]);
-            backLeft.setSpeed(speeds[1]);
-            frontRight.setSpeed(speeds[2]);
-            backRight.setSpeed(speeds[3]);
+            frontLeft.setPower(speeds[0]);
+            backLeft.setPower(speeds[1]);
+            frontRight.setPower(speeds[2]);
+            backRight.setPower(speeds[3]);
         }
         else {
-            frontLeft.setSpeed(0.5 * speeds[0]);
-            backLeft.setSpeed(0.5 * speeds[1]);
-            frontRight.setSpeed(0.5 * speeds[2]);
-            backRight.setSpeed(0.5 * speeds[3]);
+            frontLeft.setPower(0.5 * speeds[0]);
+            backLeft.setPower(0.5 * speeds[1]);
+            frontRight.setPower(0.5 * speeds[2]);
+            backRight.setPower(0.5 * speeds[3]);
         }
 
     }

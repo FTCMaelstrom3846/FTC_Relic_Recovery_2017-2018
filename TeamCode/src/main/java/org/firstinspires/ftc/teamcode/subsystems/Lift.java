@@ -17,8 +17,8 @@ public class Lift implements Constants{
 
     public Lift(Hardware hardware) {
         //this.gamepad1 = gamepad1;
-        this.leftLift = hardware.intake;
-        this.rightLift = hardware.intake;
+        this.leftLift = hardware.leftLift;
+        this.rightLift = hardware.rightLift;
     }
 
 
