@@ -4,13 +4,14 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 import org.firstinspires.ftc.teamcode.subsystems.Conveyor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
 /**
  * Created by Ramsey on 10/15/2016.
@@ -27,9 +28,9 @@ public class Hardware implements Constants {
 
     public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
 
-/*    public DcMotor intake;
+    public DcMotor intake;
     public DcMotor leftLift;
-    public DcMotor rightLift;*/
+    public DcMotor rightLift;
 /*    public DcMotor relicExtender;
 
     public Servo relicWrist;
@@ -39,11 +40,13 @@ public class Hardware implements Constants {
 
     public CRServo[] conveyorServos = new CRServo[4];
 
-    public Drivetrain drivetrain = new Drivetrain(/*gamepad1,*/ this);
+    public Drivetrain drivetrain;
 
-    public Conveyor conveyor = new Conveyor(this);
+    public Conveyor conveyorSystem;
 
+    public Intake intakeSystem;
 
+    public Lift lift;
 
     HardwareMap hwMap;
 
@@ -58,9 +61,9 @@ public class Hardware implements Constants {
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
 
-        /*intake = hwMap.dcMotor.get("intake");
+        intake = hwMap.dcMotor.get("intake");
         leftLift = hwMap.dcMotor.get("leftLift");
-        rightLift = hwMap.dcMotor.get("rightLift");*/
+        rightLift = hwMap.dcMotor.get("rightLift");
 /*      relicExtender = hwMap.dcMotor.get("relicExtender");
 
 
@@ -86,7 +89,15 @@ public class Hardware implements Constants {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-       conveyor.run(0);
+        drivetrain = new Drivetrain(/*gamepad1,*/ this);
+
+        conveyorSystem = new Conveyor(this);
+
+        intakeSystem = new Intake(this);
+
+        lift = new Lift(this);
+
+       conveyorSystem.setSpeed(0);
     }
 
 }

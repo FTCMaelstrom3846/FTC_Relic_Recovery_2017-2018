@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 public class Drivetrain implements Constants {
 
+    private double desiredAngle = 0;
     //Gamepad gamepad1;
     private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
     private SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
@@ -29,6 +30,10 @@ public class Drivetrain implements Constants {
 
 
     double teleopAngle;
+    public double speed1;
+    public double speed2;
+    public double speed3;
+    public double speed4;
 
     public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
         //this.gamepad1 = gamepad1;
@@ -36,7 +41,7 @@ public class Drivetrain implements Constants {
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
-        //this.imu = hardware.imu;
+        this.imu = hardware.imu;
         /*this.halfSpeed = halfSpeed;*/
     }
 
@@ -45,20 +50,18 @@ public class Drivetrain implements Constants {
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
-        //this.imu = hardware.imu;
+        this.imu = hardware.imu;
         this.auto = auto;
     }
 
     public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
 
-        double x = -gamepadLeftYRaw;
-        double y = gamepadLeftXRaw;
+        double x = gamepadLeftYRaw;
+        double y = -gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
         double adjustedAngle = angle + Math.PI/4;
 
         this.teleopAngle = angle;
-
-        //double angleCorrection = PIDController.power(angle, imu.getAngles()[0]);
 
         double speedMagnitude = Math.hypot(x, y);
 
@@ -67,13 +70,24 @@ public class Drivetrain implements Constants {
         double xComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.cos(adjustedAngle)/Math.abs(Math.cos(adjustedAngle))) : Math.cos(adjustedAngle);
 */
 
-        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
-        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
-        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
-        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw /*+ angleCorrection*/;
+        if (gamepadLeftXRaw != 0) {
+            desiredAngle = imu.getAngles()[0];
+        }
+
+        double angleCorrection = angularPIDController.power(desiredAngle, imu.getAngles()[0]);
+
+        double frontLeftPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
+        double backLeftPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
+        double frontRightPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
+        double backRightPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + gamepadRightXRaw == 0 ? angleCorrection : 0;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
+
+        speed1 = speeds[0];
+        speed2 = speeds[1];
+        speed3 = speeds[2];
+        speed4 = speeds[3];
 
         if (!halfSpeed) {
             frontLeft.setSpeed(speeds[0]);
@@ -98,7 +112,7 @@ public class Drivetrain implements Constants {
 
 //Everything below is retarded old stuff and needs to be fixed
 
-    public void drive(int distance/*Change to dirstance*/, double angle) {
+    public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle) {
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
@@ -106,7 +120,9 @@ public class Drivetrain implements Constants {
 
         eReset();
 
+/*
         double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
+*/
         double headingError;
         long startTime = System.nanoTime();
         long stopState = 0;
@@ -118,7 +134,7 @@ public class Drivetrain implements Constants {
         frontRightPower = (Math.cos(angle + (Math.PI / 4)));
         backRightPower = (Math.sin(angle + (Math.PI / 4)));
 
-        while (opModeIsActive() && (stopState <= 1000)) {
+        while (opModeIsActive() /*&& (stopState <= 1000)*/) {
             headingError = imu.getAngles()[0] - initialHeading;
             frontLeft.setPower((frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + (corrKP * headingError)));
             backLeft.setPower((backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
