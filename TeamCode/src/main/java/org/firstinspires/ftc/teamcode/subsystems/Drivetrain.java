@@ -70,11 +70,11 @@ public class Drivetrain implements Constants {
         double xComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.cos(adjustedAngle)/Math.abs(Math.cos(adjustedAngle))) : Math.cos(adjustedAngle);
 */
 
-        if (gamepadLeftXRaw != 0) {
+        if (Math.abs(gamepadRightXRaw) > 0.00001) {
             desiredAngle = imu.getAngles()[0];
         }
 
-        double angleCorrection = gamepadRightXRaw == 0 ? angularPIDController.power(desiredAngle, imu.getAngles()[0]) : 0;
+        double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
 
         double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
         double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
