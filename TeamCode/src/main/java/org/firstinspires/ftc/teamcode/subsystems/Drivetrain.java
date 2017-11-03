@@ -74,7 +74,7 @@ public class Drivetrain implements Constants {
             desiredAngle = imu.getAngles()[0];
         }
 
-        double angleCorrection = gamepadRightXRaw == 0 ?  angularPIDController.power(desiredAngle, imu.getAngles()[0]) : 0;
+        double angleCorrection = gamepadRightXRaw == 0 ? angularPIDController.power(desiredAngle, imu.getAngles()[0]) : 0;
 
         double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
         double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
@@ -123,11 +123,9 @@ public class Drivetrain implements Constants {
 /*
         double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
 */
-        double headingError;
         long startTime = System.nanoTime();
         long stopState = 0;
         double initialHeading = imu.getAngles()[0];
-        double corrKP = 0.01;
         angle *= (Math.PI / 180);
         frontLeftPower = -(Math.sin(angle + (Math.PI / 4)));
         backLeftPower = -(Math.cos(angle + (Math.PI / 4)));
@@ -135,11 +133,11 @@ public class Drivetrain implements Constants {
         backRightPower = (Math.sin(angle + (Math.PI / 4)));
 
         while (opModeIsActive() /*&& (stopState <= 1000)*/) {
-            headingError = imu.getAngles()[0] - initialHeading;
-            frontLeft.setPower((frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + (corrKP * headingError)));
-            backLeft.setPower((backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
-            frontRight.setPower((frontRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
-            backRight.setPower((backRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition())) + (corrKP * headingError));
+            double angleCorrection = angularPIDController.power(initialHeading, imu.getAngles()[0]);
+            frontLeft.setPower(frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
+            backLeft.setPower(backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
+            frontRight.setPower(frontRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
+            backRight.setPower(backRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
 
 
 
@@ -165,7 +163,9 @@ public class Drivetrain implements Constants {
         }
     }
 
-    public boolean opModeIsActive() {return auto.getOpModeIsActive();}
+    public boolean opModeIsActive() {
+        return auto.getOpModeIsActive();
+    }
 
     public void normalizeSpeeds (double[] speeds) {
 

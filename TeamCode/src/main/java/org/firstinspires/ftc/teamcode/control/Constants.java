@@ -45,7 +45,7 @@ public interface Constants {
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
 
-    double distanceKP = 0.01;
+    double distanceKP = 0.00045;
     double distanceKI = 0;
     double distanceKD = 0;
     double distanceMaxI = 0;
