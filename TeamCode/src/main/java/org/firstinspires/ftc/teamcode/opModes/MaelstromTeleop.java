@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opModes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+//import org.firstinspires.ftc.teamcode.control.GamepadInputFilter;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 
@@ -38,14 +39,11 @@ public class MaelstromTeleop extends OpMode {
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
 
 
-        if (gamepad1.right_bumper) {
-            robot.conveyorSystem.up();
+        if (gamepad1.right_bumper || gamepad2.y) {
             robot.intakeSystem.intake();
-        } else if (gamepad1.left_bumper) {
-            robot.conveyorSystem.down();
+        } else if (gamepad1.left_bumper || gamepad2.a) {
             robot.intakeSystem.outtake();
         } else {
-            robot.conveyorSystem.stop();
             robot.intakeSystem.stop();
         }
 
@@ -59,6 +57,38 @@ public class MaelstromTeleop extends OpMode {
 
         if (gamepad1.a) {
             robot.frontLeft.setPower(0);
+        }
+
+        if (gamepad2.right_bumper) {
+            robot.lift.raiseRight();
+        } else if (gamepad2.left_bumper) {
+            robot.lift.raiseLeft();
+        }
+
+        if (gamepad2.right_trigger > 0) {
+            robot.lift.lowerRight();
+        } else if (gamepad2.left_trigger > 0) {
+            robot.lift.lowerLeft();
+        }
+
+        if (gamepad2.b || gamepad1.right_bumper) {
+            robot.conveyorSystem.up();
+        } else if (gamepad2.x || gamepad1.right_bumper) {
+            robot.conveyorSystem.down();
+        } else {
+            robot.conveyorSystem.stop();
+        }
+
+        if (gamepad2.dpad_up) {
+            robot.conveyorSystem.rightUp();
+        } else if (gamepad2.dpad_down){
+            robot.conveyorSystem.rightDown();
+        }
+
+        if (gamepad2.dpad_right) {
+            robot.conveyorSystem.leftUp();
+        } else if (gamepad2.dpad_left){
+            robot.conveyorSystem.leftDown();
         }
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);

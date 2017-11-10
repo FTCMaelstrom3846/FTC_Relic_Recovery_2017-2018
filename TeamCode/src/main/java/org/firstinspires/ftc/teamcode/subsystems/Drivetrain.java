@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.control.PIDController;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.opModes.MaelstromAutonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
@@ -24,8 +24,8 @@ public class Drivetrain implements Constants {
     private BNO055_IMU imu;
     private MaelstromAutonomous auto;
 
-    private PIDController angularPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
-
+    private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
+    private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
     private PIDController distanceIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
 
 
@@ -74,12 +74,12 @@ public class Drivetrain implements Constants {
             desiredAngle = imu.getAngles()[0];
         }
 
-        double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
+        double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularCorrectionPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
 
-        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
-        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
-        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
-        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude) + gamepadRightXRaw + angleCorrection;
+        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
+        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
+        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
+        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw * SPEED_MULTIPLIER+ angleCorrection;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
@@ -133,7 +133,7 @@ public class Drivetrain implements Constants {
         backRightPower = (Math.sin(angle + (Math.PI / 4)));
 
         while (opModeIsActive() /*&& (stopState <= 1000)*/) {
-            double angleCorrection = angularPIDController.power(initialHeading, imu.getAngles()[0]);
+            double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
             frontLeft.setPower(frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
             backLeft.setPower(backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
             frontRight.setPower(frontRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
@@ -151,6 +151,30 @@ public class Drivetrain implements Constants {
             }
         }
 
+    }
+
+    public void turn (double angle) {
+
+        eReset();
+
+        long startTime = System.nanoTime();
+        long stopState = 0;
+
+        while (opModeIsActive() /*&& (stopState <= 1000)*/) {
+            double power = angularTurnPIDController.power(angle, imu.getAngles()[0]);
+            frontLeft.setPower(power);
+            backLeft.setPower(power);
+            frontRight.setPower(power);
+            backRight.setPower(power);
+
+
+
+            if (imu.getAngles()[0] >= (angle - 0.5) && frontRight.getCurrentPosition() <= (angle + 0.5)) {
+                stopState = (System.nanoTime() - startTime) / 1000000;
+            } else {
+                startTime = System.nanoTime();
+            }
+        }
     }
 
     void eReset() {

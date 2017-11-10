@@ -39,10 +39,28 @@ public class Conveyor implements Constants {
             servo.setPower(CONVEYOR_UP_POWER);
         }
     }
+
+    public void rightUp() {
+        conveyorServos[0].setPower(1);
+        conveyorServos[2].setPower(1);
+    }
+
+    public void leftUp() {
+        conveyorServos[1].setPower(1);
+        conveyorServos[3].setPower(1);
+    }
     public void down() {
         for (CRServo servo: conveyorServos) {
             servo.setPower(CONVEYOR_DOWN_POWER);
         }
+    }
+    public void rightDown() {
+        conveyorServos[0].setPower(-1);
+        conveyorServos[2].setPower(-1);
+    }
+    public void leftDown() {
+        conveyorServos[1].setPower(-1);
+        conveyorServos[3].setPower(-1);
     }
     public void stop() {
         for (CRServo servo: conveyorServos) {
