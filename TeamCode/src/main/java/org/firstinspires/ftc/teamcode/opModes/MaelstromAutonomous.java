@@ -13,22 +13,26 @@ import ftc.vision.ImageProcessorResult;
 
 @Autonomous(name="Autonomous")
 //@Disabled
-public class MaelstromAutonomous extends LinearOpMode {
+public class MaelstromAutonomous extends LinearOpMode implements Runnable {
 
+    Hardware robot = new Hardware();
 
     @Override
     public void runOpMode() {
-
-        Hardware robot = new Hardware();
-
         robot.init(hardwareMap);
+
+        robot.drivetrain.setAuto(this);
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
 
         waitForStart();
 
+        Thread telemetryThread = new Thread(this);
+        telemetryThread.start();
+
         robot.drivetrain.drive(5000, 0);
+
         /*FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
 
         frameGrabber.grabSingleFrame(); //Tell it to grab a frame
@@ -58,4 +62,8 @@ public class MaelstromAutonomous extends LinearOpMode {
         return opModeIsActive();
     }
 
+    public void run() {
+        /*telemetry.addData("Ticks remaining", 5000 - robot.frontRight.getCurrentPosition());
+        telemetry.update();*/
+    }
 }

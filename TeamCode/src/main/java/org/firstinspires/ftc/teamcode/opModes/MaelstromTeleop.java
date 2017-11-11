@@ -38,6 +38,8 @@ public class MaelstromTeleop extends OpMode {
         telemetry.addData("Back left RPM:", robot.backLeft.getRPM());
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
 
+        telemetry.addData("Front right position:", robot.frontRight.getCurrentPosition());
+
 
         if (gamepad1.right_bumper || gamepad2.y) {
             robot.intakeSystem.intake();

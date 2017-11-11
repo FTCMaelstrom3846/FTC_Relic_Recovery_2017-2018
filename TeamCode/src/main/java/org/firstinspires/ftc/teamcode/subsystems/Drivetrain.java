@@ -19,14 +19,14 @@ public class Drivetrain implements Constants {
     private double desiredAngle = 0;
     //Gamepad gamepad1;
     private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
-    private SpeedControlledMotor[] motors = {frontLeft, backLeft, frontRight, backRight};
     private boolean halfSpeed = false;
     private BNO055_IMU imu;
     private MaelstromAutonomous auto;
+    private Hardware hardware;
 
     private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
-    private PIDController distanceIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
+    private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
 
 
     double teleopAngle;
@@ -42,15 +42,11 @@ public class Drivetrain implements Constants {
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
         this.imu = hardware.imu;
+        this.hardware = hardware;
         /*this.halfSpeed = halfSpeed;*/
     }
 
-    public Drivetrain (Hardware hardware, MaelstromAutonomous auto) {
-        this.backLeft = hardware.backLeft;
-        this.frontLeft = hardware.frontLeft;
-        this.backRight = hardware.backRight;
-        this.frontRight = hardware.frontRight;
-        this.imu = hardware.imu;
+    public void setAuto (MaelstromAutonomous auto) {
         this.auto = auto;
     }
 
@@ -76,10 +72,10 @@ public class Drivetrain implements Constants {
 
         double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularCorrectionPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
 
-        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
-        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
-        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw* SPEED_MULTIPLIER + angleCorrection;
-        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude * SPEED_MULTIPLIER) + gamepadRightXRaw * SPEED_MULTIPLIER+ angleCorrection;
+        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_SPEED_MULTIPLIER + angleCorrection;
 
         double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
         normalizeSpeeds(speeds);
@@ -113,6 +109,7 @@ public class Drivetrain implements Constants {
 //Everything below is retarded old stuff and needs to be fixed
 
     public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle) {
+
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
@@ -127,17 +124,19 @@ public class Drivetrain implements Constants {
         long stopState = 0;
         double initialHeading = imu.getAngles()[0];
         angle *= (Math.PI / 180);
-        frontLeftPower = -(Math.sin(angle + (Math.PI / 4)));
-        backLeftPower = -(Math.cos(angle + (Math.PI / 4)));
-        frontRightPower = (Math.cos(angle + (Math.PI / 4)));
-        backRightPower = (Math.sin(angle + (Math.PI / 4)));
+        //frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
+        //backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
+        frontRightPower = /*AUTONOMOUS_SPEED_MULTIPLIER * */(Math.cos(angle + (Math.PI / 4)));
+        //backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
+
+        double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
 
         while (opModeIsActive() /*&& (stopState <= 1000)*/) {
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
-            frontLeft.setPower(frontLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
-            backLeft.setPower(backLeftPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
-            frontRight.setPower(frontRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
-            backRight.setPower(backRightPower * distanceIDController.power(ticks, frontRight.getCurrentPosition()) + angleCorrection);
+            //frontLeft.setPower(frontLeftPower * -PIDMultiplier + angleCorrection);
+            //backLeft.setPower(backLeftPower * -PIDMultiplier + angleCorrection);
+            //frontRight.setPower((frontRightPower * PIDMultiplier) + angleCorrection);
+            //backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
 
 
 
@@ -153,6 +152,11 @@ public class Drivetrain implements Constants {
 
     }
 
+    public int getPos() {
+        return frontRight.getCurrentPosition();
+    }
+
+
     public void turn (double angle) {
 
         eReset();
@@ -167,8 +171,6 @@ public class Drivetrain implements Constants {
             frontRight.setPower(power);
             backRight.setPower(power);
 
-
-
             if (imu.getAngles()[0] >= (angle - 0.5) && frontRight.getCurrentPosition() <= (angle + 0.5)) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
@@ -180,7 +182,7 @@ public class Drivetrain implements Constants {
     void eReset() {
 
 
-        for(SpeedControlledMotor motor: motors) {
+        for(SpeedControlledMotor motor: hardware.drivetrainMotors) {
             motor.setPower(0);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

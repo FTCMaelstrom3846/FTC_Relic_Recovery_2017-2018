@@ -11,17 +11,18 @@ public interface Constants {
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
-    double SPEED_MULTIPLIER = .8;
+    double TELEOP_SPEED_MULTIPLIER = 0.6;
+    double AUTONOMOUS_SPEED_MULTIPLIER = 0.8;
 
 
     double CONVEYOR_UP_POWER = 0.75;
     double CONVEYOR_DOWN_POWER = -0.75;
 
-    double INTAKESYSTEM_INTAKE_POWER = -0.5;
-    double INTAKESYSTEM_OUTAKE_POWER = 0.5;
+    double INTAKESYSTEM_INTAKE_POWER = -0.75;
+    double INTAKESYSTEM_OUTAKE_POWER = 0.75;
 
-    double LIFT_RAISE_POWER = -1;
-    double LIFT_LOWER_POWER = 1;
+    double LIFT_RAISE_POWER = -0.55;
+    double LIFT_LOWER_POWER = 0.55;
 
     double frontLeftKP = 0.008;
     double frontLeftKI = 0;
