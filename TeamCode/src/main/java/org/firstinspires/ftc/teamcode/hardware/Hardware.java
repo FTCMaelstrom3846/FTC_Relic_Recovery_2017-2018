@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Conveyor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.RelicGrabber;
 
 /**
  * Created by Ramsey on 10/15/2016.
@@ -31,10 +33,10 @@ public class Hardware implements Constants {
     public DcMotor intake;
     public DcMotor leftLift;
     public DcMotor rightLift;
-/*    public DcMotor relicExtender;
+    public DcMotor relicExtender;
 
     public Servo relicWrist;
-    public Servo relicGrabber;*/
+    public Servo relicGrabber;
 
     public CRServo conveyorTopLeft, conveyorTopRight, conveyorBottomRight, conveyorBottomLeft;
 
@@ -47,6 +49,8 @@ public class Hardware implements Constants {
     public Intake intakeSystem;
 
     public Lift lift;
+
+    public RelicGrabber relicGrabberSystem;
 
     HardwareMap hwMap;
 
@@ -64,11 +68,11 @@ public class Hardware implements Constants {
         intake = hwMap.dcMotor.get("intake");
         leftLift = hwMap.dcMotor.get("leftLift");
         rightLift = hwMap.dcMotor.get("rightLift");
-/*      relicExtender = hwMap.dcMotor.get("relicExtender");
+        relicExtender = hwMap.dcMotor.get("relicExtender");
 
 
         relicWrist = hwMap.servo.get("relicWrist");
-        relicGrabber = hwMap.servo.get("relicGrabber");*/
+        relicGrabber = hwMap.servo.get("relicGrabber");
 
         conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
         conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
@@ -96,6 +100,8 @@ public class Hardware implements Constants {
         intakeSystem = new Intake(this);
 
         lift = new Lift(this);
+
+        relicGrabberSystem = new RelicGrabber(this);
 
        conveyorSystem.setSpeed(0);
     }

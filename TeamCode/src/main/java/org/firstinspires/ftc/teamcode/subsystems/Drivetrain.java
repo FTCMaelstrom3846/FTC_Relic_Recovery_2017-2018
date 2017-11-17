@@ -124,20 +124,23 @@ public class Drivetrain implements Constants {
         long stopState = 0;
         double initialHeading = imu.getAngles()[0];
         angle *= (Math.PI / 180);
-        //frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
-        //backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
-        frontRightPower = /*AUTONOMOUS_SPEED_MULTIPLIER * */(Math.cos(angle + (Math.PI / 4)));
-        //backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
-
-        double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
+        frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
+        backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
+        frontRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
+        backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
 
         while (opModeIsActive() /*&& (stopState <= 1000)*/) {
+            double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
-            //frontLeft.setPower(frontLeftPower * -PIDMultiplier + angleCorrection);
-            //backLeft.setPower(backLeftPower * -PIDMultiplier + angleCorrection);
-            //frontRight.setPower((frontRightPower * PIDMultiplier) + angleCorrection);
-            //backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
-
+            frontLeft.setPower(frontLeftPower * -PIDMultiplier + angleCorrection);
+            backLeft.setPower(backLeftPower * -PIDMultiplier + angleCorrection);
+            frontRight.setPower(frontRightPower * PIDMultiplier + angleCorrection);
+            backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
+            auto.telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
+            auto.telemetry.addData("Left Front Encoder", frontLeft.getCurrentPosition());
+            auto.telemetry.addData("Right Back Encoder", backRight.getCurrentPosition());
+            auto.telemetry.addData("Left Back Encoder", backLeft.getCurrentPosition());
+            auto.telemetry.update();
 
 
             if ((frontRight.getCurrentPosition() >= (ticks - 50)) &&
@@ -152,24 +155,23 @@ public class Drivetrain implements Constants {
 
     }
 
-    public int getPos() {
-        return frontRight.getCurrentPosition();
-    }
-
-
-    public void turn (double angle) {
+    public void turnAngle(double angle) {
 
         eReset();
 
+
         long startTime = System.nanoTime();
         long stopState = 0;
-
         while (opModeIsActive() /*&& (stopState <= 1000)*/) {
             double power = angularTurnPIDController.power(angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
             frontRight.setPower(power);
             backRight.setPower(power);
+            auto.telemetry.addData("Angle", imu.getAngles()[0]);
+
+            auto.telemetry.update();
+
 
             if (imu.getAngles()[0] >= (angle - 0.5) && frontRight.getCurrentPosition() <= (angle + 0.5)) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
@@ -177,7 +179,13 @@ public class Drivetrain implements Constants {
                 startTime = System.nanoTime();
             }
         }
+
     }
+
+    public int getPos() {
+        return frontRight.getCurrentPosition();
+    }
+
 
     void eReset() {
 

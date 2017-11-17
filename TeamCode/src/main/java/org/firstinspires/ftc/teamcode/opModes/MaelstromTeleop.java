@@ -12,12 +12,19 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
+    Boolean conveyorRightIndividualRunning = false;
+    Boolean conveyorLeftIndividualRunning = false;
+    boolean conveyorWholeRunning = false;
     //GamepadInputFilter gamepadFilter = new GamepadInputFilter();
 
 
     public void init() {
 
         robot.init(hardwareMap);
+
+        robot.relicGrabberSystem.lowerWrist();
+
+        robot.relicGrabberSystem.closeGrabber();
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
@@ -40,6 +47,25 @@ public class MaelstromTeleop extends OpMode {
 
         telemetry.addData("Front right position:", robot.frontRight.getCurrentPosition());
 
+        if (gamepad1.dpad_left) {
+            robot.relicGrabberSystem.extend();
+        } else if (gamepad1.dpad_right) {
+            robot.relicGrabberSystem.retract();
+        } else {
+            robot.relicGrabberSystem.stop();
+        }
+
+        if (gamepad1.dpad_up) {
+            robot.relicGrabberSystem.raiseWrist();
+        } else if (gamepad1.dpad_down) {
+            robot.relicGrabberSystem.lowerWrist();
+        }
+
+        if (gamepad1.y) {
+            robot.relicGrabberSystem.openGrabber();
+        } else if (gamepad1.a) {
+            robot.relicGrabberSystem.closeGrabber();
+        }
 
         if (gamepad1.right_bumper || gamepad2.y) {
             robot.intakeSystem.intake();
@@ -57,9 +83,6 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.stop();
         }
 
-        if (gamepad1.a) {
-            robot.frontLeft.setPower(0);
-        }
 
         if (gamepad2.right_bumper) {
             robot.lift.raiseRight();
@@ -75,22 +98,36 @@ public class MaelstromTeleop extends OpMode {
 
         if (gamepad2.b || gamepad1.right_bumper) {
             robot.conveyorSystem.up();
+            conveyorWholeRunning = true;
         } else if (gamepad2.x || gamepad1.right_bumper) {
             robot.conveyorSystem.down();
+            conveyorWholeRunning = true;
         } else {
-            robot.conveyorSystem.stop();
+            conveyorWholeRunning = false;
         }
 
         if (gamepad2.dpad_up) {
             robot.conveyorSystem.rightUp();
+            conveyorRightIndividualRunning = true;
         } else if (gamepad2.dpad_down){
             robot.conveyorSystem.rightDown();
+            conveyorRightIndividualRunning = true;
+        } else {
+            conveyorRightIndividualRunning = false;
         }
 
         if (gamepad2.dpad_right) {
             robot.conveyorSystem.leftUp();
+            conveyorLeftIndividualRunning = true;
         } else if (gamepad2.dpad_left){
             robot.conveyorSystem.leftDown();
+            conveyorLeftIndividualRunning = true;
+        } else {
+            conveyorLeftIndividualRunning = false;
+        }
+
+        if (!conveyorRightIndividualRunning && !conveyorWholeRunning && !conveyorLeftIndividualRunning) {
+            robot.conveyorSystem.stop();
         }
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);

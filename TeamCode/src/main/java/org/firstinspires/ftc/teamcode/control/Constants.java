@@ -14,6 +14,14 @@ public interface Constants {
     double TELEOP_SPEED_MULTIPLIER = 0.6;
     double AUTONOMOUS_SPEED_MULTIPLIER = 0.8;
 
+    double RELIC_EXTENDER_POWER = -1;
+    double RELIC_RETRACT_POWER = 1;
+
+    double RELIC_GRABBER_OPEN = 0.25;
+    double RELIC_GRABBER_CLOSED = 0.9;
+
+    double RELIC_WRIST_UP = 0.75;
+    double RELIC_WRIST_DOWN = 1;
 
     double CONVEYOR_UP_POWER = 0.75;
     double CONVEYOR_DOWN_POWER = -0.75;
