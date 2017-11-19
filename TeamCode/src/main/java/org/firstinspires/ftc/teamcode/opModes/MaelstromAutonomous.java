@@ -28,9 +28,11 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         waitForStart();
 
-        robot.drivetrain.drive(2000, 0);
+        //robot.drivetrain.drive(1500, 0);
 
         robot.drivetrain.turnAngle(90);
+
+        //robot.drivetrain.turnAngle(90);
 
         /*while (opModeIsActive()) {
             telemetry.addData("Right Front Encoder", robot.frontRight.getCurrentPosition());

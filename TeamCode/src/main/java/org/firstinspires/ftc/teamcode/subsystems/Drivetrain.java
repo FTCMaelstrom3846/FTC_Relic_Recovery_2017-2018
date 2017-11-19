@@ -169,7 +169,7 @@ public class Drivetrain implements Constants {
             frontRight.setPower(power);
             backRight.setPower(power);
             auto.telemetry.addData("Angle", imu.getAngles()[0]);
-
+            auto.telemetry.addData("i", angularTurnPIDController.getI());
             auto.telemetry.update();
 
 
