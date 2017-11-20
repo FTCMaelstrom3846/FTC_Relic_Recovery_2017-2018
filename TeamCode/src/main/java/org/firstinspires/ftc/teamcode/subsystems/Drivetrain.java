@@ -137,13 +137,11 @@ public class Drivetrain implements Constants {
             frontRight.setPower(frontRightPower * PIDMultiplier + angleCorrection);
             backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
             auto.telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
-            auto.telemetry.addData("Left Front Encoder", frontLeft.getCurrentPosition());
-            auto.telemetry.addData("Right Back Encoder", backRight.getCurrentPosition());
-            auto.telemetry.addData("Left Back Encoder", backLeft.getCurrentPosition());
+            auto.telemetry.addData("StopState", stopState);
             auto.telemetry.update();
 
 
-            if ((frontRight.getCurrentPosition() >= (ticks - DISTANCE_TOLERANCE)) && (frontRight.getCurrentPosition() <= (ticks + DISTANCE_TOLERANCE))) {
+            if ((frontRight.getCurrentPosition() >= (-ticks - DISTANCE_TOLERANCE)) && (frontRight.getCurrentPosition() <= (-ticks + DISTANCE_TOLERANCE))) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
