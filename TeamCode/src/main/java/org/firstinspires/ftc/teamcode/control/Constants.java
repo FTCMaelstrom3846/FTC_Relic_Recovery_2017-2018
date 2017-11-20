@@ -11,7 +11,10 @@ public interface Constants {
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
-    double TELEOP_SPEED_MULTIPLIER = 0.6;
+    double ANGLE_TOLERANCE = 1;
+    double DISTANCE_TOLERANCE = 50;
+
+    double TELEOP_SPEED_MULTIPLIER = 1;
     double AUTONOMOUS_SPEED_MULTIPLIER = 0.8;
 
     double RELIC_EXTENDER_POWER = -1;
@@ -57,13 +60,13 @@ public interface Constants {
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
 
-    double distanceKP = 0.00045;
-    double distanceKI = 0;
+    double distanceKP = 0.00044;
+    double distanceKI = 0.5;
     double distanceKD = 0;
     double distanceMaxI = 0;
 
-    double angleTurnKP = -0.0136;
-    double angleTurnKI = -0.9;
+    double angleTurnKP = -0.011;
+    double angleTurnKI = -1.25;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
 }

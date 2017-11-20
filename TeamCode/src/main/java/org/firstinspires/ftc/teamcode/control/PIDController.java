@@ -17,7 +17,7 @@ public class PIDController implements Constants{
     public double power(double target, double currentLoc) {
         double error = target - currentLoc;
         double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
-        i += Math.abs(currentLoc) > Math.abs(target) * 0.85 ? error*deltaTime : 0;
+        i += Math.abs(currentLoc) > Math.abs(target) * 0.8 ? error*deltaTime : 0;
         //i = Math.min(maxI, Math.max(-maxI, i));
         d = (error - previousError)/deltaTime;
         double power = (KP*error) + (KI*i) + (KD*d);

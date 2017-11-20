@@ -59,8 +59,8 @@ public class Drivetrain implements Constants {
 
         this.teleopAngle = angle;
 
-        double speedMagnitude = Math.hypot(x, y);
-
+        double speedMagnitude = Math.hypot(x, y); //Ankit is a homosexual
+//agree- Ankit
 /*
         double yComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.sin(adjustedAngle)/Math.abs(Math.sin(adjustedAngle))) : Math.sin(adjustedAngle);
         double xComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.cos(adjustedAngle)/Math.abs(Math.cos(adjustedAngle))) : Math.cos(adjustedAngle);
@@ -129,7 +129,7 @@ public class Drivetrain implements Constants {
         frontRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
         backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
 
-        while (opModeIsActive() /*&& (stopState <= 1000)*/) {
+        while (opModeIsActive() && (stopState <= 1000)) {
             double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
             frontLeft.setPower(frontLeftPower * -PIDMultiplier + angleCorrection);
@@ -143,10 +143,7 @@ public class Drivetrain implements Constants {
             auto.telemetry.update();
 
 
-            if ((frontRight.getCurrentPosition() >= (ticks - 50)) &&
-                    (frontRight.getCurrentPosition() <= (ticks + 50)) &&
-                (backLeft.getCurrentPosition() >= (ticks - 50)) &&
-                (backLeft.getCurrentPosition() <= (ticks + 50))) {
+            if ((frontRight.getCurrentPosition() >= (ticks - DISTANCE_TOLERANCE)) && (frontRight.getCurrentPosition() <= (ticks + DISTANCE_TOLERANCE))) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
@@ -162,7 +159,7 @@ public class Drivetrain implements Constants {
 
         long startTime = System.nanoTime();
         long stopState = 0;
-        while (opModeIsActive() /*&& (stopState <= 1000)*/) {
+        while (opModeIsActive() && (stopState <= 1000)) {
             double power = angularTurnPIDController.power(angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
@@ -173,7 +170,7 @@ public class Drivetrain implements Constants {
             auto.telemetry.update();
 
 
-            if (imu.getAngles()[0] >= (angle - 0.5) && frontRight.getCurrentPosition() <= (angle + 0.5)) {
+            if (imu.getAngles()[0] >= (angle - ANGLE_TOLERANCE) && imu.getAngles()[0] <= (angle + ANGLE_TOLERANCE)) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
