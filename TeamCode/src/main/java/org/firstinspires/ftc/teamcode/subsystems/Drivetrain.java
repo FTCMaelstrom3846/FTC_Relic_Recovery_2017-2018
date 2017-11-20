@@ -60,7 +60,6 @@ public class Drivetrain implements Constants {
         this.teleopAngle = angle;
 
         double speedMagnitude = Math.hypot(x, y); //Ankit is a homosexual
-//agree- Ankit
 /*
         double yComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.sin(adjustedAngle)/Math.abs(Math.sin(adjustedAngle))) : Math.sin(adjustedAngle);
         double xComponent = angle == 0 || angle == Math.PI/2 || angle == Math.PI || angle == -Math.PI/2 ? (Math.cos(adjustedAngle)/Math.abs(Math.cos(adjustedAngle))) : Math.cos(adjustedAngle);
