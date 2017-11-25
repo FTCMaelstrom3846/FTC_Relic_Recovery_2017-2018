@@ -30,7 +30,7 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         robot.drivetrain.drive(1640, 0);
 
-        robot.drivetrain.turnAngle(-90);
+        //robot.drivetrain.turnAngle(-90);
 
         robot.drivetrain.drive(-500, 0);
 
