@@ -23,8 +23,10 @@ public class Intake implements Constants {
     public void intake() {
         intake.setPower(INTAKESYSTEM_INTAKE_POWER);
     }
+
     public void outtake() {
         intake.setPower(INTAKESYSTEM_OUTAKE_POWER);
     }
+
     public void stop() {intake.setPower(0);}
 }

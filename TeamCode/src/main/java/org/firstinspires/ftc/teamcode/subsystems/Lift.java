@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
+import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 
@@ -12,8 +13,8 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class Lift implements Constants{
 
-    private DcMotor rightLift;
-    private DcMotor leftLift;
+    private SpeedControlledMotor rightLift;
+    private SpeedControlledMotor leftLift;
 
     public Lift(Hardware hardware) {
         //this.gamepad1 = gamepad1;
@@ -23,25 +24,31 @@ public class Lift implements Constants{
 
 
     public void raise() {
-        leftLift.setPower(LIFT_RAISE_POWER);
+        leftLift.setPower(-LIFT_RAISE_POWER);
         rightLift.setPower(LIFT_RAISE_POWER);
     }
+
     public void raiseRight() {
         rightLift.setPower(LIFT_RAISE_POWER);
     }
+
     public void raiseLeft() {
         leftLift.setPower(LIFT_RAISE_POWER);
     }
+
     public void lower() {
-        leftLift.setPower(LIFT_LOWER_POWER);
+        leftLift.setPower(-LIFT_LOWER_POWER);
         rightLift.setPower(LIFT_LOWER_POWER);
     }
+
     public void lowerRight() {
         rightLift.setPower(LIFT_LOWER_POWER);
     }
+
     public void lowerLeft() {
         leftLift.setPower(LIFT_LOWER_POWER);
     }
+
     public void stop() {
         leftLift.setPower(0);
         rightLift.setPower(0);

@@ -12,9 +12,7 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 public class MaelstromTeleop extends OpMode {
 
     Hardware robot = new Hardware();
-    Boolean conveyorRightIndividualRunning = false;
-    Boolean conveyorLeftIndividualRunning = false;
-    boolean conveyorWholeRunning = false;
+
     //GamepadInputFilter gamepadFilter = new GamepadInputFilter();
 
 
@@ -96,39 +94,6 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.lowerLeft();
         }
 
-        if (gamepad2.b || gamepad1.right_bumper) {
-            robot.conveyorSystem.up();
-            conveyorWholeRunning = true;
-        } else if (gamepad2.x || gamepad1.right_bumper) {
-            robot.conveyorSystem.down();
-            conveyorWholeRunning = true;
-        } else {
-            conveyorWholeRunning = false;
-        }
-
-        if (gamepad2.dpad_up) {
-            robot.conveyorSystem.rightUp();
-            conveyorRightIndividualRunning = true;
-        } else if (gamepad2.dpad_down){
-            robot.conveyorSystem.rightDown();
-            conveyorRightIndividualRunning = true;
-        } else {
-            conveyorRightIndividualRunning = false;
-        }
-
-        if (gamepad2.dpad_right) {
-            robot.conveyorSystem.leftUp();
-            conveyorLeftIndividualRunning = true;
-        } else if (gamepad2.dpad_left){
-            robot.conveyorSystem.leftDown();
-            conveyorLeftIndividualRunning = true;
-        } else {
-            conveyorLeftIndividualRunning = false;
-        }
-
-        if (!conveyorRightIndividualRunning && !conveyorWholeRunning && !conveyorLeftIndividualRunning) {
-            robot.conveyorSystem.stop();
-        }
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
 

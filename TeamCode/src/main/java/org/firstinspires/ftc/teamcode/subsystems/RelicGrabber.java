@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
+import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class RelicGrabber implements Constants {
 
-    private DcMotor relicExtender;
+    private SpeedControlledMotor relicExtender;
     public Servo relicWrist;
     public Servo relicGrabber;
 
@@ -28,9 +29,11 @@ public class RelicGrabber implements Constants {
     public void extend() {
         relicExtender.setPower(RELIC_EXTENDER_POWER);
     }
+
     public void retract() {
         relicExtender.setPower(RELIC_RETRACT_POWER);
     }
+
     public void stop() {
         relicExtender.setPower(0);
     }

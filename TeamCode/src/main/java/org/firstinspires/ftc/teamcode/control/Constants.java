@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.control;
 public interface Constants {
 
     double NANOSECONDS_PER_MINUTE = 6e+10;
-    int NEVEREST_20_MAX_RPM = 290;
+    int NEVEREST_20_MAX_RPM = 320;
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
@@ -15,7 +15,7 @@ public interface Constants {
     double DISTANCE_TOLERANCE = 50;
 
     double TELEOP_SPEED_MULTIPLIER = 1;
-    double AUTONOMOUS_SPEED_MULTIPLIER = 0.8;
+    double AUTONOMOUS_SPEED_MULTIPLIER = 1;
 
     double RELIC_EXTENDER_POWER = -1;
     double RELIC_RETRACT_POWER = 1;
@@ -32,8 +32,8 @@ public interface Constants {
     double INTAKESYSTEM_INTAKE_POWER = -0.75;
     double INTAKESYSTEM_OUTAKE_POWER = 0.75;
 
-    double LIFT_RAISE_POWER = -0.55;
-    double LIFT_LOWER_POWER = 0.55;
+    double LIFT_RAISE_POWER = 0.55;
+    double LIFT_LOWER_POWER = -0.55;
 
     double frontLeftKP = 0.008;
     double frontLeftKI = 0;
@@ -54,6 +54,21 @@ public interface Constants {
     double backRightKI = 0;
     double backRightKD = 0;
     double backRightMaxI = 1;
+
+    double leftLiftKP = 0.008;
+    double leftLiftKI = 0;
+    double leftLiftKD = 0;
+    double leftLiftMaxI = 1;
+
+    double relicExtenderKP = 0.008;
+    double relicExtenderKI = 0;
+    double relicExtenderKD = 0;
+    double relicExtenderMaxI = 1;
+
+    double rightLiftKP = 0.008;
+    double rightLiftKI = 0;
+    double rightLiftKD = 0;
+    double rightLiftMaxI = 1;
 
     double angleCorrectionKP = -0.025;
     double angleCorrectionKI = 0;

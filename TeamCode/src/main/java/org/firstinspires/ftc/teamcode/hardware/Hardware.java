@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
-import org.firstinspires.ftc.teamcode.subsystems.Conveyor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
@@ -26,14 +25,14 @@ public class Hardware implements Constants {
     public SpeedControlledMotor frontLeft = new SpeedControlledMotor(frontLeftKP, frontLeftKI, frontLeftKD, frontLeftMaxI),
             frontRight = new SpeedControlledMotor(frontRightKP, frontRightKI, frontRightKD, frontRightMaxI),
             backLeft = new SpeedControlledMotor(backLeftKP, backLeftKI, backLeftKD, backLeftMaxI),
-            backRight = new SpeedControlledMotor(backRightKP, backRightKI, backRightKD, backRightMaxI);
+            backRight = new SpeedControlledMotor(backRightKP, backRightKI, backRightKD, backRightMaxI),
+            leftLift = new SpeedControlledMotor(leftLiftKP, leftLiftKI, leftLiftKD, leftLiftMaxI),
+            rightLift = new SpeedControlledMotor(rightLiftKP, rightLiftKI, rightLiftKD, rightLiftMaxI),
+            relicExtender = new SpeedControlledMotor(relicExtenderKP, relicExtenderKI, relicExtenderKD, relicExtenderMaxI);
 
     public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
 
     public DcMotor intake;
-    public DcMotor leftLift;
-    public DcMotor rightLift;
-    public DcMotor relicExtender;
 
     public Servo relicWrist;
     public Servo relicGrabber;
@@ -43,8 +42,6 @@ public class Hardware implements Constants {
     public CRServo[] conveyorServos = new CRServo[4];
 
     public Drivetrain drivetrain;
-
-    public Conveyor conveyorSystem;
 
     public Intake intakeSystem;
 
@@ -64,12 +61,12 @@ public class Hardware implements Constants {
         frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
+        leftLift.init (hwMap, "leftLift");
+        rightLift.init(hwMap, "rightLift");
+        relicExtender.init(hwMap, "relicExtender");
+
 
         intake = hwMap.dcMotor.get("intake");
-        leftLift = hwMap.dcMotor.get("leftLift");
-        rightLift = hwMap.dcMotor.get("rightLift");
-        relicExtender = hwMap.dcMotor.get("relicExtender");
-
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
@@ -95,15 +92,11 @@ public class Hardware implements Constants {
 
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
-        conveyorSystem = new Conveyor(this);
-
         intakeSystem = new Intake(this);
 
         lift = new Lift(this);
 
         relicGrabberSystem = new RelicGrabber(this);
-
-       conveyorSystem.setSpeed(0);
     }
 
 }
