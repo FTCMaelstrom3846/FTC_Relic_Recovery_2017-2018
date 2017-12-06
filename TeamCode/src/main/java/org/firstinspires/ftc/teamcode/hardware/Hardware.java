@@ -37,10 +37,6 @@ public class Hardware implements Constants {
     public Servo relicWrist;
     public Servo relicGrabber;
 
-    public CRServo conveyorTopLeft, conveyorTopRight, conveyorBottomRight, conveyorBottomLeft;
-
-    public CRServo[] conveyorServos = new CRServo[4];
-
     public Drivetrain drivetrain;
 
     public Intake intakeSystem;
@@ -65,30 +61,10 @@ public class Hardware implements Constants {
         rightLift.init(hwMap, "rightLift");
         relicExtender.init(hwMap, "relicExtender");
 
-
         intake = hwMap.dcMotor.get("intake");
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
-
-        conveyorTopRight = hwMap.crservo.get("conveyorTopRight");
-        conveyorTopLeft = hwMap.crservo.get("conveyorTopLeft");
-        conveyorBottomRight = hwMap.crservo.get("conveyorBottomRight");
-        conveyorBottomLeft = hwMap.crservo.get("conveyorBottomLeft");
-
-        conveyorBottomRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        conveyorTopLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        conveyorServos[0] = conveyorBottomLeft;
-        conveyorServos[1] = conveyorBottomRight;
-        conveyorServos[2] = conveyorTopLeft;
-        conveyorServos[3] = conveyorTopRight;
-
-        for(SpeedControlledMotor motor: drivetrainMotors) {
-            motor.setPower(0);
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
 
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
@@ -97,6 +73,20 @@ public class Hardware implements Constants {
         lift = new Lift(this);
 
         relicGrabberSystem = new RelicGrabber(this);
+
+        for(SpeedControlledMotor motor: drivetrainMotors) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
+
+        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        relicExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
     }
 
 }

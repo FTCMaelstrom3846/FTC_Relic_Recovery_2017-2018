@@ -28,12 +28,8 @@ public class Drivetrain implements Constants {
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
     private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
 
-
-    double teleopAngle;
-    public double speed1;
-    public double speed2;
-    public double speed3;
-    public double speed4;
+    private double angle;
+    private double[] speeds = new double[4];
 
     public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
         //this.gamepad1 = gamepad1;
@@ -57,7 +53,7 @@ public class Drivetrain implements Constants {
         double angle = Math.atan2(y, x);
         double adjustedAngle = angle + Math.PI/4;
 
-        this.teleopAngle = angle;
+        this.angle = angle;
 
         double speedMagnitude = Math.hypot(x, y); //Ankit is a homosexual
 //agree- Ankit
@@ -72,18 +68,15 @@ public class Drivetrain implements Constants {
 
         double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularCorrectionPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
 
-        double frontLeftPower = (Math.sin(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
-        double backLeftPower = (Math.cos(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
-        double frontRightPower = -(Math.cos(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
-        double backRightPower = -(Math.sin(adjustedAngle) * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_SPEED_MULTIPLIER + angleCorrection;
-
-        double speeds[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
+        double speeds[] = {Math.sin(adjustedAngle), Math.cos(adjustedAngle), Math.cos(adjustedAngle), Math.sin(adjustedAngle)};
         normalizeSpeeds(speeds);
 
-        speed1 = speeds[0];
-        speed2 = speeds[1];
-        speed3 = speeds[2];
-        speed4 = speeds[3];
+        speeds[0] = (speeds[0] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        speeds[1] = (speeds[1] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        speeds[2] = (-speeds[2] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
+        speeds[3] = (-speeds[3] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_SPEED_MULTIPLIER + angleCorrection;
+
+        this.speeds = speeds;
 
         if (!halfSpeed) {
             frontLeft.setPower(speeds[0]);
@@ -99,12 +92,6 @@ public class Drivetrain implements Constants {
         }
 
     }
-
-    public double getTeleopAngle() {
-        return teleopAngle;
-    }
-
-
 
 //Everything below is retarded old stuff and needs to be fixed
 
@@ -123,11 +110,13 @@ public class Drivetrain implements Constants {
         long startTime = System.nanoTime();
         long stopState = 0;
         double initialHeading = imu.getAngles()[0];
-        angle *= (Math.PI / 180);
-        frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
-        backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
-        frontRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(angle + (Math.PI / 4)));
-        backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(angle + (Math.PI / 4)));
+        angle = Math.toRadians(angle);
+        double adjustedAngle = angle + Math.PI/4;
+
+        frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        frontRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
 
         while (opModeIsActive() && (stopState <= 1000)) {
             double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
@@ -181,6 +170,26 @@ public class Drivetrain implements Constants {
         return frontRight.getCurrentPosition();
     }
 
+    public double getDriveAngle() {
+        return angle;
+    }
+
+    public double getFrontLeftPower() {
+        return speeds[0];
+    }
+
+    public double getBackLeftPower() {
+        return speeds[1];
+    }
+
+    public double getFrontRightPower() {
+        return speeds[2];
+    }
+
+    public double getBackRightPower() {
+        return speeds[3];
+    }
+
 
     void eReset() {
 
@@ -203,10 +212,9 @@ public class Drivetrain implements Constants {
         for (int i = 0; i < speeds.length; i++) {
             maxSpeed = Math.max(maxSpeed, Math.abs(speeds[i]));
         }
-        if (maxSpeed > 1) {
-            for (int i = 0; i < speeds.length; i++) {
-                speeds[i] /= maxSpeed;
-            }
+
+        for (int i = 0; i < speeds.length; i++) {
+            speeds[i] /= maxSpeed;
         }
     }
 

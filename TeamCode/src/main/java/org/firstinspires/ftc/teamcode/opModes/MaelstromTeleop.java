@@ -31,12 +31,12 @@ public class MaelstromTeleop extends OpMode {
     public void loop() {
         robot.drivetrain.drive(/*gamepadFilter.lazyLeftStickY*/(gamepad1.left_stick_y),
                 /*gamepadFilter.lazyLeftStickX*/(gamepad1.left_stick_x), /*gamepadFilter.lazyRighStickX*/(gamepad1.right_stick_x));
-        telemetry.addData("angle", robot.drivetrain.getTeleopAngle()*180/Math.PI);
+        telemetry.addData("angle", Math.toDegrees(robot.drivetrain.getDriveAngle()));
 
-        telemetry.addData("speed 1", robot.drivetrain.speed1);
-        telemetry.addData("speed 2", robot.drivetrain.speed2);
-        telemetry.addData("speed 3", robot.drivetrain.speed3);
-        telemetry.addData("speed 4", robot.drivetrain.speed4);
+        telemetry.addData("Front Left Power", robot.drivetrain.getFrontLeftPower());
+        telemetry.addData("Back Left Power", robot.drivetrain.getBackLeftPower());
+        telemetry.addData("Front Right Power", robot.drivetrain.getFrontRightPower());
+        telemetry.addData("Back Right Power", robot.drivetrain.getBackRightPower());
 
         telemetry.addData("Front left RPM:", robot.frontLeft.getRPM());
         telemetry.addData("Front right RPM:", robot.frontRight.getRPM());

@@ -54,6 +54,12 @@ public class SpeedControlledMotor implements Constants{
 
     }
 
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
+        motor.setZeroPowerBehavior(behavior);
+    }
+
+
+
     public int getCurrentPosition() {
         return motor.getCurrentPosition();
     }
