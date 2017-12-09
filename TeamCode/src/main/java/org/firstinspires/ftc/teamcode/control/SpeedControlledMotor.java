@@ -50,7 +50,7 @@ public class SpeedControlledMotor implements Constants{
 
     public void setRPM(double rpm) {
         power = PIDController.power(rpm, getRPM());
-        motor.setPower(power);
+        motor.setPower((power > 0 && getRPM() < 0) || (power < 0 && getRPM() > 0) ? 0: power);
 
     }
 

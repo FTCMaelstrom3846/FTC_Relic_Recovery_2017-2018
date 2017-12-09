@@ -75,15 +75,16 @@ public class Hardware implements Constants {
         relicGrabberSystem = new RelicGrabber(this);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //Change back to BREAK
             motor.setPower(0);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
 
-        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         relicExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 

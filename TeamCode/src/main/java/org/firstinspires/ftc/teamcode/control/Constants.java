@@ -35,40 +35,40 @@ public interface Constants {
     double LIFT_RAISE_POWER = 0.55;
     double LIFT_LOWER_POWER = -0.55;
 
-    double frontLeftKP = 0.008;
+    double frontLeftKP = 20;
     double frontLeftKI = 0;
     double frontLeftKD = 0/*1.92426108e-6*/;
     double frontLeftMaxI = 1;
 
-    double frontRightKP = 0.008;
+    double frontRightKP = 20;
     double frontRightKI = 0;
     double frontRightKD = 0;
     double frontRightMaxI = 1;
 
-    double backLeftKP = 0.008;
+    double backLeftKP = 20;
     double backLeftKI = 0;
     double backLeftKD = 0;
     double backLeftMaxI = 1;
 
-    double backRightKP = 0.008;
+    double backRightKP = 20;
     double backRightKI = 0;
     double backRightKD = 0;
     double backRightMaxI = 1;
 
-    double leftLiftKP = 0.008;
+    double leftLiftKP = 2000000000;
     double leftLiftKI = 0;
     double leftLiftKD = 0;
     double leftLiftMaxI = 1;
+
+    double rightLiftKP = 2000000000;
+    double rightLiftKI = 0;
+    double rightLiftKD = 0;
+    double rightLiftMaxI = 1;
 
     double relicExtenderKP = 0.008;
     double relicExtenderKI = 0;
     double relicExtenderKD = 0;
     double relicExtenderMaxI = 1;
-
-    double rightLiftKP = 0.008;
-    double rightLiftKI = 0;
-    double rightLiftKD = 0;
-    double rightLiftMaxI = 1;
 
     double angleCorrectionKP = -0.025;
     double angleCorrectionKI = 0;
