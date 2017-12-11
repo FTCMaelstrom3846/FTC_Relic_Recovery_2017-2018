@@ -36,6 +36,8 @@ public class Hardware implements Constants {
 
     public Servo relicWrist;
     public Servo relicGrabber;
+    public Servo dumpRight;
+    public Servo dumpLeft;
 
     public Drivetrain drivetrain;
 
@@ -65,6 +67,8 @@ public class Hardware implements Constants {
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
+        dumpRight = hwMap.servo.get("dumpRight");
+        dumpLeft = hwMap.servo.get("dumpLeft");
 
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
@@ -81,7 +85,7 @@ public class Hardware implements Constants {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-
+        dumpLeft.setDirection(Servo.Direction.REVERSE);
 
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

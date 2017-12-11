@@ -24,6 +24,9 @@ public class MaelstromTeleop extends OpMode {
 
         robot.relicGrabberSystem.closeGrabber();
 
+        robot.dumpRight.setPosition(0);
+        robot.dumpLeft.setPosition(0);
+
         telemetry.addLine("Omit the first noun");
         telemetry.update();
     }
@@ -45,7 +48,7 @@ public class MaelstromTeleop extends OpMode {
 
         telemetry.addData("Front right position:", robot.frontRight.getCurrentPosition());
 
-        if (gamepad1.dpad_left) {
+       /* if (gamepad1.dpad_left) {
             robot.relicGrabberSystem.extend();
         } else if (gamepad1.dpad_right) {
             robot.relicGrabberSystem.retract();
@@ -63,7 +66,15 @@ public class MaelstromTeleop extends OpMode {
             robot.relicGrabberSystem.openGrabber();
         } else if (gamepad1.a) {
             robot.relicGrabberSystem.closeGrabber();
-        }
+        }*/
+
+       if (gamepad1.dpad_up) {
+           robot.dumpRight.setPosition(1);
+           robot.dumpLeft.setPosition(1);
+       } else if (gamepad1.dpad_down) {
+           robot.dumpRight.setPosition(0);
+           robot.dumpLeft.setPosition(0);
+       }
 
         if (gamepad1.right_bumper || gamepad2.y) {
             robot.intakeSystem.intake();
