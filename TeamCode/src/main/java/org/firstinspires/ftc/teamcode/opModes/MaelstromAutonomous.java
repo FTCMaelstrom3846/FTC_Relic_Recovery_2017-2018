@@ -28,11 +28,11 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         waitForStart();
 
-        robot.drivetrain.drive(1640, 0);
+        robot.drivetrain.drive(1640, 0, 0.5);
 
         //robot.drivetrain.turnAngle(-90);
 
-        robot.drivetrain.drive(-500, 0);
+        robot.drivetrain.drive(-500, 0, 0.5);
 
         telemetry.addLine("Outtake");
 

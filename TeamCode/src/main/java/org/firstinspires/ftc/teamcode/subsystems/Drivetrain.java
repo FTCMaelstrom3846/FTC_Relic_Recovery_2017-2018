@@ -95,7 +95,7 @@ public class Drivetrain implements Constants {
 
 //Everything below is retarded old stuff and needs to be fixed
 
-    public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle) {
+    public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle, double maxSpeedMultiplier) {
 
         double frontLeftPower;
         double backLeftPower;
@@ -113,10 +113,10 @@ public class Drivetrain implements Constants {
         angle = Math.toRadians(angle);
         double adjustedAngle = angle + Math.PI/4;
 
-        frontLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
-        backLeftPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
-        frontRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
-        backRightPower = AUTONOMOUS_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        frontLeftPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        backLeftPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        frontRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        backRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
 
         while (opModeIsActive() && (stopState <= 1000)) {
             double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());

@@ -15,22 +15,19 @@ public interface Constants {
     double DISTANCE_TOLERANCE = 50;
 
     double TELEOP_SPEED_MULTIPLIER = 1;
-    double AUTONOMOUS_SPEED_MULTIPLIER = 1;
+    double AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER = 1;
 
     double RELIC_EXTENDER_POWER = -1;
     double RELIC_RETRACT_POWER = 1;
 
-    double RELIC_GRABBER_OPEN = 0.25;
-    double RELIC_GRABBER_CLOSED = 0.9;
+    double RELIC_GRABBER_OPEN = 1;
+    double RELIC_GRABBER_CLOSED = 0;
 
-    double RELIC_WRIST_UP = 0.75;
+    double RELIC_WRIST_UP = 0;
     double RELIC_WRIST_DOWN = 1;
 
-    double CONVEYOR_UP_POWER = 0.75;
-    double CONVEYOR_DOWN_POWER = -0.75;
-
-    double INTAKESYSTEM_INTAKE_POWER = -0.75;
-    double INTAKESYSTEM_OUTAKE_POWER = 0.75;
+    double INTAKESYSTEM_INTAKE_POWER = -1;
+    double INTAKESYSTEM_OUTAKE_POWER = 1;
 
     double LIFT_RAISE_POWER = 0.55;
     double LIFT_LOWER_POWER = -0.55;
