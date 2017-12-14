@@ -34,19 +34,21 @@ public class MaelstromTeleop extends OpMode {
     public void loop() {
         robot.drivetrain.drive(/*gamepadFilter.lazyLeftStickY*/(gamepad1.left_stick_y),
                 /*gamepadFilter.lazyLeftStickX*/(gamepad1.left_stick_x), /*gamepadFilter.lazyRighStickX*/(gamepad1.right_stick_x));
-        telemetry.addData("angle", Math.toDegrees(robot.drivetrain.getDriveAngle()));
+/*        telemetry.addData("angle", Math.toDegrees(robot.drivetrain.getDriveAngle()));
 
         telemetry.addData("Front Left Power", robot.drivetrain.getFrontLeftPower());
         telemetry.addData("Back Left Power", robot.drivetrain.getBackLeftPower());
         telemetry.addData("Front Right Power", robot.drivetrain.getFrontRightPower());
-        telemetry.addData("Back Right Power", robot.drivetrain.getBackRightPower());
+        telemetry.addData("Back Right Power", robot.drivetrain.getBackRightPower());*/
 
         telemetry.addData("Front left RPM:", robot.frontLeft.getRPM());
         telemetry.addData("Front right RPM:", robot.frontRight.getRPM());
         telemetry.addData("Back left RPM:", robot.backLeft.getRPM());
         telemetry.addData("Back right RPM:", robot.backRight.getRPM());
 
+/*
         telemetry.addData("Front right position:", robot.frontRight.getCurrentPosition());
+*/
 
         if (gamepad2.dpad_left) {
             robot.relicGrabberSystem.extend();
@@ -69,11 +71,12 @@ public class MaelstromTeleop extends OpMode {
         }
 
        if (gamepad1.dpad_up) {
-           robot.dumpRight.setPosition(1);
-           robot.dumpLeft.setPosition(1);
+           robot.dumpPan.raisePan();
        } else if (gamepad1.dpad_down) {
-           robot.dumpRight.setPosition(0);
-           robot.dumpLeft.setPosition(0);
+           robot.dumpPan.lowerPan();
+       } else if (gamepad1.dpad_left) {
+           telemetry.addLine("center");
+           robot.dumpPan.centerPan();
        }
 
         if (gamepad1.right_bumper/* || gamepad2.y*/) {

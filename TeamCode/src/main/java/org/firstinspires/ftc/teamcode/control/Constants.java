@@ -32,6 +32,10 @@ public interface Constants {
     double LIFT_RAISE_POWER = 0.55;
     double LIFT_LOWER_POWER = -0.55;
 
+    double PAN_RAISE = 1;
+    double PAN_LOWER = 0;
+    double PAN_CENTER = 0.5;
+
     double frontLeftKP = 20;
     double frontLeftKI = 0;
     double frontLeftKD = 0/*1.92426108e-6*/;

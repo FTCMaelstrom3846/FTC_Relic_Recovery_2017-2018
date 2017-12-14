@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -10,6 +8,7 @@ import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.subsystems.RelicGrabber;
@@ -47,6 +46,8 @@ public class Hardware implements Constants {
 
     public RelicGrabber relicGrabberSystem;
 
+    public DumpPan dumpPan;
+
     HardwareMap hwMap;
 
     public void init(HardwareMap hardwareMap) {
@@ -77,6 +78,8 @@ public class Hardware implements Constants {
         lift = new Lift(this);
 
         relicGrabberSystem = new RelicGrabber(this);
+
+        dumpPan = new DumpPan(this);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK
