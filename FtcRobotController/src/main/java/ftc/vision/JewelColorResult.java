@@ -8,9 +8,9 @@ import org.opencv.core.Scalar;
  * This file was made by the electronVolts, FTC team 7393
  * Date Created: 8/17/16.
  */
-public class BeaconColorResult{
+public class JewelColorResult {
   
-  public enum BeaconColor{
+  public enum JewelColor {
     RED     (ImageUtil.RED),
     GREEN   (ImageUtil.GREEN),
     BLUE    (ImageUtil.BLUE),
@@ -18,18 +18,18 @@ public class BeaconColorResult{
     
     public final Scalar color;
     
-    BeaconColor(Scalar scalar){
+    JewelColor(Scalar scalar){
       this.color = scalar;
     }
   }
-  private final BeaconColor leftColor, rightColor;
+  private final JewelColor leftColor, rightColor;
   
-  public BeaconColorResult() {
-    this.leftColor = BeaconColor.UNKNOWN;
-    this.rightColor = BeaconColor.UNKNOWN;
+  public JewelColorResult() {
+    this.leftColor = JewelColor.UNKNOWN;
+    this.rightColor = JewelColor.UNKNOWN;
   }
   
-  public BeaconColorResult(BeaconColor leftColor, BeaconColor rightColor) {
+  public JewelColorResult(JewelColor leftColor, JewelColor rightColor) {
     this.leftColor = leftColor;
     this.rightColor = rightColor;
   }
@@ -38,11 +38,11 @@ public class BeaconColorResult{
     return leftColor + ", " + rightColor;
   }
   
-  public BeaconColor getLeftColor() {
+  public JewelColor getLeftColor() {
     return leftColor;
   }
   
-  public BeaconColor getRightColor() {
+  public JewelColor getRightColor() {
     return rightColor;
   }
 }

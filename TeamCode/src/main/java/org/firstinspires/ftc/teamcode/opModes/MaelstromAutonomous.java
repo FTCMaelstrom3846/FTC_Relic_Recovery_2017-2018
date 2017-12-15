@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode.opModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.JavaCameraView;
 
-import ftc.vision.BeaconColorResult;
+import ftc.vision.JewelColorResult;
 import ftc.vision.FrameGrabber;
 import ftc.vision.ImageProcessorResult;
 
@@ -16,6 +18,8 @@ import ftc.vision.ImageProcessorResult;
 public class MaelstromAutonomous extends LinearOpMode {
 
     Hardware robot = new Hardware();
+
+
 
     @Override
     public void runOpMode() {
@@ -28,13 +32,13 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         waitForStart();
 
-        robot.drivetrain.drive(1640, 0, 0.5);
+/*        robot.drivetrain.drive(1640, 0, 0.5);
 
         //robot.drivetrain.turnAngle(-90);
 
         robot.drivetrain.drive(-500, 0, 0.5);
 
-        telemetry.addLine("Outtake");
+        telemetry.addLine("Outtake");*/
 
 
         //robot.drivetrain.turnAngle(90);
@@ -46,8 +50,17 @@ public class MaelstromAutonomous extends LinearOpMode {
             telemetry.addData("Left Back Encoder", robot.backLeft.getCurrentPosition());
             telemetry.update();
         }*/
+        /*CameraBridgeViewBase javaCameraView = FtcRobotControllerActivity;
 
-        /*FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
+
+        while (opModeIsActive()) {
+
+            javaCameraView.turnOnFlash();
+            sleep(300);
+            javaCameraView.turnOffFlash();
+            sleep(300);
+        }*/
+        FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
 
         frameGrabber.grabSingleFrame(); //Tell it to grab a frame
         while (!frameGrabber.isResultReady()) { //Wait for the result
@@ -56,19 +69,21 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         //Get the result
         ImageProcessorResult imageProcessorResult = frameGrabber.getResult();
-        BeaconColorResult result = (BeaconColorResult) imageProcessorResult.getResult();
+        JewelColorResult result = (JewelColorResult) imageProcessorResult.getResult();
 
-        BeaconColorResult.BeaconColor leftColor = result.getLeftColor();
-        BeaconColorResult.BeaconColor rightColor = result.getRightColor();
+        JewelColorResult.JewelColor leftColor = result.getLeftColor();
+        JewelColorResult.JewelColor rightColor = result.getRightColor();
 
         telemetry.addData("Left color", leftColor);
         telemetry.addData("Right color", rightColor);
 
-        if (leftColor == BeaconColorResult.BeaconColor.BLUE) {
+        if (leftColor == JewelColorResult.JewelColor.BLUE) {
+            telemetry.addLine("Left jewel is blue");
+        } else if (leftColor == JewelColorResult.JewelColor.RED) {
+            telemetry.addLine("Left jewel is red");
+        }
 
-        } else if (leftColor == BeaconColorResult.BeaconColor.RED) {
-
-        }*/
+        sleep(30000);
 
     }
 

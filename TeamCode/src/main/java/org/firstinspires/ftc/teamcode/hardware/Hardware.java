@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.JewelArms;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.subsystems.RelicGrabber;
 
@@ -38,6 +39,9 @@ public class Hardware implements Constants {
     public Servo dumpRight;
     public Servo dumpLeft;
 
+    public Servo leftJewelArm;
+    public Servo rightJewelArm;
+
     public Drivetrain drivetrain;
 
     public Intake intakeSystem;
@@ -47,6 +51,8 @@ public class Hardware implements Constants {
     public RelicGrabber relicGrabberSystem;
 
     public DumpPan dumpPan;
+
+    public JewelArms jewelArms;
 
     HardwareMap hwMap;
 
@@ -71,6 +77,9 @@ public class Hardware implements Constants {
         dumpRight = hwMap.servo.get("dumpRight");
         dumpLeft = hwMap.servo.get("dumpLeft");
 
+        leftJewelArm = hwMap.servo.get("leftJewelArm");
+        rightJewelArm = hwMap.servo.get("rightJewelArm");
+
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
         intakeSystem = new Intake(this);
@@ -80,6 +89,8 @@ public class Hardware implements Constants {
         relicGrabberSystem = new RelicGrabber(this);
 
         dumpPan = new DumpPan(this);
+
+        jewelArms = new JewelArms(this);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK

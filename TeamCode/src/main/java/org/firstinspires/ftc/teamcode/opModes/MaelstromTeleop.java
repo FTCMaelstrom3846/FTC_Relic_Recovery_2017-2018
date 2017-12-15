@@ -15,17 +15,21 @@ public class MaelstromTeleop extends OpMode {
 
     //GamepadInputFilter gamepadFilter = new GamepadInputFilter();
 
+    boolean dpadRightCurrState = false;
+    boolean dpadRightPreviousState = false;
+    boolean gripperOpen = true;
 
     public void init() {
 
         robot.init(hardwareMap);
 
-        robot.relicGrabberSystem.lowerWrist();
+        robot.relicGrabberSystem.resetWrist();
 
-        robot.relicGrabberSystem.closeGrabber();
+        robot.relicGrabberSystem.openGrabber();
 
-        robot.dumpRight.setPosition(0);
-        robot.dumpLeft.setPosition(0);
+        robot.jewelArms.resetArms();
+
+        robot.dumpPan.lowerPan();
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
@@ -50,53 +54,66 @@ public class MaelstromTeleop extends OpMode {
         telemetry.addData("Front right position:", robot.frontRight.getCurrentPosition());
 */
 
-        if (gamepad2.dpad_left) {
-            robot.relicGrabberSystem.extend();
-        } else if (gamepad2.dpad_right) {
-            robot.relicGrabberSystem.retract();
+        if (gamepad2.right_trigger > 0) {
+            robot.relicGrabberSystem.setPower(gamepad2.right_trigger);
+        } else if (gamepad2.left_trigger > 0) {
+            robot.relicGrabberSystem.setPower(-gamepad2.left_trigger);
         } else {
             robot.relicGrabberSystem.stop();
         }
 
-        if (gamepad2.dpad_up) {
+        if (gamepad1.dpad_right || gamepad2.dpad_right) {
+            robot.relicGrabberSystem.resetWrist();
+        } else if (gamepad1.dpad_up || gamepad2.dpad_up) {
             robot.relicGrabberSystem.raiseWrist();
-        } else if (gamepad2.dpad_down) {
+        } else if (gamepad1.dpad_left || gamepad2.dpad_left) {
             robot.relicGrabberSystem.lowerWrist();
         }
 
-        if (gamepad2.y) {
+        if (gamepad1.dpad_down || gamepad2.dpad_down) { //MAKE TOGGLE CLASS
+            dpadRightCurrState = true;
+        } else {
+            dpadRightCurrState = false;
+            if (dpadRightPreviousState) {
+                gripperOpen = !gripperOpen;
+            }
+        }
+
+        dpadRightPreviousState = dpadRightCurrState;
+
+        if (gripperOpen) {
             robot.relicGrabberSystem.openGrabber();
-        } else if (gamepad2.a) {
+        } else {
             robot.relicGrabberSystem.closeGrabber();
         }
 
-       if (gamepad1.dpad_up) {
+       if (gamepad1.y) {
            robot.dumpPan.raisePan();
-       } else if (gamepad1.dpad_down) {
+       } else if (gamepad1.a) {
            robot.dumpPan.lowerPan();
-       } else if (gamepad1.dpad_left) {
+       } else if (gamepad1.x) {
            telemetry.addLine("center");
            robot.dumpPan.centerPan();
        }
 
-        if (gamepad1.right_bumper/* || gamepad2.y*/) {
+        if (gamepad1.right_trigger > 0/* || gamepad2.y*/) {
             robot.intakeSystem.intake();
-        } else if (gamepad1.left_bumper/* || gamepad2.a*/) {
+        } else if (gamepad1.left_trigger > 0/* || gamepad2.a*/) {
             robot.intakeSystem.outtake();
         } else {
             robot.intakeSystem.stop();
         }
 
-        if (gamepad1.right_trigger > 0) {
+        if (gamepad1.right_bumper) {
             robot.lift.raise();
-        } else if (gamepad1.left_trigger > 0) {
+        } else if (gamepad1.left_bumper) {
             robot.lift.lower();
         } else {
             robot.lift.stop();
         }
 
 
-        if (gamepad2.right_bumper) {
+/*        if (gamepad2.right_bumper) {
             robot.lift.raiseRight();
         } else if (gamepad2.left_bumper) {
             robot.lift.raiseLeft();
@@ -106,7 +123,7 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.lowerRight();
         } else if (gamepad2.left_trigger > 0) {
             robot.lift.lowerLeft();
-        }
+        }*/
 
 
         //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);

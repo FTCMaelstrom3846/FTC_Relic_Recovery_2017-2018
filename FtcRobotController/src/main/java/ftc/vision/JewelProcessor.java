@@ -9,19 +9,18 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by vandejd1 on 8/29/16.
  * FTC Team EV 7393
  */
-public class BeaconProcessor implements ImageProcessor<BeaconColorResult> {
-    private static final String TAG = "BeaconProcessor";
+public class JewelProcessor implements ImageProcessor<JewelColorResult> {
+    private static final String TAG = "JewelProcessor";
     private static final double MIN_MASS = 6;
 
     @Override
-    public ImageProcessorResult<BeaconColorResult> process(long startTime, Mat rgbaFrame, boolean saveImages) {
+    public ImageProcessorResult<JewelColorResult> process(long startTime, Mat rgbaFrame, boolean saveImages) {
         //save the image in the Pictures directory
         if (saveImages) {
             ImageUtil.saveImage(TAG, rgbaFrame, Imgproc.COLOR_RGBA2BGR, "0_camera", startTime);
@@ -118,9 +117,9 @@ public class BeaconProcessor implements ImageProcessor<BeaconColorResult> {
         Core.merge(rgbaChannels, rgbaFrame);
 
         //use the maxIndex array to get the left and right colors
-        BeaconColorResult.BeaconColor[] beaconColors = BeaconColorResult.BeaconColor.values();
-        BeaconColorResult.BeaconColor left = beaconColors[maxMassIndex[0]];
-        BeaconColorResult.BeaconColor right = beaconColors[maxMassIndex[1]];
+        JewelColorResult.JewelColor[] jewelColors = JewelColorResult.JewelColor.values();
+        JewelColorResult.JewelColor left = jewelColors[maxMassIndex[0]];
+        JewelColorResult.JewelColor right = jewelColors[maxMassIndex[1]];
 
         //draw the color result bars
         int barHeight = hsv.height()/30;
@@ -133,7 +132,7 @@ public class BeaconProcessor implements ImageProcessor<BeaconColorResult> {
 
         //construct and return the result
         return new ImageProcessorResult<>(startTime, rgbaFrame,
-                new BeaconColorResult(left, right)
+                new JewelColorResult(left, right)
         );
     }
 }

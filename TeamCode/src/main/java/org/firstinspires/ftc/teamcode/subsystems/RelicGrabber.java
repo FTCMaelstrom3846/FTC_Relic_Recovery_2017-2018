@@ -38,19 +38,28 @@ public class RelicGrabber implements Constants {
         relicExtender.setPower(0);
     }
 
-    public void openGrabber () {
+    public void setPower(double power) {
+        relicExtender.setPower(power);
+    }
+
+    public void openGrabber() {
         relicGrabber.setPosition(RELIC_GRABBER_OPEN);
     }
 
-    public void closeGrabber () {
+    public void closeGrabber() {
         relicGrabber.setPosition(RELIC_GRABBER_CLOSED);
     }
 
-    public void raiseWrist () {
+    public void resetWrist() {
+        relicWrist.setPosition(RELIC_WRIST_RESET);
+    }
+
+    public void raiseWrist() {
         relicWrist.setPosition(RELIC_WRIST_UP);
     }
 
     public void lowerWrist() {
-        relicWrist.setPosition(RELIC_WRIST_DOWN);
+        relicWrist.setPosition(relicExtender.getCurrentPosition() > 3000 ? RELIC_WRIST_DROP : RELIC_WRIST_PICKUP);
     }
+
 }
