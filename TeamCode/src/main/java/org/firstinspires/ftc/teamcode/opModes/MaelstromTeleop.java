@@ -87,11 +87,11 @@ public class MaelstromTeleop extends OpMode {
             robot.relicGrabberSystem.closeGrabber();
         }
 
-       if (gamepad1.y) {
+       if (gamepad1.y || gamepad2.y) {
            robot.dumpPan.raisePan();
-       } else if (gamepad1.a) {
+       } else if (gamepad1.a || gamepad2.a) {
            robot.dumpPan.lowerPan();
-       } else if (gamepad1.x) {
+       } else if (gamepad1.x || gamepad2.x) {
            telemetry.addLine("center");
            robot.dumpPan.centerPan();
        }
@@ -104,9 +104,9 @@ public class MaelstromTeleop extends OpMode {
             robot.intakeSystem.stop();
         }
 
-        if (gamepad1.right_bumper) {
+        if (gamepad1.right_bumper || gamepad2.right_bumper) {
             robot.lift.raise();
-        } else if (gamepad1.left_bumper) {
+        } else if (gamepad1.left_bumper ||  gamepad2.left_bumper) {
             robot.lift.lower();
         } else {
             robot.lift.stop();
