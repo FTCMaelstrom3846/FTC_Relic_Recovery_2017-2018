@@ -28,10 +28,10 @@ public interface Constants {
     double RELIC_WRIST_DROP = 0.6;
     double RELIC_WRIST_PICKUP = 1;
 
-    double LEFT_JEWEL_ARM_LOWER = 0.1;
-    double LEFT_JEWEL_ARM_RAISE = 0.65;
-    double RIGHT_JEWEL_ARM_LOWER = 0.9;
-    double RIGHT_JEWEL_ARM_RAISE = 0.29;
+    double LEFT_JEWEL_ARM_LOWER = 0.55;
+    double LEFT_JEWEL_ARM_RAISE = 0.33;
+    double RIGHT_JEWEL_ARM_LOWER = 0.35;
+    double RIGHT_JEWEL_ARM_RAISE = 0.65;
 
     double INTAKESYSTEM_INTAKE_POWER = -1;
     double INTAKESYSTEM_OUTAKE_POWER = 1;
@@ -41,7 +41,8 @@ public interface Constants {
 
     double PAN_RAISE = 1;
     double PAN_LOWER = 0;
-    double PAN_CENTER = 0.5;
+    double PAN_CENTER_LEFT = 0.4;
+    double PAN_CENTER_RIGHT = 0.55;
 
     double frontLeftKP = 20;
     double frontLeftKI = 0;

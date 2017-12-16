@@ -376,7 +376,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
             Log.d(TAG, "Finish processing thread");
         }
     }
-    public void turnOffFlash() {
+/*    public void turnOffFlash() {
         Camera.Parameters params = mCamera.getParameters();
         params.setFlashMode(params.FLASH_MODE_OFF);
         mCamera.setParameters(params);
@@ -386,5 +386,5 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
         Camera.Parameters params = mCamera.getParameters();
         params.setFlashMode(params.FLASH_MODE_TORCH);
         mCamera.setParameters(params);
-    }
+    }*/
 }

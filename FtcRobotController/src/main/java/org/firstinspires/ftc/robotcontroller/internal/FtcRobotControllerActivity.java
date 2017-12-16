@@ -131,7 +131,7 @@ public class FtcRobotControllerActivity extends Activity
     static final int FRAME_HEIGHT_REQUEST = 144;
 
     // Loads camera view of OpenCV for us to use. This lets us see using OpenCV
-    public CameraBridgeViewBase cameraBridgeViewBase;
+    private CameraBridgeViewBase cameraBridgeViewBase;
 
     //manages getting one frame at a time
     public static FrameGrabber frameGrabber = null;
@@ -752,4 +752,8 @@ public class FtcRobotControllerActivity extends Activity
       }
     }
   }
+/*
+  public CameraBridgeViewBase getCameraBridgeViewBase() {
+    return cameraBridgeViewBase;
+  }*/
 }

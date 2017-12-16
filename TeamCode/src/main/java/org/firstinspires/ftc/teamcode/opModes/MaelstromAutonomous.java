@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opModes;
 
+import android.hardware.Camera;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -18,8 +20,9 @@ import ftc.vision.ImageProcessorResult;
 public class MaelstromAutonomous extends LinearOpMode {
 
     Hardware robot = new Hardware();
-
-
+/*
+    Camera mCamera = Camera.open();
+*/
 
     @Override
     public void runOpMode() {
@@ -29,6 +32,10 @@ public class MaelstromAutonomous extends LinearOpMode {
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
+
+/*
+        turnOnFlash();
+*/
 
         waitForStart();
 
@@ -50,17 +57,16 @@ public class MaelstromAutonomous extends LinearOpMode {
             telemetry.addData("Left Back Encoder", robot.backLeft.getCurrentPosition());
             telemetry.update();
         }*/
-        /*CameraBridgeViewBase javaCameraView = FtcRobotControllerActivity;
-
 
         while (opModeIsActive()) {
+            telemetry.addData("Red", robot.jewelSensor.red());
+            telemetry.addData("Blue", robot.jewelSensor.blue());
+            telemetry.update();
+        }
 
-            javaCameraView.turnOnFlash();
-            sleep(300);
-            javaCameraView.turnOffFlash();
-            sleep(300);
-        }*/
-        FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
+        robot.jewelArms.lowerLeft();
+
+        /*FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
 
         frameGrabber.grabSingleFrame(); //Tell it to grab a frame
         while (!frameGrabber.isResultReady()) { //Wait for the result
@@ -75,17 +81,46 @@ public class MaelstromAutonomous extends LinearOpMode {
         JewelColorResult.JewelColor rightColor = result.getRightColor();
 
         telemetry.addData("Left color", leftColor);
-        telemetry.addData("Right color", rightColor);
+        telemetry.addData("Right color", rightColor);*/
 
-        if (leftColor == JewelColorResult.JewelColor.BLUE) {
+/*        if (leftColor == JewelColorResult.JewelColor.RED) {
+*//*
             telemetry.addLine("Left jewel is blue");
-        } else if (leftColor == JewelColorResult.JewelColor.RED) {
+*//*
+            robot.drivetrain.turnAngle(30);
+        } else if (rightColor == JewelColorResult.JewelColor.RED) {
+*//*
             telemetry.addLine("Left jewel is red");
-        }
+*//*
+            robot.drivetrain.turnAngle(-30);
 
-        sleep(30000);
+        }*/
 
+        robot.jewelArms.raiseLeft();
+
+        robot.drivetrain.turnAngle(0);
+
+/*
+        turnOffFlash();
+*/
+
+        telemetry.addLine("we done");
+        telemetry.update();
     }
+/*
+
+    public void turnOffFlash() {
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFlashMode(params.FLASH_MODE_OFF);
+        mCamera.setParameters(params);
+    }
+
+    public void turnOnFlash() {
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFlashMode(params.FLASH_MODE_TORCH);
+        mCamera.setParameters(params);
+    }
+*/
 
     public boolean getOpModeIsActive() {
         return opModeIsActive();

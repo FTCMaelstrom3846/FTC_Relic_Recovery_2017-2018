@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,6 +43,8 @@ public class Hardware implements Constants {
     public Servo leftJewelArm;
     public Servo rightJewelArm;
 
+    public ColorSensor jewelSensor;
+
     public Drivetrain drivetrain;
 
     public Intake intakeSystem;
@@ -79,6 +82,8 @@ public class Hardware implements Constants {
 
         leftJewelArm = hwMap.servo.get("leftJewelArm");
         rightJewelArm = hwMap.servo.get("rightJewelArm");
+
+        jewelSensor = hwMap.colorSensor.get("jewelSensor");
 
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 

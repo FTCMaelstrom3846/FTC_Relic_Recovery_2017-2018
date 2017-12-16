@@ -31,8 +31,8 @@ public class DumpPan implements Constants {
     }
 
     public void centerPan() {
-        dumpRight.setPosition(PAN_CENTER);
-        dumpLeft.setPosition(PAN_CENTER);
+        dumpRight.setPosition(PAN_CENTER_RIGHT);
+        dumpLeft.setPosition(PAN_CENTER_LEFT);
     }
 
 }
