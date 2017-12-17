@@ -21,7 +21,7 @@ public class JewelArms implements Constants {
 
 
     public void lowerRight() {
-        leftJewelArm.setPosition(RIGHT_JEWEL_ARM_LOWER);
+        rightJewelArm.setPosition(RIGHT_JEWEL_ARM_LOWER);
     }
 
     public void lowerLeft() {
@@ -29,7 +29,7 @@ public class JewelArms implements Constants {
     }
 
     public void raiseRight() {
-        leftJewelArm.setPosition(RIGHT_JEWEL_ARM_RAISE);
+        rightJewelArm.setPosition(RIGHT_JEWEL_ARM_RAISE);
     }
 
     public void raiseLeft() {

@@ -18,6 +18,8 @@ public class MaelstromTeleop extends OpMode {
     boolean dpadRightCurrState = false;
     boolean dpadRightPreviousState = false;
     boolean gripperOpen = true;
+    double currTime = 0;
+    double previousTime = 0;
 
     public void init() {
 
@@ -33,9 +35,12 @@ public class MaelstromTeleop extends OpMode {
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
+        previousTime = System.nanoTime()/1e6;
     }
 
     public void loop() {
+        currTime = System.nanoTime()/1e6;
+        double elapsedTime = currTime - previousTime;
         robot.drivetrain.drive(/*gamepadFilter.lazyLeftStickY*/(gamepad1.left_stick_y),
                 /*gamepadFilter.lazyLeftStickX*/(gamepad1.left_stick_x), /*gamepadFilter.lazyRighStickX*/(gamepad1.right_stick_x));
 /*        telemetry.addData("angle", Math.toDegrees(robot.drivetrain.getDriveAngle()));
@@ -92,8 +97,10 @@ public class MaelstromTeleop extends OpMode {
        } else if (gamepad1.a || gamepad2.a) {
            robot.dumpPan.lowerPan();
        } else if (gamepad1.x || gamepad2.x) {
-           telemetry.addLine("center");
-           robot.dumpPan.centerPan();
+           if (elapsedTime > 8) {
+               telemetry.addLine("center");
+               robot.dumpPan.centerPan();
+           }
        }
 
         if (gamepad1.right_trigger > 0/* || gamepad2.y*/) {
@@ -139,5 +146,6 @@ public class MaelstromTeleop extends OpMode {
         } else if (gamepad1.dpad_left) {
             robot.relicGrabber.setPosition(.25);
         }*/
+        previousTime = elapsedTime > 8 ?  System.nanoTime()/1e6 : previousTime;
     }
 }

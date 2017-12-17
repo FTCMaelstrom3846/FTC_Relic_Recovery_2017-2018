@@ -23,14 +23,14 @@ public interface Constants {
     double RELIC_GRABBER_OPEN = 1;
     double RELIC_GRABBER_CLOSED = 0;
 
-    double RELIC_WRIST_RESET = 0;
+    double RELIC_WRIST_RESET = 1;
     double RELIC_WRIST_UP = 0.5;
     double RELIC_WRIST_DROP = 0.6;
-    double RELIC_WRIST_PICKUP = 1;
+    double RELIC_WRIST_PICKUP = 0;
 
     double LEFT_JEWEL_ARM_LOWER = 0.55;
     double LEFT_JEWEL_ARM_RAISE = 0.33;
-    double RIGHT_JEWEL_ARM_LOWER = 0.35;
+    double RIGHT_JEWEL_ARM_LOWER = 0;
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
 
     double INTAKESYSTEM_INTAKE_POWER = -1;
@@ -41,8 +41,8 @@ public interface Constants {
 
     double PAN_RAISE = 1;
     double PAN_LOWER = 0;
-    double PAN_CENTER_LEFT = 0.4;
-    double PAN_CENTER_RIGHT = 0.55;
+    double PAN_CENTER_LEFT = 0.36;
+    double PAN_CENTER_RIGHT = 0.51;
 
     double frontLeftKP = 20;
     double frontLeftKI = 0;

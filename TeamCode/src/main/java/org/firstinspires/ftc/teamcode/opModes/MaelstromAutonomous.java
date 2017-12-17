@@ -58,15 +58,20 @@ public class MaelstromAutonomous extends LinearOpMode {
             telemetry.update();
         }*/
 
+/*
         while (opModeIsActive()) {
             telemetry.addData("Red", robot.jewelSensor.red());
             telemetry.addData("Blue", robot.jewelSensor.blue());
             telemetry.update();
         }
+*/
 
-        robot.jewelArms.lowerLeft();
 
-        /*FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
+        robot.rightJewelArm.setPosition(0.35);
+        sleep(1000);
+        robot.jewelArms.lowerRight();
+/*
+        FrameGrabber frameGrabber = FtcRobotControllerActivity.frameGrabber; //Get the frameGrabber
 
         frameGrabber.grabSingleFrame(); //Tell it to grab a frame
         while (!frameGrabber.isResultReady()) { //Wait for the result
@@ -81,31 +86,40 @@ public class MaelstromAutonomous extends LinearOpMode {
         JewelColorResult.JewelColor rightColor = result.getRightColor();
 
         telemetry.addData("Left color", leftColor);
-        telemetry.addData("Right color", rightColor);*/
+        telemetry.addData("Right color", rightColor);*//*
 
-/*        if (leftColor == JewelColorResult.JewelColor.RED) {
-*//*
+*//**//*        if (leftColor == JewelColorResult.JewelColor.RED) {
+*//**//**//*
             telemetry.addLine("Left jewel is blue");
-*//*
+*//**//*
             robot.drivetrain.turnAngle(30);
         } else if (rightColor == JewelColorResult.JewelColor.RED) {
-*//*
+*//**//**//*
             telemetry.addLine("Left jewel is red");
-*//*
+*//**//**//**//*
             robot.drivetrain.turnAngle(-30);
 
         }*/
+        sleep(2500);
+        telemetry.addData("Blue", robot.jewelSensor.blue());
+        telemetry.addData("Red", robot.jewelSensor.red());
+        if (robot.jewelSensor.blue() > 0) {
+            robot.drivetrain.drive(300, 0, 1);
+            robot.jewelArms.raiseRight();
+            sleep(1000);
+            robot.drivetrain.drive(1750, 0, 0.6);
 
-        robot.jewelArms.raiseLeft();
+        } else if (robot.jewelSensor.red() > 0) {
+            robot.drivetrain.drive(-300, 0, 1);
+            robot.jewelArms.raiseRight();
+            sleep(1000);
+            robot.drivetrain.drive(2150, 0, 0.6);
 
-        robot.drivetrain.turnAngle(0);
+        }
 
 /*
         turnOffFlash();
 */
-
-        telemetry.addLine("we done");
-        telemetry.update();
     }
 /*
 

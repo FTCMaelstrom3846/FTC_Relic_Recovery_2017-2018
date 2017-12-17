@@ -139,7 +139,7 @@ public class Drivetrain implements Constants {
 
     }
 
-    public void turnAngle(double angle) {
+    public void turnAngle(double angle, double speedMultiplier) {
 
         eReset();
 
@@ -147,7 +147,7 @@ public class Drivetrain implements Constants {
         long startTime = System.nanoTime();
         long stopState = 0;
         while (opModeIsActive() && (stopState <= 1000)) {
-            double power = angularTurnPIDController.power(angle, imu.getAngles()[0]);
+            double power = speedMultiplier * angularTurnPIDController.power(angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
             frontRight.setPower(power);
