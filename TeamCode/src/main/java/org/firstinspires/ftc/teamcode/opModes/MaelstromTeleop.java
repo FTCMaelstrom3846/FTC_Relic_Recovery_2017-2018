@@ -112,9 +112,9 @@ public class MaelstromTeleop extends OpMode {
         }
 
         if (gamepad1.right_bumper || gamepad2.right_bumper) {
-            robot.lift.raise();
-        } else if (gamepad1.left_bumper ||  gamepad2.left_bumper) {
             robot.lift.lower();
+        } else if (gamepad1.left_bumper ||  gamepad2.left_bumper) {
+            robot.lift.raise();
         } else {
             robot.lift.stop();
         }

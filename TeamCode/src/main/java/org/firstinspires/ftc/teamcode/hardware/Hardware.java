@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
@@ -57,6 +58,9 @@ public class Hardware implements Constants {
 
     public JewelArms jewelArms;
 
+    public OpticalDistanceSensor rightLiftDistance;
+    public OpticalDistanceSensor leftLiftDistance;
+
     HardwareMap hwMap;
 
     public void init(HardwareMap hardwareMap) {
@@ -96,6 +100,9 @@ public class Hardware implements Constants {
         dumpPan = new DumpPan(this);
 
         jewelArms = new JewelArms(this);
+
+        rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
+        leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK
