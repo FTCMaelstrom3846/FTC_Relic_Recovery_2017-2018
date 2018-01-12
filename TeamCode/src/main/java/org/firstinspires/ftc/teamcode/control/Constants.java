@@ -89,6 +89,11 @@ public interface Constants {
     double distanceKD = 0.0000025;
     double distanceMaxI = 0;
 
+    double shortDistanceKP = 0.0027;
+    double shortDistanceKI = 0.075;
+    double shortDistanceKD = 0.0000025;
+    double shortDistanceMaxI = 0;
+
     double angleTurnKP = -0.011;
     double angleTurnKI = -1.25;
     double angleTurnKD = 0;

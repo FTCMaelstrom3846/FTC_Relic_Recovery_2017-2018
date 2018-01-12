@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.PIDController;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
-import org.firstinspires.ftc.teamcode.opModes.MaelstromAutonomous;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
@@ -16,34 +20,41 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
 public class Drivetrain implements Constants {
 
+    public enum Column {
+        Right, Center, Left
+    }
+
     private double desiredAngle = 0;
     //Gamepad gamepad1;
     private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
     private boolean halfSpeed = false;
     private BNO055_IMU imu;
-    private MaelstromAutonomous auto;
+    private AutonomousOpMode auto;
     private Hardware hardware;
+    public Telemetry telemetry;
 
     private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
     private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
+    private PIDController shortDistancePIDController = new PIDController(shortDistanceKP, shortDistanceKI, shortDistanceKD, shortDistanceMaxI);
 
     private double angle;
     private double[] speeds = new double[4];
 
     public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
         //this.gamepad1 = gamepad1;
+        this.hardware = hardware;
         this.backLeft = hardware.backLeft;
         this.frontLeft = hardware.frontLeft;
         this.backRight = hardware.backRight;
         this.frontRight = hardware.frontRight;
         this.imu = hardware.imu;
-        this.hardware = hardware;
         /*this.halfSpeed = halfSpeed;*/
     }
 
-    public void setAuto (MaelstromAutonomous auto) {
+    public void setAuto (AutonomousOpMode auto) {
         this.auto = auto;
+        this.telemetry = auto.getTelemetry();
     }
 
     public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
@@ -113,24 +124,25 @@ public class Drivetrain implements Constants {
         angle = Math.toRadians(angle);
         double adjustedAngle = angle + Math.PI/4;
 
-        frontLeftPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
-        backLeftPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        frontLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        backLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
         frontRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
         backRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
 
         while (opModeIsActive() && (stopState <= 1000)) {
-            double PIDMultiplier = distancePIDController.power(-ticks, frontRight.getCurrentPosition());
+            double PIDMultiplier = Math.abs(ticks) < 250 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
+                    : distancePIDController.power(-ticks, frontRight.getCurrentPosition());
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
-            frontLeft.setPower(frontLeftPower * -PIDMultiplier + angleCorrection);
-            backLeft.setPower(backLeftPower * -PIDMultiplier + angleCorrection);
+            frontLeft.setPower(frontLeftPower * PIDMultiplier + angleCorrection);
+            backLeft.setPower(backLeftPower * PIDMultiplier + angleCorrection);
             frontRight.setPower(frontRightPower * PIDMultiplier + angleCorrection);
             backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
-            auto.telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
-            auto.telemetry.addData("StopState", stopState);
-            auto.telemetry.update();
+            telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
+            telemetry.addData("StopState", stopState);
+            telemetry.update();
 
 
-            if ((frontRight.getCurrentPosition() >= (-ticks - DISTANCE_TOLERANCE)) && (frontRight.getCurrentPosition() <= (-ticks + DISTANCE_TOLERANCE))) {
+            if (Math.abs(frontRight.getCurrentPosition() - -ticks) >= DISTANCE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
@@ -139,29 +151,97 @@ public class Drivetrain implements Constants {
 
     }
 
-    public void turnAngle(double angle, double speedMultiplier) {
+    public void strafeTillColumn (Column column, double maxSpeedMultiplier) {
 
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
+        double angle = -90;
+
+        int columnCount = 0;
         eReset();
-
 
         long startTime = System.nanoTime();
         long stopState = 0;
-        while (opModeIsActive() && (stopState <= 1000)) {
-            double power = speedMultiplier * angularTurnPIDController.power(angle, imu.getAngles()[0]);
+
+        double initialHeading = imu.getAngles()[0];
+        angle = Math.toRadians(angle);
+        double adjustedAngle = angle + Math.PI/4;
+
+        frontLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        backLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        frontRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
+        backRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+
+        loopTillCryptobox:
+        while (opModeIsActive()) {
+            double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
+            frontLeft.setPower(frontLeftPower + angleCorrection);
+            backLeft.setPower(backLeftPower  + angleCorrection);
+            frontRight.setPower(frontRightPower + angleCorrection);
+            backRight.setPower(backRightPower + angleCorrection);
+
+            switch (column) {
+                case Right:
+                    if (columnCount == 1) {
+                        break loopTillCryptobox;
+                    }
+                    break;
+                case Center:
+
+                    break;
+                case Left:
+
+                    break;
+            }
+
+            if (hardware.rightLiftDistance.getRawLightDetected() > 220 && stopState > 750) {
+                startTime = System.nanoTime();
+                columnCount++;
+            } else {
+                stopState = (System.nanoTime() - startTime) / 1000000;
+            }
+
+            telemetry.addData("distance", hardware.rightLiftDistance.getRawLightDetected());
+            telemetry.update();
+
+            try {
+                Thread.sleep(1);
+            }
+            catch (InterruptedException e) {}
+        }
+
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void turnAngle(double angle, double speedMultiplier) {
+
+        eReset();
+        double lastAngle = imu.getAngles()[0];
+        long startTime = System.nanoTime();
+        long stopState = 0;
+        while (opModeIsActive() && (stopState <= 3000)) {
+            double power = speedMultiplier * angularTurnPIDController.power(angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
             frontRight.setPower(power);
             backRight.setPower(power);
-            auto.telemetry.addData("Angle", imu.getAngles()[0]);
-            auto.telemetry.addData("i", angularTurnPIDController.getI());
-            auto.telemetry.update();
+            telemetry.addData("Angle", imu.getAngles()[0]);
+            telemetry.addData("i", angularTurnPIDController.getI());
+            telemetry.update();
 
 
-            if (imu.getAngles()[0] >= (angle - ANGLE_TOLERANCE) && imu.getAngles()[0] <= (angle + ANGLE_TOLERANCE)) {
+            if (Math.abs(imu.getAngles()[0]  - (angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle)) >= ANGLE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
             }
+
+            lastAngle = imu.getAngles()[0];
         }
 
     }

@@ -41,6 +41,8 @@ public class BNO055_IMU {
         return new double[]{yaw, pitch, roll};
     }
 
+
+
     public String dataOutput() {
         return String.format("Yaw: %.3f  Pitch: %.3f  Roll: %.3f", getAngles()[0], getAngles()[1], getAngles()[2]);
     }

@@ -36,13 +36,7 @@ public class Hardware implements Constants {
 
     public DcMotor intake;
 
-    public Servo relicWrist;
-    public Servo relicGrabber;
-    public Servo dumpRight;
-    public Servo dumpLeft;
-
-    public Servo leftJewelArm;
-    public Servo rightJewelArm;
+    public Servo relicWrist, relicGrabber, dumpRight, dumpLeft, leftJewelArm, rightJewelArm;
 
     public ColorSensor jewelSensor;
 
@@ -58,8 +52,7 @@ public class Hardware implements Constants {
 
     public JewelArms jewelArms;
 
-    public OpticalDistanceSensor rightLiftDistance;
-    public OpticalDistanceSensor leftLiftDistance;
+    public OpticalDistanceSensor rightLiftDistance, leftLiftDistance;
 
     HardwareMap hwMap;
 
