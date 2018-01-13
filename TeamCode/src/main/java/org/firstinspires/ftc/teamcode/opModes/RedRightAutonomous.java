@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
@@ -18,6 +19,7 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
 
     Hardware robot = new Hardware();
 
+    RelicRecoveryVuMark column;
 
     @Override
     public void runOpMode() {
@@ -25,7 +27,7 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
 
         robot.drivetrain.setAuto(this);
 
-        VumarkRecognition vumark = new VumarkRecognition(/*hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName())*/);
+        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         vumark.initVumark();
 
         telemetry.addLine("Omit the first noun");
@@ -54,23 +56,35 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
 
         }*/
 
-        //robot.drivetrain.drive(1750, 0, 0.6);
+
+        robot.drivetrain.drive(700, 0, 0.6);
+
+        sleep(1000);
+
+        column = vumark.getColumn();
+        telemetry.addData("Detected vumark", column);
+        telemetry.update();
+        sleep(2000);
+
+        robot.drivetrain.drive(1100, 0, 0.6);
 
         robot.drivetrain.turnAngle(180, 1);
 
-        //robot.drivetrain.drive(1750, -90, 0.6);
+        robot.drivetrain.drive(-200, 0, 1);
 
-        //robot.drivetrain.strafeTillColumn(Drivetrain.Column.Right, 0.55);
+        robot.drivetrain.strafeTillColumn(column, 0.55, -90);
 
-        //robot.drivetrain.drive(200, 0, 1);
+        robot.drivetrain.drive(200, 0, 1);
 
-        //robot.dumpPan.raisePan();
+        robot.dumpPan.raisePan();
 
-        //sleep(1750);
+        sleep(750);
 
-        //robot.dumpPan.lowerPan();
+        robot.drivetrain.drive(200, 0, 1);
 
-        //sleep(500);
+        robot.dumpPan.lowerPan();
+
+        sleep(500);
     }
 
 
@@ -81,5 +95,6 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
     public Telemetry getTelemetry() {
         return telemetry;
     }
+
 
 }

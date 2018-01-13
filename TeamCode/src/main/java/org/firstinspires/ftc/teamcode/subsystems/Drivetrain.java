@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.PIDController;
@@ -19,10 +20,6 @@ import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
  */
 
 public class Drivetrain implements Constants {
-
-    public enum Column {
-        Right, Center, Left
-    }
 
     private double desiredAngle = 0;
     //Gamepad gamepad1;
@@ -142,7 +139,7 @@ public class Drivetrain implements Constants {
             telemetry.update();
 
 
-            if (Math.abs(frontRight.getCurrentPosition() - -ticks) >= DISTANCE_TOLERANCE) {
+            if (Math.abs(frontRight.getCurrentPosition() - -ticks) <= DISTANCE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
@@ -151,13 +148,12 @@ public class Drivetrain implements Constants {
 
     }
 
-    public void strafeTillColumn (Column column, double maxSpeedMultiplier) {
+    public void strafeTillColumn (RelicRecoveryVuMark column, double maxSpeedMultiplier, double angle) {
 
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
         double backRightPower;
-        double angle = -90;
 
         int columnCount = 0;
         eReset();
@@ -174,6 +170,8 @@ public class Drivetrain implements Constants {
         frontRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
         backRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
 
+        double firstOptoReading = hardware.leftLiftDistance.getRawLightDetected();
+
         loopTillCryptobox:
         while (opModeIsActive()) {
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
@@ -183,27 +181,35 @@ public class Drivetrain implements Constants {
             backRight.setPower(backRightPower + angleCorrection);
 
             switch (column) {
-                case Right:
+                case RIGHT:
                     if (columnCount == 1) {
                         break loopTillCryptobox;
                     }
                     break;
-                case Center:
-
+                case CENTER:
+                    if (columnCount == 2) {
+                        break loopTillCryptobox;
+                    }
                     break;
-                case Left:
-
+                case LEFT:
+                    if (columnCount == 3) {
+                        break loopTillCryptobox;
+                    }
                     break;
+                case UNKNOWN:
+                    telemetry.addLine("You're actually a homosexual and I hate you");
+                    telemetry.update();
+                    break loopTillCryptobox;
             }
 
-            if (hardware.rightLiftDistance.getRawLightDetected() > 220 && stopState > 750) {
+            if (hardware.leftLiftDistance.getRawLightDetected()/firstOptoReading > 1.3 && stopState > 750) {
                 startTime = System.nanoTime();
                 columnCount++;
             } else {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             }
 
-            telemetry.addData("distance", hardware.rightLiftDistance.getRawLightDetected());
+            telemetry.addData("distance", hardware.leftLiftDistance.getRawLightDetected());
             telemetry.update();
 
             try {
@@ -221,10 +227,9 @@ public class Drivetrain implements Constants {
     public void turnAngle(double angle, double speedMultiplier) {
 
         eReset();
-        double lastAngle = imu.getAngles()[0];
         long startTime = System.nanoTime();
         long stopState = 0;
-        while (opModeIsActive() && (stopState <= 3000)) {
+        while (opModeIsActive() && (stopState <= 1000)) {
             double power = speedMultiplier * angularTurnPIDController.power(angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
@@ -235,13 +240,12 @@ public class Drivetrain implements Constants {
             telemetry.update();
 
 
-            if (Math.abs(imu.getAngles()[0]  - (angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle)) >= ANGLE_TOLERANCE) {
+            if (Math.abs(imu.getAngles()[0]  - (angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle)) <= ANGLE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
             }
 
-            lastAngle = imu.getAngles()[0];
         }
 
     }

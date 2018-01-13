@@ -125,8 +125,7 @@ import ftc.vision.FrameGrabber;
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
   {
-    ////////////// START VISION PROCESSING CODE //////////////
-/*
+    /*////////////// START VISION PROCESSING CODE //////////////
     static final int FRAME_WIDTH_REQUEST = 176;
     static final int FRAME_HEIGHT_REQUEST = 144;
 
@@ -220,8 +219,7 @@ public class FtcRobotControllerActivity extends Activity
         }
       }
     };
-*/
-    ////////////// END VISION PROCESSING CODE //////////////
+    ////////////// END VISION PROCESSING CODE //////////////*/
   public static final String TAG = "RCActivity";
   public String getTag() { return TAG; }
 
@@ -752,8 +750,7 @@ public class FtcRobotControllerActivity extends Activity
       }
     }
   }
-/*
-  public CameraBridgeViewBase getCameraBridgeViewBase() {
+  /*public CameraBridgeViewBase getCameraBridgeViewBase() {
     return cameraBridgeViewBase;
   }*/
 }
