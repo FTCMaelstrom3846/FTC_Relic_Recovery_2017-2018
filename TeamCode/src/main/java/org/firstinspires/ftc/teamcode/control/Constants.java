@@ -25,7 +25,7 @@ public interface Constants {
 
     double RELIC_WRIST_RESET = 1;
     double RELIC_WRIST_UP = 0.5;
-    double RELIC_WRIST_DROP = 0.6;
+    double RELIC_WRIST_DROP = 0.225;
     double RELIC_WRIST_PICKUP = 0;
 
     double LEFT_JEWEL_ARM_LOWER = 0.55;
@@ -41,8 +41,8 @@ public interface Constants {
 
     double PAN_RAISE = 1;
     double PAN_LOWER = 0;
-    double PAN_CENTER_LEFT = 0.36;
-    double PAN_CENTER_RIGHT = 0.51;
+    double PAN_CENTER_LEFT = 0.30;
+    double PAN_CENTER_RIGHT = 0.45;
 
     double frontLeftKP = 20;
     double frontLeftKI = 0;
@@ -98,4 +98,9 @@ public interface Constants {
     double angleTurnKI = -1.25;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
+
+    double smallAngleTurnKP = -0.015;
+    double smallAngleTurnKI = -1.25;
+    double smallAngleTurnKD = 0;
+    double smallAngleTurnMaxI = 0;
 }

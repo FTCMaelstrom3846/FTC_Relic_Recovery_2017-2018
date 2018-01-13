@@ -7,9 +7,7 @@ import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.PIDController;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
@@ -32,6 +30,7 @@ public class Drivetrain implements Constants {
 
     private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
+    private PIDController smallAngularTurnPIDController = new PIDController(smallAngleTurnKP, smallAngleTurnKI, smallAngleTurnKD, smallAngleTurnMaxI);
     private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
     private PIDController shortDistancePIDController = new PIDController(shortDistanceKP, shortDistanceKI, shortDistanceKD, shortDistanceMaxI);
 
@@ -197,7 +196,6 @@ public class Drivetrain implements Constants {
                     }
                     break;
                 case UNKNOWN:
-                    telemetry.addLine("You're actually a homosexual and I hate you");
                     telemetry.update();
                     break loopTillCryptobox;
             }
@@ -230,7 +228,8 @@ public class Drivetrain implements Constants {
         long startTime = System.nanoTime();
         long stopState = 0;
         while (opModeIsActive() && (stopState <= 1000)) {
-            double power = speedMultiplier * angularTurnPIDController.power(angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle, imu.getAngles()[0]);
+            double power = speedMultiplier * Math.abs(angle) < 50 ? smallAngularTurnPIDController.power(angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 :
+                    angle, imu.getAngles()[0]) : angularTurnPIDController.power(angle >= 180 && imu.getAngles()[0] < 0 ? angle - 360 : angle, imu.getAngles()[0]);
             frontLeft.setPower(power);
             backLeft.setPower(power);
             frontRight.setPower(power);

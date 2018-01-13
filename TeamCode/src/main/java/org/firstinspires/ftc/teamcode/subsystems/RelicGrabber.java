@@ -59,7 +59,13 @@ public class RelicGrabber implements Constants {
     }
 
     public void lowerWrist() {
-        relicWrist.setPosition(relicExtender.getCurrentPosition() > 3000 ? RELIC_WRIST_DROP : RELIC_WRIST_PICKUP);
+        //relicWrist.setPosition(relicExtender.getCurrentPosition() > 3000 ? RELIC_WRIST_DROP : RELIC_WRIST_PICKUP);
+        relicWrist.setPosition(RELIC_WRIST_PICKUP);
+    }
+
+    public void placeRelic() {
+        relicWrist.setPosition(RELIC_WRIST_DROP);
+
     }
 
 }

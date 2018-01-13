@@ -73,7 +73,11 @@ public class MaelstromTeleop extends OpMode {
             robot.relicGrabberSystem.raiseWrist();
         } else if (gamepad1.dpad_left || gamepad2.dpad_left) {
             robot.relicGrabberSystem.lowerWrist();
+        } else if (gamepad2.right_bumper) {
+            robot.relicGrabberSystem.placeRelic();
         }
+
+        telemetry.addData("Relic extender position", robot.relicExtender.getCurrentPosition());
 
         if (gamepad1.dpad_down || gamepad2.dpad_down) { //MAKE TOGGLE CLASS
             dpadRightCurrState = true;
@@ -111,9 +115,9 @@ public class MaelstromTeleop extends OpMode {
             robot.intakeSystem.stop();
         }
 
-        if (gamepad1.right_bumper || gamepad2.right_bumper) {
+        if (gamepad1.right_bumper) {
             robot.lift.lower();
-        } else if (gamepad1.left_bumper ||  gamepad2.left_bumper) {
+        } else if (gamepad1.left_bumper) {
             robot.lift.raise();
         } else {
             robot.lift.stop();
