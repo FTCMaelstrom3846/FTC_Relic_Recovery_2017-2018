@@ -296,10 +296,13 @@ public class Drivetrain implements Constants {
             maxSpeed = Math.max(maxSpeed, Math.abs(speeds[i]));
         }
 
+
         for (int i = 0; i < speeds.length; i++) {
             speeds[i] /= maxSpeed;
         }
     }
+
+
 
     /*public double[] smoothSpeeds(double[] speeds) {
         for (int i = 0; i < speeds.length; i++) {

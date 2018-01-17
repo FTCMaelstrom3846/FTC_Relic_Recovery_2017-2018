@@ -10,3 +10,9 @@
 -Remove teleopAngle in drivetrain
 -Rewrite Conveyor class with speed control
 -Re-add conveyor and intake in hardware and in their respective classes
+
+
+
+
+-Tune angle turning kp
+-Finish util class (add normalize method)
