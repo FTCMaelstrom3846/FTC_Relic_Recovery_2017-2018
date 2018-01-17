@@ -20,4 +20,18 @@ public class Utils {
         return clippedValue;
     }
 
+    public static void normalizeValues (double[] values) {
+
+        double maxValue = 0;
+
+        for (int i = 0; i < values.length; i++) {
+            maxValue = Math.max(maxValue, Math.abs(values[i]));
+        }
+
+
+        for (int i = 0; i < values.length; i++) {
+            values[i] /= maxValue;
+        }
+    }
+
 }

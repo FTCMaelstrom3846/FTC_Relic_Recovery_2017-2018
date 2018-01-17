@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 
@@ -76,7 +77,8 @@ public class Drivetrain implements Constants {
         double angleCorrection = /*Math.abs(gamepadRightXRaw) < 0.00001 ? angularCorrectionPIDController.power(desiredAngle, imu.getAngles()[0]) : */0;
 
         double speeds[] = {Math.sin(adjustedAngle), Math.cos(adjustedAngle), Math.cos(adjustedAngle), Math.sin(adjustedAngle)};
-        normalizeSpeeds(speeds);
+
+        Utils.normalizeValues(speeds);
 
         speeds[0] = (speeds[0] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
         speeds[1] = (speeds[1] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_SPEED_MULTIPLIER + angleCorrection;
@@ -286,20 +288,6 @@ public class Drivetrain implements Constants {
 
     public boolean opModeIsActive() {
         return auto.getOpModeIsActive();
-    }
-
-    public void normalizeSpeeds (double[] speeds) {
-
-        double maxSpeed = 0;
-
-        for (int i = 0; i < speeds.length; i++) {
-            maxSpeed = Math.max(maxSpeed, Math.abs(speeds[i]));
-        }
-
-
-        for (int i = 0; i < speeds.length; i++) {
-            speeds[i] /= maxSpeed;
-        }
     }
 
 
