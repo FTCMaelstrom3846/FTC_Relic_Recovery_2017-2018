@@ -26,10 +26,9 @@ public class AutonomousTesting extends LinearOpMode implements AutonomousOpMode 
 
         waitForStart();
 
-        robot.drivetrain.drive(600, 0, 1);
-        robot.drivetrain.turnAngle(70, 1);
-        robot.drivetrain.turnAngle(100, 1);
-        robot.drivetrain.turnAngle(-170, 1);
+        robot.drivetrain.drive(3500, 0, 1);
+        robot.drivetrain.drive(-3500, 0, 0.5);
+        robot.drivetrain.drive(3500, 0, 0.25);
     }
 
 

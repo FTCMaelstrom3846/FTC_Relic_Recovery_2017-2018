@@ -102,9 +102,8 @@ public class Drivetrain implements Constants {
 
     }
 
-//Everything below is retarded old stuff and needs to be fixed
 
-    public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle, double maxSpeedMultiplier) {
+    public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle, double maxSpeed) {
 
         double frontLeftPower;
         double backLeftPower;
@@ -122,19 +121,27 @@ public class Drivetrain implements Constants {
         angle = Math.toRadians(angle);
         double adjustedAngle = angle + Math.PI/4;
 
-        frontLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
-        backLeftPower = -maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
-        frontRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.cos(adjustedAngle));
-        backRightPower = maxSpeedMultiplier * AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * (Math.sin(adjustedAngle));
+        frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+        backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
 
         while (opModeIsActive() && (stopState <= 1000)) {
             double PIDMultiplier = Math.abs(ticks) < 250 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
                     : distancePIDController.power(-ticks, frontRight.getCurrentPosition());
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
-            frontLeft.setPower(frontLeftPower * PIDMultiplier + angleCorrection);
-            backLeft.setPower(backLeftPower * PIDMultiplier + angleCorrection);
-            frontRight.setPower(frontRightPower * PIDMultiplier + angleCorrection);
-            backRight.setPower(backRightPower * PIDMultiplier + angleCorrection);
+            speeds[0] = frontLeftPower * PIDMultiplier;
+            speeds[1] = backLeftPower * PIDMultiplier;
+            speeds[2] = frontRightPower * PIDMultiplier;
+            speeds[3] = backRightPower * PIDMultiplier;
+
+            Utils.normalizeSpeedsToMax(speeds, maxSpeed);
+
+            frontLeft.setPower(speeds[0] + angleCorrection);
+            backLeft.setPower(speeds[1] + angleCorrection);
+            frontRight.setPower(speeds[2] + angleCorrection);
+            backRight.setPower(speeds[3] + angleCorrection);
+
             telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
             telemetry.addData("StopState", stopState);
             telemetry.update();
@@ -145,6 +152,53 @@ public class Drivetrain implements Constants {
             } else {
                 startTime = System.nanoTime();
             }
+        }
+
+    }
+
+    public void driveForTime(double speed, double angle, double time) {
+
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
+
+        eReset();
+
+
+        speed *= -1;
+/*
+        double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
+*/
+        long startTime = System.nanoTime();
+        double elapsedTime = 0;
+        double initialHeading = imu.getAngles()[0];
+        angle = Math.toRadians(angle);
+        double adjustedAngle = angle + Math.PI/4;
+
+        frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+        backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+
+        while (opModeIsActive() && (elapsedTime < time)) {
+            double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getAngles()[0]);
+
+            speeds[0] = frontLeftPower * speed + angleCorrection;
+            speeds[1] = backLeftPower * speed + angleCorrection;
+            speeds[2] = frontRightPower * speed + angleCorrection;
+            speeds[3] = backRightPower * speed + angleCorrection;
+
+            frontLeft.setPower(speeds[0]);
+            backLeft.setPower(speeds[1]);
+            frontRight.setPower(speeds[2]);
+            backRight.setPower(speeds[3]);
+
+            telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
+            telemetry.addData("StopState", elapsedTime);
+            telemetry.update();
+
+             elapsedTime = (System.nanoTime() - startTime) / 1e9;
         }
 
     }

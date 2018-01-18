@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode.opModes;
 
-import android.hardware.Camera;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
-import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 @Autonomous(name="Red Right Autonomous ")
 //@Disabled
@@ -46,7 +41,7 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
         sleep(4000);
 
         robot.drivetrain.turnAngle(-30, 1);*/
-
+/*
         robot.jewelArms.lowerRight();
         sleep(1000);
         telemetry.addData("Blue", robot.jewelSensor.blue());
@@ -63,22 +58,24 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
             sleep(500);
             robot.drivetrain.drive(2400, 0, 0.6);
 
-        }
+        }*/
 
-        /*robot.drivetrain.drive(700, 0, 0.6);
+/*        robot.drivetrain.drive(700, 0, 0.6);
 
         sleep(1000);
 
-        column = vumark.getColumn();
+        //column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();
-        sleep(2000);
+        telemetry.update();*/
+        //sleep(2000);
 
-        robot.drivetrain.drive(1100, 0, 0.6);*/
+        robot.drivetrain.drive(-1200, 0, 0.8);
 
-/*        robot.drivetrain.turnAngle(180, 1);
+        robot.drivetrain.driveForTime(0.5, 0, 1.5);
 
-        robot.drivetrain.drive(-200, 0, 1);
+        //robot.drivetrain.turnAngle(180, 1);
+
+        //robot.drivetrain.drive(-200, 0, 1);
 
         robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, 0.55, -90);
 
@@ -92,7 +89,7 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);*/
+        sleep(500);
     }
 
 
