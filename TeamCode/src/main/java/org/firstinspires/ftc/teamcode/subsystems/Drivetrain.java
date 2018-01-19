@@ -256,7 +256,7 @@ public class Drivetrain implements Constants {
                     break loopTillCryptobox;
             }
 
-            if (hardware.leftLiftDistance.getRawLightDetected()/firstOptoReading > 1.3 && stopState > 750) {
+            if (hardware.leftLiftDistance.getRawLightDetected()/firstOptoReading > 1.45 && stopState > 1750) {
                 startTime = System.nanoTime();
                 columnCount++;
             } else {
@@ -266,10 +266,9 @@ public class Drivetrain implements Constants {
             telemetry.addData("distance", hardware.leftLiftDistance.getRawLightDetected());
             telemetry.update();
 
-            try {
-                Thread.sleep(1);
+            if (stopState > 10000) {
+                break;
             }
-            catch (InterruptedException e) {}
         }
 
         frontLeft.setPower(0);
@@ -330,8 +329,7 @@ public class Drivetrain implements Constants {
     }
 
 
-    void eReset() {
-
+    public void eReset() {
 
         for(SpeedControlledMotor motor: hardware.drivetrainMotors) {
             motor.setPower(0);

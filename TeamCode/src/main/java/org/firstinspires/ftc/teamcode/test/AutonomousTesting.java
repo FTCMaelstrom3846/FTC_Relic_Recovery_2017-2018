@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 @Autonomous(name="Test Autonomous ")
-//@Disabled
+@Disabled
 public class AutonomousTesting extends LinearOpMode implements AutonomousOpMode {
 
     Hardware robot = new Hardware();

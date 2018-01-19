@@ -71,13 +71,13 @@ public class RedRightAutonomous extends LinearOpMode implements AutonomousOpMode
 
         robot.drivetrain.drive(-1200, 0, 0.8);
 
-        robot.drivetrain.driveForTime(0.5, 0, 1.5);
+        robot.drivetrain.driveForTime(0.25, 0, 1);
 
         //robot.drivetrain.turnAngle(180, 1);
 
-        //robot.drivetrain.drive(-200, 0, 1);
+        robot.drivetrain.drive(-850, 0, 1);
 
-        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, 0.55, -90);
+        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.LEFT, 0.55, -90);
 
         robot.drivetrain.drive(200, 0, 1);
 

@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 @TeleOp(name="Optical Distance Sensor Test")
-//@Disabled
+@Disabled
 public class OpticalDistanceSensorTest extends LinearOpMode {
 
     Hardware robot = new Hardware();

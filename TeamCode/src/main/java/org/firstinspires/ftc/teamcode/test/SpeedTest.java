@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 
 @TeleOp(name= "SpeedTest")
-//@Disabled
+@Disabled
 public class SpeedTest extends OpMode {
 
     Hardware robot = new Hardware();
