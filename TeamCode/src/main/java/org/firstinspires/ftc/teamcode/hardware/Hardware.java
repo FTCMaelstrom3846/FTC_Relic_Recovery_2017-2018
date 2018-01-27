@@ -85,7 +85,7 @@ public class Hardware implements Constants {
         dumpLeft = hwMap.servo.get("dumpLeft");
 
         leftLift = hwMap.crservo.get("leftLift");
-        rightLift = hwMap.crservo.get("rightLeft");
+        rightLift = hwMap.crservo.get("rightLift");
 
         leftJewelArm = hwMap.servo.get("leftJewelArm");
         //rightJewelArm = hwMap.servo.get("rightJewelArm");
