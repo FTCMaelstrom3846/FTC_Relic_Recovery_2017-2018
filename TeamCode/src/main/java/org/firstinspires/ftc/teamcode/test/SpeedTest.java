@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -32,9 +33,13 @@ public class SpeedTest extends OpMode {
         telemetry.addData("Left Lift RPM:", robot.leftLift.getRPM());
         telemetry.addData("Left Position", robot.leftLift.getCurrentPosition());
 
-        robot.rightLift.setRPM(20/*rightLiftPID.power(400, robot.rightLift.getCurrentPosition())*/);
-        robot.leftLift.setRPM(-20/*leftLiftPID.power(-400, robot.leftLift.getCurrentPosition())*/);
+        robot.rightLift.setRPM(20*/
+/*rightLiftPID.power(400, robot.rightLift.getCurrentPosition())*//*
+);
+        robot.leftLift.setRPM(-20*/
+/*leftLiftPID.power(-400, robot.leftLift.getCurrentPosition())*//*
+);
         //robot.leftLift.setRPM(-20);
 
     }
-}
+}*/

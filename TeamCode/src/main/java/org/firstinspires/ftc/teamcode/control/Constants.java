@@ -14,6 +14,9 @@ public interface Constants {
     double ANGLE_TOLERANCE = 1;
     double DISTANCE_TOLERANCE = 50;
 
+    double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
+    int TIME_BETWEEN_OPTOSENSOR_DETECTIONS = 1500;
+
     double TELEOP_SPEED_MULTIPLIER = 1;
     double AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER = 1;
 
@@ -28,13 +31,16 @@ public interface Constants {
     double RELIC_WRIST_DROP = 0.225;
     double RELIC_WRIST_PICKUP = 0;
 
-    double LEFT_JEWEL_ARM_LOWER = 0.55;
-    double LEFT_JEWEL_ARM_RAISE = 0.33;
+    double LEFT_JEWEL_ARM_LOWER = 0.62;
+    double LEFT_JEWEL_ARM_RAISE = 0.29;
     double RIGHT_JEWEL_ARM_LOWER = 0;
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
+    double JEWEL_WRIST_RIGHT = 1;
+    double JEWEL_WRIST_LEFT = 0;
+    double JEWEL_WRIST_CENTER = 0.5;
 
-    double INTAKESYSTEM_INTAKE_POWER = -1;
-    double INTAKESYSTEM_OUTAKE_POWER = 1;
+    double INTAKESYSTEM_INTAKE_POWER = 1;
+    double INTAKESYSTEM_OUTAKE_POWER = -1;
 
     double LIFT_RAISE_POWER = 1;
     double LIFT_LOWER_POWER = -1;

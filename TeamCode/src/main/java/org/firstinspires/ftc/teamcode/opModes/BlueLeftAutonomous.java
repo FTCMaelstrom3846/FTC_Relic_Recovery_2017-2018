@@ -5,13 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.teamcode.control.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
-import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Blue Right Autonomous ")
 //@Disabled
-public class BlueLeftAutonomous extends LinearOpMode implements AutonomousOpMode {
+public class BlueLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
 
     Hardware robot = new Hardware();
 
@@ -31,8 +30,8 @@ public class BlueLeftAutonomous extends LinearOpMode implements AutonomousOpMode
 
 
         waitForStart();
-/*
-        robot.drivetrain.turnAngle(30, 1);
+
+/*        robot.drivetrain.turnAngle(30, 1);
         sleep(1000);
 
         column = vumark.getColumn();
@@ -43,21 +42,23 @@ public class BlueLeftAutonomous extends LinearOpMode implements AutonomousOpMode
 
         robot.drivetrain.turnAngle(-30, 1);*/
 
-        robot.jewelArms.lowerRight();
+        robot.jewelArms.lowerLeft();
         sleep(1000);
-        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());
-        if (robot.jewelSensor.red() > robot.jewelSensor.blue()) {
-            robot.drivetrain.drive(300, 0, 0.68);
-            robot.jewelArms.raiseRight();
-            sleep(500);
-            robot.drivetrain.drive(-2150, 0, 0.6);
+/*        telemetry.addData("Blue", robot.jewelSensor.blue());
+        telemetry.addData("Red", robot.jewelSensor.red());*/
+        if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
+            //robot.drivetrain.drive(300, 0, 0.68);
+            robot.jewelArms.turnWristRight();
+            sleep(600);
+            robot.jewelArms.raiseLeft();
+            //robot.drivetrain.drive(1750, 0, 0.6);
 
-        } else if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
-            robot.drivetrain.drive(-300, 0, 0.68);
-            robot.jewelArms.raiseRight();
-            sleep(500);
-            robot.drivetrain.drive(-1750, 0, 0.6);
+        } else if (robot.jewelSensor.red() < robot.jewelSensor.blue()) {
+            //robot.drivetrain.drive(-300, 0, 0.68);
+            robot.jewelArms.turnWristLeft();
+            sleep(600);
+            robot.jewelArms.raiseLeft();
+            //robot.drivetrain.drive(2400, 0, 0.6);
 
         }
 
@@ -65,14 +66,22 @@ public class BlueLeftAutonomous extends LinearOpMode implements AutonomousOpMode
 
         sleep(1000);
 
-        column = vumark.getColumn();
+        //column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();
-        sleep(2000);
+        telemetry.update();*/
+        //sleep(2000);
 
-        robot.drivetrain.drive(1100, 0, 0.6);*/
+        robot.drivetrain.drive(1200, 0, 0.6);
 
-/*        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, 0.55, 90);
+        robot.drivetrain.turnAngle(180, 1);
+
+        robot.drivetrain.driveForTime(0.25, 0, 1);
+
+        //robot.drivetrain.turnAngle(180, 1);
+
+        robot.drivetrain.drive(-950, 0, 1);
+
+        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.LEFT, Utils.AutoColor.RED, .55, 90);
 
         robot.drivetrain.drive(200, 0, 1);
 
@@ -84,7 +93,7 @@ public class BlueLeftAutonomous extends LinearOpMode implements AutonomousOpMode
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);*/
+        sleep(500);
     }
 
 

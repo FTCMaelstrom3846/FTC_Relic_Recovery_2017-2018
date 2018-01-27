@@ -33,8 +33,10 @@ public class SensorOutput extends LinearOpMode {
             telemetry.addData("Right Back Encoder", robot.backRight.getCurrentPosition());
             telemetry.addData("Left Back Encoder", robot.backLeft.getCurrentPosition());
 
+/*
             telemetry.addData("Left Lift Encoder", robot.leftLift.getCurrentPosition());
             telemetry.addData("Right Lift Encoder", robot.rightLift.getCurrentPosition());
+*/
 
             telemetry.addData("Relic Extender Encoder", robot.relicExtender.getCurrentPosition());
             telemetry.update();

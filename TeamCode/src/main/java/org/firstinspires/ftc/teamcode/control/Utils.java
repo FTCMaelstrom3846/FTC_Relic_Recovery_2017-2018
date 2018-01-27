@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.control;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * Created by manug on 1/16/2018.
  */
@@ -65,4 +67,13 @@ public class Utils {
         }
     }
 
+    public enum AutoColor {
+        RED, BLUE
+    }
+
+    public interface AutonomousOpMode {
+        boolean getOpModeIsActive();
+
+        Telemetry getTelemetry();
+    }
 }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
@@ -13,8 +14,11 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class Lift implements Constants{
 
-    private SpeedControlledMotor rightLift;
-    private SpeedControlledMotor leftLift;
+   /* private SpeedControlledMotor rightLift;
+    private SpeedControlledMotor leftLift;*/
+
+   private CRServo rightLift;
+   private CRServo leftLift;
 
     public Lift(Hardware hardware) {
         //this.gamepad1 = gamepad1;
@@ -27,7 +31,7 @@ public class Lift implements Constants{
         leftLift.setPower(-LIFT_RAISE_POWER);
         rightLift.setPower(LIFT_RAISE_POWER);
     }
-
+//hi hamsey ramed
     public void raiseRight() {
         rightLift.setPower(LIFT_RAISE_POWER);
     }

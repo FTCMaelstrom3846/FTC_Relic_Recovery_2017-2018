@@ -28,14 +28,6 @@ public class MaelstromTeleop extends OpMode {
 
         robot.init(hardwareMap);
 
-        robot.relicGrabberSystem.resetWrist();
-
-        robot.relicGrabberSystem.openGrabber();
-
-        robot.jewelArms.resetArms();
-
-        robot.dumpPan.lowerPan();
-
         telemetry.addLine("Omit the first noun");
         telemetry.update();
         previousTime = System.nanoTime()/1e6;
@@ -140,7 +132,7 @@ public class MaelstromTeleop extends OpMode {
         }*/
 
 
-        //telemetry.addData("Robot angle:", robot.imu.getAngles()[0]);
+        //telemetry.addData("Robot angle:", robot.imu.getRelativeYaw()[0]);
 
         /*if (gamepad1.dpad_up) {
             robot.relicWrist.setPosition(.5);

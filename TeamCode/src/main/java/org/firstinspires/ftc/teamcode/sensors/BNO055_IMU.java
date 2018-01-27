@@ -4,13 +4,17 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 
-public class BNO055_IMU {
+public class BNO055_IMU implements Runnable{
 
+    private double reltiveYaw = 0;
+    private double lastAngle = 0;
     private final BNO055IMU imu;
 
     public BNO055_IMU(String name, HardwareMap hwmap) {
         imu = hwmap.get(BNO055IMU.class, name);
         setParameters();
+        Thread updateYaw = new Thread(this);
+        updateYaw.start();
     }
 
 
@@ -23,6 +27,23 @@ public class BNO055_IMU {
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         imu.initialize(parameters);
+    }
+
+    public void updateRelativeYaw() {
+        if (lastAngle > 90 && getAngles()[0] < 0) {
+            reltiveYaw = 180 * Math.round(reltiveYaw/180) + (180 + getAngles()[0] );
+        } else if (lastAngle < -90 && getAngles()[0]  > 0) {
+            reltiveYaw = 180 * Math.round(reltiveYaw/180) - (180 - getAngles()[0] );
+        } else if (Math.abs(reltiveYaw) <= 180) {
+            reltiveYaw = getAngles()[0];
+        } else {
+            reltiveYaw += getAngles()[0]  - lastAngle;
+        }
+        lastAngle = getAngles()[0];
+    }
+
+    public double getRelativeYaw() {
+        return reltiveYaw;
     }
 
     public double[] getAngles() {
@@ -41,7 +62,17 @@ public class BNO055_IMU {
         return new double[]{yaw, pitch, roll};
     }
 
+    public void run() {
+        while (true) {
+            updateRelativeYaw();
+            try {
+                Thread.sleep(0, 250000);
+            }
+            catch (InterruptedException e) {
 
+            }
+        }
+    }
 
     public String dataOutput() {
         return String.format("Yaw: %.3f  Pitch: %.3f  Roll: %.3f", getAngles()[0], getAngles()[1], getAngles()[2]);

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,15 +29,20 @@ public class Hardware implements Constants {
             frontRight = new SpeedControlledMotor(frontRightKP, frontRightKI, frontRightKD, frontRightMaxI),
             backLeft = new SpeedControlledMotor(backLeftKP, backLeftKI, backLeftKD, backLeftMaxI),
             backRight = new SpeedControlledMotor(backRightKP, backRightKI, backRightKD, backRightMaxI),
-            leftLift = new SpeedControlledMotor(leftLiftKP, leftLiftKI, leftLiftKD, leftLiftMaxI),
-            rightLift = new SpeedControlledMotor(rightLiftKP, rightLiftKI, rightLiftKD, rightLiftMaxI),
+            /*leftLift = new SpeedControlledMotor(leftLiftKP, leftLiftKI, leftLiftKD, leftLiftMaxI),
+            rightLift = new SpeedControlledMotor(rightLiftKP, rightLiftKI, rightLiftKD, rightLiftMaxI),*/
             relicExtender = new SpeedControlledMotor(relicExtenderKP, relicExtenderKI, relicExtenderKD, relicExtenderMaxI);
 
     public SpeedControlledMotor[] drivetrainMotors = {frontLeft, backLeft, frontRight, backRight};
 
-    public DcMotor intake;
+    public DcMotor rightIntake;
+    public DcMotor leftIntake;
 
-    public Servo relicWrist, relicGrabber, dumpRight, dumpLeft, leftJewelArm, rightJewelArm;
+    public Servo relicWrist, relicGrabber, dumpRight, dumpLeft,
+            leftJewelArm, /*rightJewelArm*/ jewelWrist;
+
+    public CRServo leftLift;
+    public CRServo rightLift;
 
     public ColorSensor jewelSensor;
 
@@ -66,19 +72,24 @@ public class Hardware implements Constants {
         frontRight.init(hwMap, "frontRight");
         backLeft.init(hwMap, "backLeft");
         backRight.init(hwMap, "backRight");
-        leftLift.init (hwMap, "leftLift");
-        rightLift.init(hwMap, "rightLift");
+/*        leftLift.init (hwMap, "leftLift");
+        rightLift.init(hwMap, "rightLift");*/
         relicExtender.init(hwMap, "relicExtender");
 
-        intake = hwMap.dcMotor.get("intake");
+        rightIntake = hwMap.dcMotor.get("rightIntake");
+        leftIntake = hwMap.dcMotor.get("leftIntake");
 
         relicWrist = hwMap.servo.get("relicWrist");
         relicGrabber = hwMap.servo.get("relicGrabber");
         dumpRight = hwMap.servo.get("dumpRight");
         dumpLeft = hwMap.servo.get("dumpLeft");
 
+        leftLift = hwMap.crservo.get("leftLift");
+        rightLift = hwMap.crservo.get("rightLeft");
+
         leftJewelArm = hwMap.servo.get("leftJewelArm");
-        rightJewelArm = hwMap.servo.get("rightJewelArm");
+        //rightJewelArm = hwMap.servo.get("rightJewelArm");
+        jewelWrist = hwMap.servo.get("jewelWrist");
 
         jewelSensor = hwMap.colorSensor.get("jewelSensor");
 
@@ -105,12 +116,23 @@ public class Hardware implements Constants {
         }
 
         dumpLeft.setDirection(Servo.Direction.REVERSE);
+        leftIntake.setDirection(DcMotor.Direction.REVERSE);
 
-        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        /*leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/
+
         relicExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
+        jewelArms.raiseLeft();
+        //jewelArms.raiseRight();
+
+        relicGrabberSystem.resetWrist();
+
+        relicGrabberSystem.openGrabber();
+
+        dumpPan.lowerPan();
     }
 
 }

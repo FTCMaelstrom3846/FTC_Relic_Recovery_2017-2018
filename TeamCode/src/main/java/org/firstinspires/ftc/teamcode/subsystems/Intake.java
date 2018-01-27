@@ -12,21 +12,28 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class Intake implements Constants {
 
-    private DcMotor intake;
+    private DcMotor leftIntake;
+    private DcMotor rightIntake;
 
     public Intake (Hardware hardware) {
         //this.gamepad1 = gamepad1;
-        this.intake = hardware.intake;
+        this.leftIntake = hardware.leftIntake;
+        this.rightIntake = hardware.rightIntake;
     }
 
 
     public void intake() {
-        intake.setPower(INTAKESYSTEM_INTAKE_POWER);
+        leftIntake.setPower(INTAKESYSTEM_INTAKE_POWER);
+        rightIntake.setPower(INTAKESYSTEM_INTAKE_POWER);
     }
 
     public void outtake() {
-        intake.setPower(INTAKESYSTEM_OUTAKE_POWER);
+        leftIntake.setPower(INTAKESYSTEM_OUTAKE_POWER);
+        rightIntake.setPower(INTAKESYSTEM_OUTAKE_POWER);
     }
 
-    public void stop() {intake.setPower(0);}
+    public void stop() {
+        leftIntake.setPower(0);
+        rightIntake.setPower(0);
+    }
 }
