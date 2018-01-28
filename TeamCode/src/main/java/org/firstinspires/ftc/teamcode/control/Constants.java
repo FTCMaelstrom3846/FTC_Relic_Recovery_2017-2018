@@ -42,8 +42,8 @@ public interface Constants {
     double INTAKESYSTEM_INTAKE_POWER = 1;
     double INTAKESYSTEM_OUTAKE_POWER = -1;
 
-    double LIFT_RAISE_POWER = 1;
-    double LIFT_LOWER_POWER = -1;
+    double LIFT_RAISE_POWER = 0.73;
+    double LIFT_LOWER_POWER = -0.73;
 
     double PAN_RAISE = 1;
     double PAN_LOWER = 0;
