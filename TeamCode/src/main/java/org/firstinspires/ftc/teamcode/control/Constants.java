@@ -17,6 +17,7 @@ public interface Constants {
     double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
     int TIME_BETWEEN_OPTOSENSOR_DETECTIONS = 1500;
 
+    double TELEOP_TURNING_SPEED_MULTIPLIER = 0.55;
     double TELEOP_SPEED_MULTIPLIER = 1;
     double AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER = 1;
 
@@ -39,8 +40,8 @@ public interface Constants {
     double JEWEL_WRIST_LEFT = 0;
     double JEWEL_WRIST_CENTER = 0.5;
 
-    double INTAKESYSTEM_INTAKE_POWER = 1;
-    double INTAKESYSTEM_OUTAKE_POWER = -1;
+    double INTAKESYSTEM_INTAKE_POWER = 0.5;
+    double INTAKESYSTEM_OUTAKE_POWER = - 0.5;
 
     double LIFT_RAISE_POWER = 0.73;
     double LIFT_LOWER_POWER = -0.73;

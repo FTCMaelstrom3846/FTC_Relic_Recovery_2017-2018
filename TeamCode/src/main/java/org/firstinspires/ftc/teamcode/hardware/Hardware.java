@@ -116,7 +116,7 @@ public class Hardware implements Constants {
         }
 
         dumpLeft.setDirection(Servo.Direction.REVERSE);
-        leftIntake.setDirection(DcMotor.Direction.REVERSE);
+        rightIntake.setDirection(DcMotor.Direction.REVERSE);
 
         /*leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/

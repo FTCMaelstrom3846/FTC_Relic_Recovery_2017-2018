@@ -66,7 +66,7 @@ public class BNO055_IMU implements Runnable{
         while (true) {
             updateRelativeYaw();
             try {
-                Thread.sleep(0, 250000);
+                Thread.sleep(10);
             }
             catch (InterruptedException e) {
 
