@@ -40,16 +40,16 @@ public interface Constants {
     double JEWEL_WRIST_LEFT = 0;
     double JEWEL_WRIST_CENTER = 0.5;
 
-    double INTAKESYSTEM_INTAKE_POWER = 0.5;
-    double INTAKESYSTEM_OUTAKE_POWER = - 0.5;
+    double INTAKESYSTEM_INTAKE_POWER = 0.75;
+    double INTAKESYSTEM_OUTAKE_POWER = - 0.75;
 
     double LIFT_RAISE_POWER = 0.73;
     double LIFT_LOWER_POWER = -0.73;
 
-    double PAN_RAISE = 1;
-    double PAN_LOWER = 0;
-    double PAN_CENTER_LEFT = 0.30;
-    double PAN_CENTER_RIGHT = 0.45;
+    double PAN_RAISE = 0.66;
+    double PAN_LOWER = .255;
+    /*double PAN_LOWER_AUTO = .05;*/
+    double PAN_CENTER = 0.31;
 
     double frontLeftKP = 20;
     double frontLeftKI = 0;

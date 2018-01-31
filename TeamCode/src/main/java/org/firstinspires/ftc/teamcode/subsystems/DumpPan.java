@@ -14,7 +14,7 @@ public class DumpPan implements Constants {
     public Servo dumpLeft;
     public Servo dumpRight;
 
-    private double pos = 0;
+    //private double pos = 0;
     public DumpPan(Hardware hardware) {
         this.dumpLeft = hardware.dumpLeft;
         this.dumpRight = hardware.dumpRight;
@@ -27,7 +27,7 @@ public class DumpPan implements Constants {
 */
             dumpRight.setPosition(PAN_RAISE);
             dumpLeft.setPosition(PAN_RAISE);
-            pos = 0;
+            //pos = 0;
 /*            try {
                 Thread.sleep(7);
             } catch (InterruptedException e){}
@@ -40,7 +40,7 @@ public class DumpPan implements Constants {
 */
             dumpRight.setPosition(PAN_LOWER);
             dumpLeft.setPosition(PAN_LOWER);
-            pos = 0;
+            //pos = 0;
 
 /*            try {
                 Thread.sleep(7);
@@ -50,16 +50,16 @@ public class DumpPan implements Constants {
 
     public void centerPan() {
 
-        if (dumpRight.getPosition() == 1) {
-            dumpRight.setPosition(PAN_CENTER_RIGHT);
-            dumpLeft.setPosition(PAN_CENTER_LEFT);
-        } else {
-            if (pos < PAN_CENTER_RIGHT) {
-                pos += 0.1;
-                dumpRight.setPosition(pos);
-                dumpLeft.setPosition(pos > PAN_CENTER_LEFT ? PAN_CENTER_LEFT : pos);
-            }
-        }
+/*
+        if (dumpRight.getPosition() > PAN_CENTER) {
+*/
+            dumpRight.setPosition(PAN_CENTER);
+            dumpLeft.setPosition(PAN_CENTER);
+/*        } else {
+            pos += 0.1;
+            dumpRight.setPosition(pos);
+            dumpLeft.setPosition(pos > PAN_CENTER ? PAN_CENTER : pos);
+        }*/
 
     }
 

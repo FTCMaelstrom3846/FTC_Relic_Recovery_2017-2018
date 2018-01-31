@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -117,6 +118,7 @@ public class Hardware implements Constants {
 
         dumpLeft.setDirection(Servo.Direction.REVERSE);
         rightIntake.setDirection(DcMotor.Direction.REVERSE);
+        rightLift.setDirection(CRServo.Direction.REVERSE);
 
         /*leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/
