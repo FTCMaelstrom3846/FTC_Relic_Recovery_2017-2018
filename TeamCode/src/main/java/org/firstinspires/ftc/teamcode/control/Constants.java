@@ -86,7 +86,7 @@ public interface Constants {
     double relicExtenderKD = 0;
     double relicExtenderMaxI = 1;
 
-    double angleCorrectionKP = -0.05;
+    double angleCorrectionKP = -0.052;
     double angleCorrectionKI = 0;
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
