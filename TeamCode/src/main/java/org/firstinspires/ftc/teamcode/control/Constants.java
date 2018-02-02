@@ -24,8 +24,8 @@ public interface Constants {
     double RELIC_EXTENDER_POWER = -1;
     double RELIC_RETRACT_POWER = 1;
 
-    double RELIC_GRABBER_OPEN = 1;
-    double RELIC_GRABBER_CLOSED = 0;
+    double RELIC_GRABBER_OPEN = 0;
+    double RELIC_GRABBER_CLOSED = 0.775;
 
     double RELIC_WRIST_RESET = 1;
     double RELIC_WRIST_UP = 0.5;

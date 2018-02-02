@@ -80,7 +80,7 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         robot.drivetrain.driveForTime(0.55, -90, 1.5);
 */
 
-        robot.drivetrain.intakeFlipAndCryptoLineup(-500, 1, 0.4);
+        robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
 
 /*        robot.drivetrain.driveForTime(1, 0, 0.2);
 
