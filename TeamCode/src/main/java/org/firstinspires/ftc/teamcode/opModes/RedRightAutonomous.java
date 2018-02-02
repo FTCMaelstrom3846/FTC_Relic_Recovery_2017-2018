@@ -20,8 +20,6 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
     public void runOpMode() {
         robot.init(hardwareMap);
 
-        robot.drivetrain.setAuto(this);
-
 /*        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         vumark.initVumark();*/
 

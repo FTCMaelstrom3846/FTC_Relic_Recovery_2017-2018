@@ -32,16 +32,16 @@ public interface Constants {
     double RELIC_WRIST_DROP = 0.225;
     double RELIC_WRIST_PICKUP = 0;
 
-    double LEFT_JEWEL_ARM_LOWER = 0.62;
-    double LEFT_JEWEL_ARM_RAISE = 0.29;
+    double LEFT_JEWEL_ARM_LOWER = 0.17;
+    double LEFT_JEWEL_ARM_RAISE = 0.5;
     double RIGHT_JEWEL_ARM_LOWER = 0;
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
     double JEWEL_WRIST_RIGHT = 1;
     double JEWEL_WRIST_LEFT = 0;
     double JEWEL_WRIST_CENTER = 0.5;
 
-    double INTAKESYSTEM_INTAKE_POWER = 0.75;
-    double INTAKESYSTEM_OUTAKE_POWER = - 0.75;
+    double INTAKESYSTEM_INTAKE_POWER = .9;
+    double INTAKESYSTEM_OUTAKE_POWER = - .9;
 
     double LIFT_RAISE_POWER = 0.73;
     double LIFT_LOWER_POWER = -0.73;
@@ -86,7 +86,7 @@ public interface Constants {
     double relicExtenderKD = 0;
     double relicExtenderMaxI = 1;
 
-    double angleCorrectionKP = -0.022;
+    double angleCorrectionKP = -0.052;
     double angleCorrectionKI = 0;
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
@@ -101,8 +101,8 @@ public interface Constants {
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 
-    double angleTurnKP = -0.01;
-    double angleTurnKI = -1.25;
+    double angleTurnKP = -0.00965;
+    double angleTurnKI = -1.1;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
 

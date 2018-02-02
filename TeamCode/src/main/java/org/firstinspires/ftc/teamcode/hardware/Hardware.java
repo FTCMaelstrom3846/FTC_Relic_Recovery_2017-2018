@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
+import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
@@ -23,6 +24,8 @@ import org.firstinspires.ftc.teamcode.subsystems.RelicGrabber;
  */
 
 public class Hardware implements Constants {
+
+    public Utils.AutonomousOpMode auto;
 
     public BNO055_IMU imu;
 
@@ -67,7 +70,7 @@ public class Hardware implements Constants {
 
         this.hwMap = hardwareMap;
 
-        imu = new BNO055_IMU("imu", hwMap);
+        imu = new BNO055_IMU("imu", this);
 
         frontLeft.init(hwMap, "frontLeft");
         frontRight.init(hwMap, "frontRight");
@@ -135,6 +138,14 @@ public class Hardware implements Constants {
         relicGrabberSystem.openGrabber();
 
         dumpPan.lowerPan();
+    }
+
+    public void setAuto (Utils.AutonomousOpMode auto) {
+        this.auto = auto;
+    }
+
+    public HardwareMap getHwMap() {
+        return hwMap;
     }
 
 }

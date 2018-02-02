@@ -41,17 +41,14 @@ public class Drivetrain implements Constants {
     public Drivetrain (/*Gamepad gamepad1,*/ Hardware hardware/*, boolean halfSpeed*/) {
         //this.gamepad1 = gamepad1;
         this.hardware = hardware;
-        this.backLeft = hardware.backLeft;
-        this.frontLeft = hardware.frontLeft;
-        this.backRight = hardware.backRight;
-        this.frontRight = hardware.frontRight;
-        this.imu = hardware.imu;
+        backLeft = hardware.backLeft;
+        frontLeft = hardware.frontLeft;
+        backRight = hardware.backRight;
+        frontRight = hardware.frontRight;
+        imu = hardware.imu;
         /*this.halfSpeed = halfSpeed;*/
-    }
-
-    public void setAuto (Utils.AutonomousOpMode auto) {
-        this.auto = auto;
-        this.telemetry = auto.getTelemetry();
+        auto = hardware.auto;
+        telemetry = auto == null? null : auto.getTelemetry();
     }
 
     public void drive(double gamepadLeftYRaw, double gamepadLeftXRaw, double gamepadRightXRaw) {
@@ -201,6 +198,10 @@ public class Drivetrain implements Constants {
              elapsedTime = (System.nanoTime() - startTime) / 1e9;
         }
 
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        backRight.setPower(0);
     }
 
     public void strafeTillColumn (RelicRecoveryVuMark column, Utils.AutoColor color, double maxSpeedMultiplier, double angle) {
@@ -308,6 +309,13 @@ public class Drivetrain implements Constants {
         }
 
     }
+
+    public void intakeFlipAndCryptoLineup(int ticks, double speed, double time) {
+        driveForTime(speed, 0, time);
+        drive(ticks + frontRight.getCurrentPosition(), 0, 1);
+    }
+
+
 
     public int getPos() {
         return frontRight.getCurrentPosition();

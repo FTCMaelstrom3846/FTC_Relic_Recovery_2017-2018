@@ -15,9 +15,9 @@ public class AutonomousTesting extends LinearOpMode implements Utils.AutonomousO
 
     @Override
     public void runOpMode() {
-        robot.init(hardwareMap);//MY NAME IS HAMSEY RAMED. I AM THE CHIEF PROGRAMMER OF MY ROBOTICS TEAM. I LOVE OLIVE JUICE ON MY PASTA.
+        robot.setAuto(this);
 
-        robot.drivetrain.setAuto(this);
+        robot.init(hardwareMap);//MY NAME IS HAMSEY RAMED. I AM THE CHIEF PROGRAMMER OF MY ROBOTICS TEAM. I LOVE OLIVE JUICE ON MY PASTA.
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();

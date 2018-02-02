@@ -18,9 +18,11 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
 
     @Override
     public void runOpMode() {
+
+        robot.setAuto(this);
+
         robot.init(hardwareMap);
 
-        robot.drivetrain.setAuto(this);
 
 /*        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         vumark.initVumark();*/

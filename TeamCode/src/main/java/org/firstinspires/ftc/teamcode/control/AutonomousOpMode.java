@@ -9,5 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public interface AutonomousOpMode {
     boolean getOpModeIsActive();
 
+/*
     Telemetry getTelemetry();
+*/
 }
