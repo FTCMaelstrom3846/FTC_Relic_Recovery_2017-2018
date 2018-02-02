@@ -24,7 +24,7 @@ public interface Constants {
     double RELIC_EXTENDER_POWER = -1;
     double RELIC_RETRACT_POWER = 1;
 
-    double RELIC_GRABBER_OPEN = 0;
+    double RELIC_GRABBER_OPEN = .02;
     double RELIC_GRABBER_CLOSED = 0.775;
 
     double RELIC_WRIST_RESET = 1;
@@ -37,7 +37,7 @@ public interface Constants {
     double RIGHT_JEWEL_ARM_LOWER = 0;
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
     double JEWEL_WRIST_RIGHT = 1;
-    double JEWEL_WRIST_LEFT = 0;
+    double JEWEL_WRIST_LEFT = 0.1;
     double JEWEL_WRIST_CENTER = 0.5;
 
     double INTAKESYSTEM_INTAKE_POWER = .9;

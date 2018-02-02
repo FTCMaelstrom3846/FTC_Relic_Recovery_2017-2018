@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Red Left Autonomous ")
 //@Disabled
@@ -23,8 +24,8 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         robot.init(hardwareMap);
 
-/*        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-        vumark.initVumark();*/
+        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        vumark.initVumark();
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
@@ -43,10 +44,10 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         robot.drivetrain.turnAngle(-30, 1);*/
 
-        /*robot.jewelArms.lowerLeft();
+        robot.jewelArms.lowerLeft();
         sleep(1000);
-*//*        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());*//*
+/*        telemetry.addData("Blue", robot.jewelSensor.blue());
+        telemetry.addData("Red", robot.jewelSensor.red());*/
         if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
             //robot.drivetrain.drive(300, 0, 0.68);
             robot.jewelArms.turnWristRight();
@@ -61,7 +62,7 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
             robot.jewelArms.raiseLeft();
             //robot.drivetrain.drive(2400, 0, 0.6);
 
-        }*/
+        }
 
 /*        robot.drivetrain.drive(700, 0, 0.6);
 
@@ -98,7 +99,7 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         robot.drivetrain.drive(100, 0, 1);
 */
 
-        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, Utils.AutoColor.RED, .75, -90);
+        robot.drivetrain.strafeTillColumn(vumark.getColumn(), Utils.AutoColor.RED, .75, -90);
 
         robot.drivetrain.drive(200, 0, 1);
 

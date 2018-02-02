@@ -254,8 +254,12 @@ public class Drivetrain implements Constants {
                     }
                     break;
                 case UNKNOWN:
+                    telemetry.addLine("Not detected");
                     telemetry.update();
-                    break loopTillCryptobox;
+                    if (columnCount == 1) {
+                        break loopTillCryptobox;
+                    }
+                    break;
             }
 
             telemetry.addData("stopState", stopState);
