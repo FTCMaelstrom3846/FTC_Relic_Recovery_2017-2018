@@ -34,6 +34,17 @@ public class DumpPan implements Constants {
         }*/
     }
 
+    public void raisePanAuto() {
+        for (double i = dumpRight.getPosition(); i < PAN_RAISE; i += 0.01) {
+
+        dumpRight.setPosition(PAN_RAISE);
+        dumpLeft.setPosition(PAN_RAISE);
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e){}
+        }
+    }
+
     public void lowerPan() {
 /*
         for (double i = dumpRight.getPosition(); i <PAN_LOWER; i += 0.01) {

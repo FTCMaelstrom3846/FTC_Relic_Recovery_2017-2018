@@ -11,11 +11,11 @@ public interface Constants {
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
-    double ANGLE_TOLERANCE = 1;
+    double ANGLE_TOLERANCE = 1.25;
     double DISTANCE_TOLERANCE = 50;
 
     double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
-    int TIME_BETWEEN_OPTOSENSOR_DETECTIONS = 1500;
+    int TIME_BETWEEN_OPTOSENSOR_DETECTIONS = 1200;
 
     double TELEOP_TURNING_SPEED_MULTIPLIER = 0.55;
     double TELEOP_SPEED_MULTIPLIER = 1;
@@ -38,7 +38,7 @@ public interface Constants {
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
     double JEWEL_WRIST_RIGHT = 1;
     double JEWEL_WRIST_LEFT = 0.1;
-    double JEWEL_WRIST_CENTER = 0.5;
+    double JEWEL_WRIST_CENTER = 0.565;
 
     double INTAKESYSTEM_INTAKE_POWER = .9;
     double INTAKESYSTEM_OUTAKE_POWER = - .9;
@@ -86,7 +86,7 @@ public interface Constants {
     double relicExtenderKD = 0;
     double relicExtenderMaxI = 1;
 
-    double angleCorrectionKP = -0.052;
+    double angleCorrectionKP = -0.032;
     double angleCorrectionKI = 0;
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
@@ -101,8 +101,8 @@ public interface Constants {
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 
-    double angleTurnKP = -0.00965;
-    double angleTurnKI = -1.1;
+    double angleTurnKP = -0.0137;
+    double angleTurnKI = -1;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
 

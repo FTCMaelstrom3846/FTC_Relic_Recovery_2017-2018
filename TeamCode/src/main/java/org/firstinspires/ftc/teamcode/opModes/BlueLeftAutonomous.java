@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
-@Autonomous(name="Blue Right Autonomous ")
+@Autonomous(name="Blue Left Autonomous ")
 //@Disabled
 public class BlueLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
 
@@ -63,14 +63,14 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
             //robot.drivetrain.drive(2400, 0, 0.6);
 
         }
-
-/*        robot.drivetrain.drive(700, 0, 0.6);
+/*
+*//*        robot.drivetrain.drive(700, 0, 0.6);
 
         sleep(1000);
 
         //column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();*/
+        telemetry.update();*//*
         //sleep(2000);
 
         robot.drivetrain.drive(1200, 0, 0.6);
@@ -87,7 +87,9 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
 
         robot.drivetrain.drive(200, 0, 1);
 
-        robot.dumpPan.raisePan();
+        robot.dumpPan.centerPan();
+
+        robot.dumpPan.raisePanAuto();
 
         sleep(750);
 
@@ -95,7 +97,7 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);
+        sleep(500);*/
     }
 
 

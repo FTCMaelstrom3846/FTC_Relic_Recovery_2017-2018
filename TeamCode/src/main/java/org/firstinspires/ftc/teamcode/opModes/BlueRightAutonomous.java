@@ -7,10 +7,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
-@Autonomous(name="Red Right Autonomous ")
+@Autonomous(name="Blue Right Autonomous ")
 //@Disabled
-public class RedRightAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
+public class BlueRightAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
 
     Hardware robot = new Hardware();
 
@@ -18,10 +19,13 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
     @Override
     public void runOpMode() {
+
+        robot.setAuto(this);
+
         robot.init(hardwareMap);
 
-/*        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-        vumark.initVumark();*/
+        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        vumark.initVumark();
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
@@ -29,29 +33,22 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
         waitForStart();
 
-/*        robot.drivetrain.turnAngle(30, 1);
-        sleep(1000);
-
         column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
         telemetry.update();
-
-        sleep(4000);
-
-        robot.drivetrain.turnAngle(-30, 1);*/
 
         robot.jewelArms.lowerLeft();
         sleep(1000);
 /*        telemetry.addData("Blue", robot.jewelSensor.blue());
         telemetry.addData("Red", robot.jewelSensor.red());*/
-        if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
+        if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
             //robot.drivetrain.drive(300, 0, 0.68);
             robot.jewelArms.turnWristRight();
             sleep(600);
             robot.jewelArms.raiseLeft();
             //robot.drivetrain.drive(1750, 0, 0.6);
 
-        } else if (robot.jewelSensor.red() > robot.jewelSensor.blue()) {
+        } else if (robot.jewelSensor.red() < robot.jewelSensor.blue()) {
             //robot.drivetrain.drive(-300, 0, 0.68);
             robot.jewelArms.turnWristLeft();
             sleep(600);
@@ -66,18 +63,44 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
         //column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();*//*
+        telemetry.update();*/
         //sleep(2000);
 
-        robot.drivetrain.drive(-1200, 0, 0.6);
+        //robot.drivetrain.drive(1525, 0, 0.6);
 
-        robot.drivetrain.driveForTime(0.25, 0, 1);
+        //robot.drivetrain.turnAngle(-90, 1);
+
+/*
+        robot.drivetrain.driveForTime(0.55, -90, 1.5);
+*/
+
+        //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
+
+/*        robot.drivetrain.driveForTime(1, 0, 0.2);
+
+        robot.drivetrain.driveForTime(-0.5, 0, 2);
 
         //robot.drivetrain.turnAngle(180, 1);
 
-        robot.drivetrain.drive(-950, 0, 1);
+        robot.drivetrain.drive(100, 0, 1);*/
 
-        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.LEFT, Utils.AutoColor.RED, .55, -90);
+/*
+        robot.drivetrain.driveForTime(1, 0, 0.4);
+
+        robot.drivetrain.driveForTime(-0.35, 0, 3);
+
+        robot.drivetrain.drive(100, 0, 1);
+*/
+
+
+        robot.drivetrain.drive(1450, 0, 0.6);
+
+        robot.drivetrain.turnAngle(-90, 1);
+
+        robot.drivetrain.intakeFlipAndCryptoLineup(-560, 1, 0.4);
+
+        robot.drivetrain.strafeTillColumn(column, Utils.AutoColor.BLUE, .75, 90);
+
 
         robot.drivetrain.drive(200, 0, 1);
 
@@ -85,13 +108,13 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
         robot.dumpPan.raisePanAuto();
 
-        sleep(750);
+        sleep(1000);
 
         robot.drivetrain.drive(200, 0, 1);
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);*/
+        sleep(500);
     }
 
 

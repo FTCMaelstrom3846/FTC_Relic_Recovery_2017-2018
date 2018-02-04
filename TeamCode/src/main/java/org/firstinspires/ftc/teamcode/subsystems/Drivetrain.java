@@ -237,29 +237,58 @@ public class Drivetrain implements Constants {
             frontRight.setPower(frontRightPower + angleCorrection);
             backRight.setPower(backRightPower + angleCorrection);
 
-            switch (column) {
-                case RIGHT:
-                    if (columnCount == 1) {
-                        break loopTillCryptobox;
-                    }
-                    break;
-                case CENTER:
-                    if (columnCount == 2) {
-                        break loopTillCryptobox;
-                    }
-                    break;
-                case LEFT:
-                    if (columnCount == 3) {
-                        break loopTillCryptobox;
-                    }
-                    break;
-                case UNKNOWN:
-                    telemetry.addLine("Not detected");
-                    telemetry.update();
-                    if (columnCount == 1) {
-                        break loopTillCryptobox;
-                    }
-                    break;
+            if (color == Utils.AutoColor.RED) {
+                switch (column) {
+                    case RIGHT:
+                        if (columnCount == 1) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case CENTER:
+                        if (columnCount == 2) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case LEFT:
+                        if (columnCount == 3) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case UNKNOWN:
+                        telemetry.addLine("Not detected");
+                        telemetry.update();
+                        if (columnCount == 1) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                }
+            }
+
+            if (color == Utils.AutoColor.BLUE) {
+                switch (column) {
+                    case LEFT:
+                        if (columnCount == 1) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case CENTER:
+                        if (columnCount == 2) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case RIGHT:
+                        if (columnCount == 3) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                    case UNKNOWN:
+                        telemetry.addLine("Not detected");
+                        telemetry.update();
+                        if (columnCount == 1) {
+                            break loopTillCryptobox;
+                        }
+                        break;
+                }
             }
 
             telemetry.addData("stopState", stopState);
