@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.control.Utils;
@@ -63,6 +64,8 @@ public class Hardware implements Constants {
     public JewelArms jewelArms;
 
     public OpticalDistanceSensor rightLiftDistance, leftLiftDistance;
+
+    public SensorMRRangeSensor rangeSensor;
 
     HardwareMap hwMap;
 

@@ -11,7 +11,7 @@ public interface Constants {
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
-    double ANGLE_TOLERANCE = 1.25;
+    double ANGLE_TOLERANCE = 1;
     double DISTANCE_TOLERANCE = 50;
 
     double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
@@ -101,8 +101,8 @@ public interface Constants {
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 
-    double angleTurnKP = -0.0137;
-    double angleTurnKI = -1;
+    double angleTurnKP = -0.0145;
+    double angleTurnKI = -0.65;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
 

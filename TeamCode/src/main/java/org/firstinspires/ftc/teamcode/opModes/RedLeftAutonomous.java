@@ -33,15 +33,15 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         waitForStart();
 
-        column = vumark.getColumn();
+/*        column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
         telemetry.update();
 
 
         robot.jewelArms.lowerLeft();
         sleep(1000);
-/*        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());*/
+*//*        telemetry.addData("Blue", robot.jewelSensor.blue());
+        telemetry.addData("Red", robot.jewelSensor.red());*//*
         if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
             robot.jewelArms.turnWristRight();
             sleep(600);
@@ -52,15 +52,20 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
             sleep(600);
             robot.jewelArms.raiseLeft();
 
-        }
+        }*/
 
+/*
         robot.drivetrain.drive(-1450, 0, 0.6);
+*/
 
         robot.drivetrain.turnAngle(-90, 1);
 
-        robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
+        //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
+/*
+        robot.drivetrain.drive(-575, 0, 0.6);
 
-        robot.drivetrain.strafeTillColumn(column, Utils.AutoColor.RED, .75, -90);
+
+        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, Utils.AutoColor.RED, .75, -90);
 
         robot.drivetrain.drive(200, 0, 1);
 
@@ -74,7 +79,7 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);
+        sleep(500);*/
     }
 
 
