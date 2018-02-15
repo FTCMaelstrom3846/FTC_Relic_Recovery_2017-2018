@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.PIDController;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
@@ -27,12 +29,14 @@ public class Drivetrain implements Constants {
     private BNO055_IMU imu;
     private Utils.AutonomousOpMode auto;
     private Hardware hardware;
+    private ModernRoboticsI2cRangeSensor rangeSensor;
     public Telemetry telemetry;
 
     private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
     private PIDController smallAngularTurnPIDController = new PIDController(smallAngleTurnKP, smallAngleTurnKI, smallAngleTurnKD, smallAngleTurnMaxI);
     private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
+    private PIDController ultrasonicDistancePIDController = new PIDController(ultrasonicDistanceKP, ultrasonicDistanceKI, ultrasonicDistanceKD, ultrasonicDistanceMaxI);
     private PIDController shortDistancePIDController = new PIDController(shortDistanceKP, shortDistanceKI, shortDistanceKD, shortDistanceMaxI);
 
     private double angle;
@@ -45,6 +49,7 @@ public class Drivetrain implements Constants {
         frontLeft = hardware.frontLeft;
         backRight = hardware.backRight;
         frontRight = hardware.frontRight;
+        rangeSensor = hardware.rangeSensor;
         imu = hardware.imu;
         /*this.halfSpeed = halfSpeed;*/
         auto = hardware.auto;
@@ -145,6 +150,60 @@ public class Drivetrain implements Constants {
 
 
             if (Math.abs(frontRight.getCurrentPosition() - -ticks) <= DISTANCE_TOLERANCE) {
+                stopState = (System.nanoTime() - startTime) / 1000000;
+            } else {
+                startTime = System.nanoTime();
+            }
+        }
+
+    }
+
+
+    public void driveTillUltrasonicDistance(/*int distance*//*Change to dirstance*/double distance, double angle, double maxSpeed) {
+
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
+
+        eReset();
+
+/*
+        double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
+*/
+        long startTime = System.nanoTime();
+        long stopState = 0;
+        double initialHeading = imu.getRelativeYaw();
+        angle = Math.toRadians(angle);
+        double adjustedAngle = angle + Math.PI/4;
+
+        frontLeftPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+        backLeftPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        frontRightPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        backRightPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+
+        while (opModeIsActive() && (stopState <= 1000)) {
+            double PIDMultiplier = ultrasonicDistancePIDController.power(distance, hardware.rangeSensor.getDistance(DistanceUnit.INCH));
+            double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getRelativeYaw());
+            speeds[0] = frontLeftPower * PIDMultiplier;
+            speeds[1] = backLeftPower * PIDMultiplier;
+            speeds[2] = frontRightPower * PIDMultiplier;
+            speeds[3] = backRightPower * PIDMultiplier;
+
+            Utils.normalizeSpeedsToMax(speeds, maxSpeed);
+
+            frontLeft.setPower(speeds[0] + angleCorrection);
+            backLeft.setPower(speeds[1] + angleCorrection);
+            frontRight.setPower(speeds[2] + angleCorrection);
+            backRight.setPower(speeds[3] + angleCorrection);
+
+            telemetry.addData("Distance", hardware.rangeSensor.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Multiplier", PIDMultiplier);
+            telemetry.addData("StopState", stopState);
+            telemetry.update();
+
+
+            if (Math.abs(hardware.rangeSensor.getDistance(DistanceUnit.INCH) - distance) <= ULTRASONIC_DISTANCE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();

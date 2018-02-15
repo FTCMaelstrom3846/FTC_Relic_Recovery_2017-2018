@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
 import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.control.Utils;
@@ -65,7 +63,7 @@ public class Hardware implements Constants {
 
     public OpticalDistanceSensor rightLiftDistance, leftLiftDistance;
 
-    public SensorMRRangeSensor rangeSensor;
+    public ModernRoboticsI2cRangeSensor rangeSensor;
 
     HardwareMap hwMap;
 
@@ -114,6 +112,8 @@ public class Hardware implements Constants {
 
         rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
         leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
+
+        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK

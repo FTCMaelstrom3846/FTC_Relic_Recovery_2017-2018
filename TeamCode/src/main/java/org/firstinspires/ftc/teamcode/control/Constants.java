@@ -13,6 +13,7 @@ public interface Constants {
 
     double ANGLE_TOLERANCE = 1;
     double DISTANCE_TOLERANCE = 50;
+    double ULTRASONIC_DISTANCE_TOLERANCE = 0.3;
 
     double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
     int TIME_BETWEEN_OPTOSENSOR_DETECTIONS = 1200;
@@ -95,6 +96,11 @@ public interface Constants {
     double distanceKI = 0.075;
     double distanceKD = 0.0000025;
     double distanceMaxI = 0;
+
+    double ultrasonicDistanceKP = 0.011;
+    double ultrasonicDistanceKI = 0.0002;
+    double ultrasonicDistanceKD = 0.0000025;
+    double ultrasonicDistanceMaxI = 0;
 
     double shortDistanceKP = 0.0027;
     double shortDistanceKI = 0.075;

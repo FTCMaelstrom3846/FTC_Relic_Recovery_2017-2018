@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.test;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 @TeleOp(name="Sensor Output")
@@ -24,6 +25,8 @@ public class SensorOutput extends LinearOpMode {
 
             telemetry.addData("Jewel sensor red", robot.jewelSensor.red());
             telemetry.addData("Jewel sensor blue", robot.jewelSensor.blue());
+
+            telemetry.addData("Ultrasonic distance", robot.rangeSensor.getDistance(DistanceUnit.INCH));
 
             telemetry.addData("Right lift opto distance", robot.rightLiftDistance.getLightDetected());
             telemetry.addData("Left lift opto distance", robot.leftLiftDistance.getLightDetected());
