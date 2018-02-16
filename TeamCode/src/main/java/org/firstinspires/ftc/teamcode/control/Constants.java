@@ -97,7 +97,7 @@ public interface Constants {
     double distanceKD = 0.0000025;
     double distanceMaxI = 0;
 
-    double ultrasonicDistanceKP = 0.011;
+    double ultrasonicDistanceKP = 0.03;
     double ultrasonicDistanceKI = 0.0002;
     double ultrasonicDistanceKD = 0.0000025;
     double ultrasonicDistanceMaxI = 0;

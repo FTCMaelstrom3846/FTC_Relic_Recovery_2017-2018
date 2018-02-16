@@ -54,22 +54,21 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         }*/
 
-/*        robot.drivetrain.drive(-1450, 0, 0.6);
+        robot.drivetrain.drive(-1250, 0, 0.6);
 
         robot.drivetrain.turnAngle(-90, 1);
 
-        //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);*/
+        //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
 
         robot.drivetrain.driveTillUltrasonicDistance(5, 0, 1);
 
-/*
         robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.RIGHT, Utils.AutoColor.RED, .75, -90);
 
         robot.drivetrain.drive(200, 0, 1);
 
-        robot.dumpPan.centerPan();
+/*        robot.dumpPan.centerPan();
 
-        robot.dumpPan.raisePanAuto();
+        robot.dumpPan.raisePanAuto();*/
 
         sleep(1000);
 
@@ -77,7 +76,7 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         robot.dumpPan.lowerPan();
 
-        sleep(500);*/
+        sleep(500);
     }
 
 
