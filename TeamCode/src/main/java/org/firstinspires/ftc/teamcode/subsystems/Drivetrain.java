@@ -36,7 +36,7 @@ public class Drivetrain implements Constants {
     private PIDController angularTurnPIDController = new PIDController(angleTurnKP, angleTurnKI, angleTurnKD, angleTurnMaxI);
     private PIDController smallAngularTurnPIDController = new PIDController(smallAngleTurnKP, smallAngleTurnKI, smallAngleTurnKD, smallAngleTurnMaxI);
     private PIDController distancePIDController = new PIDController(distanceKP, distanceKI, distanceKD, distanceMaxI);
-    private PIDController ultrasonicDistancePIDController = new PIDController(ultrasonicDistanceKP, ultrasonicDistanceKI, ultrasonicDistanceKD, ultrasonicDistanceMaxI);
+    //private PIDController ultrasonicDistancePIDController = new PIDController(ultrasonicDistanceKP, ultrasonicDistanceKI, ultrasonicDistanceKD, ultrasonicDistanceMaxI);
     private PIDController shortDistancePIDController = new PIDController(shortDistanceKP, shortDistanceKI, shortDistanceKD, shortDistanceMaxI);
 
     private double angle;
@@ -158,8 +158,8 @@ public class Drivetrain implements Constants {
 
     }
 
-
-    public void driveTillUltrasonicDistance(/*int distance*//*Change to dirstance*/double distance, double angle, double maxSpeed) {
+/*
+    public void driveTillUltrasonicDistance(*//*int distance*//**//*Change to dirstance*//*double distance, double angle, double maxSpeed) {
 
         double frontLeftPower;
         double backLeftPower;
@@ -168,9 +168,9 @@ public class Drivetrain implements Constants {
 
         eReset();
 
-/*
+*//*
         double ticks = distance/(Math.PI * WHEEL_DIAMETER) * NEVEREST_20_COUNTS_PER_REV;
-*/
+*//*
         long startTime = System.nanoTime();
         long stopState = 0;
         double initialHeading = imu.getRelativeYaw();
@@ -210,7 +210,7 @@ public class Drivetrain implements Constants {
             }
         }
 
-    }
+    }*/
 
     public void driveForTime(double speed, double angle, double time) {
 

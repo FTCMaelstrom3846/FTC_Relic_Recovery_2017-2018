@@ -33,14 +33,17 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         waitForStart();
 
+/*
         column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
         telemetry.update();
 
         robot.jewelArms.lowerLeft();
         sleep(1000);
+*/
 /*        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());*/
+        telemetry.addData("Red", robot.jewelSensor.red());*//*
+
         if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
             //robot.drivetrain.drive(300, 0, 0.68);
             robot.jewelArms.turnWristRight();
@@ -56,6 +59,7 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
             //robot.drivetrain.drive(2400, 0, 0.6);
 
         }
+*/
 
 /*        robot.drivetrain.drive(700, 0, 0.6);
 
@@ -97,16 +101,16 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         robot.drivetrain.turnAngle(-90, 1);
 
-        robot.drivetrain.intakeFlipAndCryptoLineup(-560, 1, 0.4);
+        //robot.drivetrain.intakeFlipAndCryptoLineup(-560, 1, 0.4);
+        robot.drivetrain.drive(-575, 0, 0.6);
 
-        robot.drivetrain.strafeTillColumn(column, Utils.AutoColor.BLUE, .75, 90);
-
+        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.LEFT, Utils.AutoColor.BLUE, .75, 90);
 
         robot.drivetrain.drive(200, 0, 1);
 
-        robot.dumpPan.centerPan();
+/*        robot.dumpPan.centerPan();
 
-        robot.dumpPan.raisePanAuto();
+        robot.dumpPan.raisePanAuto();*/
 
         sleep(1000);
 
@@ -115,6 +119,22 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
         robot.dumpPan.lowerPan();
 
         sleep(500);
+
+        robot.intakeSystem.intake();
+
+        robot.drivetrain.drive(1000, 0, 1);
+
+        robot.intakeSystem.stop();
+
+        robot.drivetrain.drive(-1000, 0, 1);
+
+        /*        robot.dumpPan.centerPan();
+
+        robot.dumpPan.raisePanAuto();*/
+
+        sleep(1000);
+
+        robot.dumpPan.lowerPan();
     }
 
 
