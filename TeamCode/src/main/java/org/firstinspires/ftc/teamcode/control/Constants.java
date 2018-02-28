@@ -52,6 +52,9 @@ public interface Constants {
     /*double PAN_LOWER_AUTO = .05;*/
     double PAN_CENTER = 0.31;
 
+    double PAN_GRIP = 0;
+    double PAN_OPEN = 0;
+
     double frontLeftKP = 20;
     double frontLeftKI = 0;
     double frontLeftKD = 0/*1.92426108e-6*/;

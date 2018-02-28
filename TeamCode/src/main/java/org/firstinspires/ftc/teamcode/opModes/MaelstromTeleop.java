@@ -20,7 +20,10 @@ public class MaelstromTeleop extends OpMode {
 
     boolean dpadRightCurrState = false;
     boolean dpadRightPreviousState = false;
+    boolean aCurrState = false;
+    boolean aPreviousState = false;
     boolean gripperOpen = true;
+    boolean panGripperOpen = true;
     double currTime = 0;
     double previousTime = 0;
 
@@ -115,6 +118,23 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.raise();
         } else {
             robot.lift.stop();
+        }
+
+        if (gamepad1.a || gamepad2.a) { //MAKE TOGGLE CLASS
+            aCurrState = true;
+        } else {
+            aCurrState = false;
+            if (aPreviousState) {
+                panGripperOpen = !panGripperOpen;
+            }
+        }
+
+        aPreviousState = aCurrState;
+
+        if (panGripperOpen) {
+            robot.relicGrabberSystem.openGrabber();
+        } else {
+            robot.relicGrabberSystem.closeGrabber();
         }
 
 /*        if (gamepad2.right_bumper) {

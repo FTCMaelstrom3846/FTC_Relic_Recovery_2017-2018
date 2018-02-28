@@ -13,11 +13,13 @@ public class DumpPan implements Constants {
 
     public Servo dumpLeft;
     public Servo dumpRight;
+    public Servo panGripper;
 
     //private double pos = 0;
     public DumpPan(Hardware hardware) {
         this.dumpLeft = hardware.dumpLeft;
         this.dumpRight = hardware.dumpRight;
+        this.panGripper = hardware.panGripper;
     }
 
 
@@ -72,6 +74,14 @@ public class DumpPan implements Constants {
             dumpLeft.setPosition(pos > PAN_CENTER ? PAN_CENTER : pos);
         }*/
 
+    }
+
+    public void closeGripper() {
+        panGripper.setPosition(PAN_GRIP);
+    }
+
+    public void openGripper() {
+        panGripper.setPosition(PAN_OPEN);
     }
 
 }

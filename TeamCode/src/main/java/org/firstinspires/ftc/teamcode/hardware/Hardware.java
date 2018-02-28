@@ -42,7 +42,7 @@ public class Hardware implements Constants {
     public DcMotor leftIntake;
 
     public Servo relicWrist, relicGrabber, dumpRight, dumpLeft,
-            leftJewelArm, /*rightJewelArm*/ jewelWrist;
+            leftJewelArm, /*rightJewelArm*/ jewelWrist, panGripper;
 
     public CRServo leftLift;
     public CRServo rightLift;
@@ -88,6 +88,8 @@ public class Hardware implements Constants {
         relicGrabber = hwMap.servo.get("relicGrabber");
         dumpRight = hwMap.servo.get("dumpRight");
         dumpLeft = hwMap.servo.get("dumpLeft");
+
+        panGripper = hwMap.servo.get("panGripper");
 
         leftLift = hwMap.crservo.get("leftLift");
         rightLift = hwMap.crservo.get("rightLift");
