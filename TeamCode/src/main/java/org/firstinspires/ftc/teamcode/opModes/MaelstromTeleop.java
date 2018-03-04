@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 import java.io.FileWriter;
 
-
 @TeleOp(name= "Telop")
 //@Disabled
 public class MaelstromTeleop extends OpMode {
@@ -120,7 +119,7 @@ public class MaelstromTeleop extends OpMode {
             robot.lift.stop();
         }
 
-        if (gamepad1.a || gamepad2.a) { //MAKE TOGGLE CLASS
+        if (gamepad1.b || gamepad2.b) { //MAKE TOGGLE CLASS
             aCurrState = true;
         } else {
             aCurrState = false;
@@ -132,10 +131,21 @@ public class MaelstromTeleop extends OpMode {
         aPreviousState = aCurrState;
 
         if (panGripperOpen) {
-            robot.relicGrabberSystem.openGrabber();
+            robot.dumpPan.openGripper();
+            telemetry.addLine("succ");
         } else {
-            robot.relicGrabberSystem.closeGrabber();
+            robot.dumpPan.closeGripper();
+            telemetry.addLine("success");
         }
+
+        /*if (gamepad1.b)
+        {
+            robot.dumpPan.closeGripper();
+        }
+        else
+        {
+            robot.dumpPan.openGripper();
+        }*/
 
 /*        if (gamepad2.right_bumper) {
             robot.lift.raiseRight();
