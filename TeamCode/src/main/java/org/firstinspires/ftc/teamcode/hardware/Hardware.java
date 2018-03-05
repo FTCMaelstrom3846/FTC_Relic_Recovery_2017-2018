@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
+import org.firstinspires.ftc.teamcode.sensors.MaxbotixUltrasonicSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -63,7 +64,7 @@ public class Hardware implements Constants {
 
     public OpticalDistanceSensor rightLiftDistance, leftLiftDistance;
 
-    public ModernRoboticsI2cRangeSensor rangeSensor;
+    public MaxbotixUltrasonicSensor rangeSensor;
 
     HardwareMap hwMap;
 
@@ -100,6 +101,8 @@ public class Hardware implements Constants {
 
         jewelSensor = hwMap.colorSensor.get("jewelSensor");
 
+        rangeSensor = new MaxbotixUltrasonicSensor(hardwareMap.analogInput.get("rangeSensor"));
+
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
         intakeSystem = new Intake(this);
@@ -114,8 +117,6 @@ public class Hardware implements Constants {
 
         rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
         leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
-
-        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK

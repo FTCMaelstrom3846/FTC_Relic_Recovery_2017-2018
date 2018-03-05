@@ -23,6 +23,8 @@ public class SensorOutput extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+            telemetry.addData("Ultrasonic distance", robot.rangeSensor.getDistance(DistanceUnit.INCH));
+
             telemetry.addData("Jewel sensor red", robot.jewelSensor.red());
             telemetry.addData("Jewel sensor blue", robot.jewelSensor.blue());
 

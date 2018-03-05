@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
+import org.firstinspires.ftc.teamcode.sensors.MaxbotixUltrasonicSensor;
 
 
 /**
@@ -29,7 +30,7 @@ public class Drivetrain implements Constants {
     private BNO055_IMU imu;
     private Utils.AutonomousOpMode auto;
     private Hardware hardware;
-    private ModernRoboticsI2cRangeSensor rangeSensor;
+    private MaxbotixUltrasonicSensor rangeSensor;
     public Telemetry telemetry;
 
     private PIDController angularCorrectionPIDController = new PIDController(angleCorrectionKP, angleCorrectionKI, angleCorrectionKD, angleCorrectionMaxI);
