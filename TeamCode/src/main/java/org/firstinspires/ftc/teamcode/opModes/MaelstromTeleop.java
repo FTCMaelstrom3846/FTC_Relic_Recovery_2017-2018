@@ -95,12 +95,17 @@ public class MaelstromTeleop extends OpMode {
 
        if (gamepad1.y || gamepad2.y) {
            robot.dumpPan.raisePan();
+           panGripperOpen = true;
        } else if (gamepad1.a || gamepad2.a) {
            robot.dumpPan.lowerPan();
+
+           panGripperOpen = false;
        } else if (gamepad1.x || gamepad2.x) {
            if (elapsedTime > 8) {
                robot.dumpPan.centerPan();
+               panGripperOpen = true;
            }
+
        }
 
         if (gamepad1.right_trigger > 0/* || gamepad2.y*/) {

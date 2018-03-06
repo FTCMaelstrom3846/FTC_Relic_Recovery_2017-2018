@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
@@ -15,10 +16,13 @@ public class Intake implements Constants {
     private DcMotor leftIntake;
     private DcMotor rightIntake;
 
+    public CRServo intakeDropper;
+
     public Intake (Hardware hardware) {
         //this.gamepad1 = gamepad1;
         this.leftIntake = hardware.leftIntake;
         this.rightIntake = hardware.rightIntake;
+        this.intakeDropper = hardware.intakeDropper;
     }
 
 
@@ -35,5 +39,13 @@ public class Intake implements Constants {
     public void stop() {
         leftIntake.setPower(0);
         rightIntake.setPower(0);
+    }
+
+    public void extendDropper() {
+        intakeDropper.setPower(DROPPER_EXTEND_POWER);
+    }
+
+    public void retractDropper() {
+        intakeDropper.setPower(DROPPER_RETRACT_POWER);
     }
 }

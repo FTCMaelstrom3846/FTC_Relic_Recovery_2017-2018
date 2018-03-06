@@ -48,6 +48,8 @@ public class Hardware implements Constants {
     public CRServo leftLift;
     public CRServo rightLift;
 
+    public CRServo intakeDropper;
+
     public ColorSensor jewelSensor;
 
     public Drivetrain drivetrain;
@@ -94,6 +96,8 @@ public class Hardware implements Constants {
 
         leftLift = hwMap.crservo.get("leftLift");
         rightLift = hwMap.crservo.get("rightLift");
+
+        intakeDropper = hwMap.crservo.get("intakeDropper");
 
         leftJewelArm = hwMap.servo.get("leftJewelArm");
         //rightJewelArm = hwMap.servo.get("rightJewelArm");

@@ -264,7 +264,7 @@ public class Drivetrain implements Constants {
         backRight.setPower(0);
     }
 
-    public void strafeTillColumn (RelicRecoveryVuMark column, Utils.AutoColor color, double maxSpeedMultiplier, double angle) {
+    public void strafeTillColumn (/*RelicRecoveryVuMark column, */Utils.AutoColor color, double maxSpeedMultiplier, double angle) {
 
         OpticalDistanceSensor optoSensor = color == Utils.AutoColor.RED ? hardware.leftLiftDistance : hardware.rightLiftDistance;
         double frontLeftPower;
@@ -297,7 +297,11 @@ public class Drivetrain implements Constants {
             frontRight.setPower(frontRightPower + angleCorrection);
             backRight.setPower(backRightPower + angleCorrection);
 
-            if (color == Utils.AutoColor.RED) {
+
+            if (columnCount == 1) {
+                break loopTillCryptobox;
+            }
+            /*if (color == Utils.AutoColor.RED) {
                 switch (column) {
                     case RIGHT:
                         if (columnCount == 1) {
@@ -349,7 +353,7 @@ public class Drivetrain implements Constants {
                         }
                         break;
                 }
-            }
+            }*/
 
             telemetry.addData("stopState", stopState);
             telemetry.addData("first/new opto", optoSensor.getRawLightDetected()/firstOptoReading);

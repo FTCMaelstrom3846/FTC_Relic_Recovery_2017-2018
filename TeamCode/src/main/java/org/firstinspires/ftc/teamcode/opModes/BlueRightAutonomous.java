@@ -15,7 +15,7 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
     Hardware robot = new Hardware();
 
-    RelicRecoveryVuMark column;
+    RelicRecoveryVuMark column = RelicRecoveryVuMark.RIGHT;
 
     @Override
     public void runOpMode() {
@@ -80,7 +80,7 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
 
-/*        robot.drivetrain.driveForTime(1, 0, 0.2);
+/*        robot.drivetrain.driveForTime(0.55, -90, 1.5);
 
         robot.drivetrain.driveForTime(-0.5, 0, 2);
 
@@ -97,22 +97,49 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 */
 
 
-        robot.drivetrain.drive(1450, 0, 0.6);
+        /*robot.drivetrain.drive(1450, 0, 0.6);*/
+
+        robot.drivetrain.drive(1500, 0, 0.6);
+
+        robot.drivetrain.driveForTime(-0.35, 0, 0.75);
+
+        switch (column) {
+            case UNKNOWN:
+
+            case LEFT:
+                robot.drivetrain.drive(650, 0, 0.6);
+                break;
+
+            case CENTER:
+                robot.drivetrain.drive(1175, 0, 0.6);
+                break;
+            case RIGHT:
+                robot.drivetrain.drive(1580, 0, 0.6);
+                break;
+        }
+
+
+        robot.intakeSystem.extendDropper();
 
         robot.drivetrain.turnAngle(-90, 1);
 
+        robot.intakeSystem.retractDropper();
+
         //robot.drivetrain.intakeFlipAndCryptoLineup(-560, 1, 0.4);
-        robot.drivetrain.drive(-575, 0, 0.6);
+        //robot.drivetrain.drive(-575, 0, 0.6);
 
-        robot.drivetrain.strafeTillColumn(RelicRecoveryVuMark.LEFT, Utils.AutoColor.BLUE, .75, 90);
+        robot.drivetrain.driveForTime(-0.25, 0, 3);
 
-        robot.drivetrain.drive(200, 0, 1);
+
+        //robot.drivetrain.strafeTillColumn(/*RelicRecoveryVuMark.LEFT, */Utils.AutoColor.BLUE, .75, 90);
+
+        //robot.drivetrain.drive(200, 0, 1);
 
 /*        robot.dumpPan.centerPan();
 
         robot.dumpPan.raisePanAuto();*/
 
-        sleep(1000);
+        /*sleep(1000);
 
         robot.drivetrain.drive(200, 0, 1);
 
@@ -128,13 +155,13 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         robot.drivetrain.drive(-1000, 0, 1);
 
-        /*        robot.dumpPan.centerPan();
+        *//*        robot.dumpPan.centerPan();
 
-        robot.dumpPan.raisePanAuto();*/
+        robot.dumpPan.raisePanAuto();*//*
 
         sleep(1000);
 
-        robot.dumpPan.lowerPan();
+        robot.dumpPan.lowerPan();*/
     }
 
 

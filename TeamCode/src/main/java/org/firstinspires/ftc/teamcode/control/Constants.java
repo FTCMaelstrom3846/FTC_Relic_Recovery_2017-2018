@@ -11,7 +11,7 @@ public interface Constants {
     double NEVEREST_20_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
-    double ANGLE_TOLERANCE = 1;
+    double ANGLE_TOLERANCE = 1.5;
     double DISTANCE_TOLERANCE = 50;
     double ULTRASONIC_DISTANCE_TOLERANCE = 0.3;
 
@@ -34,7 +34,8 @@ public interface Constants {
     double RELIC_WRIST_PICKUP = 0;
 
     double LEFT_JEWEL_ARM_LOWER = 0.17;
-    double LEFT_JEWEL_ARM_RAISE = 0.5;
+    double LEFT_JEWEL_ARM_RAISE = 0.625;
+    double LEFT_JEWEL_ARM_RAISE_AUTO = 0.8;
     double RIGHT_JEWEL_ARM_LOWER = 0;
     double RIGHT_JEWEL_ARM_RAISE = 0.65;
     double JEWEL_WRIST_RIGHT = 1;
@@ -44,6 +45,9 @@ public interface Constants {
     double INTAKESYSTEM_INTAKE_POWER = .9;
     double INTAKESYSTEM_OUTAKE_POWER = - .9;
 
+    double DROPPER_EXTEND_POWER = 1;
+    double DROPPER_RETRACT_POWER = -1;
+
     double LIFT_RAISE_POWER = 0.73;
     double LIFT_LOWER_POWER = -0.73;
 
@@ -52,8 +56,8 @@ public interface Constants {
     /*double PAN_LOWER_AUTO = .05;*/
     double PAN_CENTER = 0.31;
 
-    double PAN_GRIP = .6;
-    double PAN_OPEN = .5;
+    double PAN_GRIP = .7;
+    double PAN_OPEN = 1;
 
     double frontLeftKP = 20;
     double frontLeftKI = 0;
@@ -110,7 +114,7 @@ public interface Constants {
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 
-    double angleTurnKP = -0.0145;
+    double angleTurnKP = -0.0141;
     double angleTurnKI = -0.65;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
