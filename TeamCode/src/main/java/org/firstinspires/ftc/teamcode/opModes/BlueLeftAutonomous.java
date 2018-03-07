@@ -44,22 +44,22 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
 
         robot.drivetrain.turnAngle(-30, 1);*/
 
-        robot.jewelArms.lowerLeft();
+        robot.jewelArmSystem.lower();
         sleep(1000);
 /*        telemetry.addData("Blue", robot.jewelSensor.blue());
         telemetry.addData("Red", robot.jewelSensor.red());*/
         if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
             //robot.drivetrain.drive(300, 0, 0.68);
-            robot.jewelArms.turnWristRight();
+            robot.jewelArmSystem.turnWristLeft();
             sleep(600);
-            robot.jewelArms.raiseLeft();
+            robot.jewelArmSystem.raise();
             //robot.drivetrain.drive(1750, 0, 0.6);
 
         } else if (robot.jewelSensor.red() < robot.jewelSensor.blue()) {
             //robot.drivetrain.drive(-300, 0, 0.68);
-            robot.jewelArms.turnWristLeft();
+            robot.jewelArmSystem.turnWristRight();
             sleep(600);
-            robot.jewelArms.raiseLeft();
+            robot.jewelArmSystem.raise();
             //robot.drivetrain.drive(2400, 0, 0.6);
 
         }

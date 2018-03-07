@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,7 +14,7 @@ import org.firstinspires.ftc.teamcode.sensors.MaxbotixUltrasonicSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.JewelArms;
+import org.firstinspires.ftc.teamcode.subsystems.JewelArm;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.subsystems.RelicGrabber;
 
@@ -43,7 +42,7 @@ public class Hardware implements Constants {
     public DcMotor leftIntake;
 
     public Servo relicWrist, relicGrabber, dumpRight, dumpLeft,
-            leftJewelArm, /*rightJewelArm*/ jewelWrist, panGripper;
+            jewelArm, jewelWrist, panGripper;
 
     public CRServo leftLift;
     public CRServo rightLift;
@@ -62,7 +61,7 @@ public class Hardware implements Constants {
 
     public DumpPan dumpPan;
 
-    public JewelArms jewelArms;
+    public JewelArm jewelArmSystem;
 
     public OpticalDistanceSensor rightLiftDistance, leftLiftDistance;
 
@@ -99,8 +98,7 @@ public class Hardware implements Constants {
 
         intakeDropper = hwMap.crservo.get("intakeDropper");
 
-        leftJewelArm = hwMap.servo.get("leftJewelArm");
-        //rightJewelArm = hwMap.servo.get("rightJewelArm");
+        jewelArm = hwMap.servo.get("jewelArm");
         jewelWrist = hwMap.servo.get("jewelWrist");
 
         jewelSensor = hwMap.colorSensor.get("jewelSensor");
@@ -117,7 +115,7 @@ public class Hardware implements Constants {
 
         dumpPan = new DumpPan(this);
 
-        jewelArms = new JewelArms(this);
+        jewelArmSystem = new JewelArm(this);
 
         rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
         leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
@@ -140,8 +138,9 @@ public class Hardware implements Constants {
         rightIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        jewelArms.raiseLeft();
-        //jewelArms.raiseRight();
+        jewelArmSystem.raise();
+
+        //jewelArmSystem.resetWrist();
 
         relicGrabberSystem.resetWrist();
 

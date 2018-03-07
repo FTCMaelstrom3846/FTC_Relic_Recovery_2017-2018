@@ -48,4 +48,8 @@ public class Intake implements Constants {
     public void retractDropper() {
         intakeDropper.setPower(DROPPER_RETRACT_POWER);
     }
+
+    public void stopDropper() {
+        intakeDropper.setPower(0);
+    }
 }

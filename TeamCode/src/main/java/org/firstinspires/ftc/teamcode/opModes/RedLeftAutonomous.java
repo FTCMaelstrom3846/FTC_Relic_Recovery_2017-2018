@@ -38,18 +38,18 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         telemetry.update();
 
 
-        robot.jewelArms.lowerLeft();
+        robot.jewelArmSystem.lower();
         sleep(1000);
 *//*        telemetry.addData("Blue", robot.jewelSensor.blue());
         telemetry.addData("Red", robot.jewelSensor.red());*//*
         if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
-            robot.jewelArms.turnWristRight();
+            robot.jewelArmSystem.turnWristLeft();
             sleep(600);
-            robot.jewelArms.raiseLeft();
+            robot.jewelArmSystem.raise();
         } else if (robot.jewelSensor.red() > robot.jewelSensor.blue()) {
-            robot.jewelArms.turnWristLeft();
+            robot.jewelArmSystem.turnWristRight();
             sleep(600);
-            robot.jewelArms.raiseLeft();
+            robot.jewelArmSystem.raise();
 
         }*/
 

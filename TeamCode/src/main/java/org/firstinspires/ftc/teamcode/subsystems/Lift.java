@@ -36,7 +36,7 @@ public class Lift implements Constants{
         rightLift.setPower(LIFT_RAISE_POWER);
     }
 
-    public void raiseLeft() {
+    public void raise() {
         leftLift.setPower(LIFT_RAISE_POWER);
     }*/
 
@@ -49,7 +49,7 @@ public class Lift implements Constants{
         rightLift.setPower(LIFT_LOWER_POWER);
     }
 
-    public void lowerLeft() {
+    public void lower() {
         leftLift.setPower(LIFT_LOWER_POWER);
     }*/
 
