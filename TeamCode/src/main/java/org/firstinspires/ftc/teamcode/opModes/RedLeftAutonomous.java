@@ -33,25 +33,21 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
 
         waitForStart();
 
-/*        column = vumark.getColumn();
+        /*column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();
+        telemetry.update();*/
 
 
         robot.jewelArmSystem.lower();
         sleep(1000);
-*//*        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());*//*
         if (robot.jewelSensor.blue() > robot.jewelSensor.red()) {
             robot.jewelArmSystem.turnWristLeft();
-            sleep(600);
-            robot.jewelArmSystem.raise();
         } else if (robot.jewelSensor.red() > robot.jewelSensor.blue()) {
             robot.jewelArmSystem.turnWristRight();
-            sleep(600);
-            robot.jewelArmSystem.raise();
+        }
 
-        }*/
+        sleep(600);
+        robot.jewelArmSystem.raise();
 
         //robot.drivetrain.drive(-1250, 0, 0.6);
 

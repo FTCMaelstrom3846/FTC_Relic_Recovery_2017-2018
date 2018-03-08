@@ -40,25 +40,14 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 */
         robot.jewelArmSystem.lower();
         sleep(1000);
-
-/*        telemetry.addData("Blue", robot.jewelSensor.blue());
-        telemetry.addData("Red", robot.jewelSensor.red());*/
-
         if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
-            //robot.drivetrain.drive(300, 0, 0.68);
             robot.jewelArmSystem.turnWristLeft();
-            sleep(600);
-            robot.jewelArmSystem.raise();
-            //robot.drivetrain.drive(1750, 0, 0.6);
-
         } else if (robot.jewelSensor.red() < robot.jewelSensor.blue()) {
-            //robot.drivetrain.drive(-300, 0, 0.68);
             robot.jewelArmSystem.turnWristRight();
-            sleep(600);
-            robot.jewelArmSystem.raise();
-            //robot.drivetrain.drive(2400, 0, 0.6);
-
         }
+
+        sleep(600);
+        robot.jewelArmSystem.raise();
 
 /*        robot.drivetrain.drive(700, 0, 0.6);
 
@@ -98,6 +87,9 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         /*robot.drivetrain.drive(1450, 0, 0.6);*/
 
+        Thread extendo = new Thread(this);
+        extendo.start();
+
         robot.drivetrain.drive(1500, 0, 0.6);
 
         robot.drivetrain.driveForTime(-0.35, 0, 0.75);
@@ -117,8 +109,6 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
                 break;
         }
 
-        Thread extendo = new Thread(this);
-        extendo.start();
 
         robot.drivetrain.turnAngle(-90, 1);
 
@@ -143,12 +133,25 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         robot.intakeSystem.stop();
 
-        robot.drivetrain.drive(-2000, 0, 1);
+        robot.drivetrain.drive(-1950, 0, 1);
 
+        robot.dumpPan.centerPan();
 
+        robot.dumpPan.raisePan();
 
+        robot.drivetrain.driveForTime(-0.25, 0, 0.65);
 
+        robot.drivetrain.drive(200, 0, 1);
 
+        robot.dumpPan.lowerPan();
+
+/*        robot.lift.raise();
+
+        robot.dumpPan.centerPan();
+
+        robot.dumpPan.raisePanAuto();
+
+        robot.drivetrain.drive(200, 0, 1);*/
 
         //robot.drivetrain.strafeTillColumn(/*RelicRecoveryVuMark.LEFT, */Utils.AutoColor.BLUE, .75, 90);
 
@@ -186,11 +189,7 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
     public void run() {
         robot.intakeSystem.extendDropper();
 
-        sleep(6000);
-
-        robot.intakeSystem.retractDropper();
-
-        sleep(6000);
+        sleep(6750);
 
         robot.intakeSystem.stop();
     }
