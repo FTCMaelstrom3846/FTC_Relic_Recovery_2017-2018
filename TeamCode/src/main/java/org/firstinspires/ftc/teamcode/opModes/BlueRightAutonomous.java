@@ -15,7 +15,7 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
     Hardware robot = new Hardware();
 
-    RelicRecoveryVuMark column = RelicRecoveryVuMark.RIGHT;
+    RelicRecoveryVuMark column;
 
     @Override
     public void runOpMode() {
@@ -33,11 +33,10 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         waitForStart();
 
-/*
         column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
         telemetry.update();
-*/
+
         robot.jewelArmSystem.lower();
         sleep(1000);
         if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
@@ -191,8 +190,9 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         sleep(6750);
 
-        robot.intakeSystem.stop();
+        robot.intakeSystem.stopDropper();
     }
+
     public boolean getOpModeIsActive() {
         return opModeIsActive();
     }

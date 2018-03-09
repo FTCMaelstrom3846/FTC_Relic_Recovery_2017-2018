@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Blue Left Autonomous ")
 //@Disabled
@@ -24,25 +25,26 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
         robot.init(hardwareMap);
 
 
-/*        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-        vumark.initVumark();*/
+        VumarkRecognition vumark = new VumarkRecognition(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        vumark.initVumark();
 
         telemetry.addLine("Omit the first noun");
         telemetry.update();
 
 
         waitForStart();
-
-/*        robot.drivetrain.turnAngle(30, 1);
-        sleep(1000);
+/*
+        robot.drivetrain.turnAngle(30, 1);
+        sleep(1000);*/
 
         column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
         telemetry.update();
-
+/*
         sleep(4000);
 
-        robot.drivetrain.turnAngle(-30, 1);*/
+        robot.drivetrain.turnAngle(-30, 1);
+        */
         robot.jewelArmSystem.lower();
         sleep(1000);
         if (robot.jewelSensor.blue() < robot.jewelSensor.red()) {
