@@ -147,6 +147,10 @@ public class Hardware implements Constants {
         relicGrabberSystem.openGrabber();
 
         dumpPan.lowerPan();
+
+        intakeSystem.stop();
+
+        intakeSystem.stopDropper();
     }
 
     public void setAuto (Utils.AutonomousOpMode auto) {

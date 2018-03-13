@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Red Left Autonomous ")
 //@Disabled
-public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
+public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode, Runnable {
 
     Hardware robot = new Hardware();
 
@@ -49,6 +49,9 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         sleep(600);
         robot.jewelArmSystem.raise();
 
+        Thread extendo = new Thread(this);
+        extendo.start();
+
         //robot.drivetrain.drive(-1250, 0, 0.6);
 
         robot.drivetrain.drive(-1500, 0, 0.6);
@@ -56,17 +59,17 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         robot.drivetrain.driveForTime(0.35, 0, 0.75);
 
         switch (column) {
-            case UNKNOWN:
 
             case LEFT:
-                robot.drivetrain.drive(-650, 0, 0.6);
+                robot.drivetrain.drive(-1400, 0, 0.6);
                 break;
-
             case CENTER:
-                robot.drivetrain.drive(-1175, 0, 0.6);
+                robot.drivetrain.drive(-1075, 0, 0.6);
                 break;
+            case UNKNOWN:
+
             case RIGHT:
-                robot.drivetrain.drive(-1580, 0, 0.6);
+                robot.drivetrain.drive(-550, 0, 0.6);
                 break;
         }
 
@@ -75,6 +78,48 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         //robot.drivetrain.intakeFlipAndCryptoLineup(-575, 1, 0.4);
 
         robot.drivetrain.driveForTime(-0.25, 0, 3);
+
+        robot.drivetrain.drive(400, 0, 1);
+
+        robot.dumpPan.centerPan();
+
+        robot.dumpPan.raisePanAuto(40);
+
+        robot.drivetrain.drive(400, 0, 1);
+
+        robot.dumpPan.lowerPan();
+
+        robot.drivetrain.driveForTime(-0.45, 0, 0.65);
+
+        robot.drivetrain.driveForTime(0.35, 0, 0.65);
+
+
+/*
+        robot.intakeSystem.intake();
+
+        robot.drivetrain.drive(1900, 0, 1);
+
+        robot.intakeSystem.outtake();
+
+        robot.drivetrain.drive(-2100, 0, 1);
+
+        robot.intakeSystem.stop();
+
+        robot.lift.raise();
+
+        sleep(750);
+
+        robot.lift.stop();
+
+        robot.dumpPan.centerPan();
+
+        robot.dumpPan.raisePan();
+
+        robot.drivetrain.driveForTime(-0.25, 0, 0.65);
+
+        robot.drivetrain.drive(400, 0, 1);
+
+        robot.dumpPan.lowerPan();*/
 
 
         //robot.drivetrain.drive(-575, 0, 0.6);
@@ -114,6 +159,14 @@ public class RedLeftAutonomous extends LinearOpMode implements Utils.AutonomousO
         robot.dumpPan.lowerPan();*/
     }
 
+
+    public void run() {
+        robot.intakeSystem.extendDropper();
+
+        sleep(6750);
+
+        robot.intakeSystem.stopDropper();
+    }
 
     public boolean getOpModeIsActive() {
         return opModeIsActive();

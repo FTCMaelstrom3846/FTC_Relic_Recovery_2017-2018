@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class JewelArm implements Constants {
 
-    public Servo jewelArm;
-    public Servo jewelWrist;
+    private Servo jewelArm;
+    private Servo jewelWrist;
 
     public JewelArm(Hardware hardware) {
         this.jewelArm = hardware.jewelArm;

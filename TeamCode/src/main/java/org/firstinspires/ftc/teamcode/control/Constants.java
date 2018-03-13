@@ -31,7 +31,7 @@ public interface Constants {
     double RELIC_WRIST_RESET = 1;
     double RELIC_WRIST_UP = 0.5;
     double RELIC_WRIST_DROP = 0.225;
-    double RELIC_WRIST_PICKUP = 0.02;
+    double RELIC_WRIST_PICKUP = /*0.02*/0;
 
     double JEWEL_ARM_LOWER = 0.2;
     double JEWEL_ARM_RAISE = 0.64;
@@ -98,8 +98,8 @@ public interface Constants {
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
 
-    double distanceKP = 0.000975;
-    double distanceKI = 0.075;
+    double distanceKP = 0.001;
+    double distanceKI = 0.09;
     double distanceKD = 0.0000025;
     double distanceMaxI = 0;
 
@@ -109,16 +109,16 @@ public interface Constants {
     double ultrasonicDistanceMaxI = 0;*/
 
     double shortDistanceKP = 0.0027;
-    double shortDistanceKI = 0.075;
+    double shortDistanceKI = 0.3;
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 
-    double angleTurnKP = -0.0141;
+    double angleTurnKP = -0.0135;
     double angleTurnKI = -0.65;
     double angleTurnKD = 0;
     double angleTurnMaxI = 0;
 
-    double smallAngleTurnKP = -0.015;
+    double smallAngleTurnKP = -0.019;
     double smallAngleTurnKI = -1.25;
     double smallAngleTurnKD = 0;
     double smallAngleTurnMaxI = 0;

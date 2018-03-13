@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 public class RelicGrabber implements Constants {
 
     private SpeedControlledMotor relicExtender;
-    public Servo relicWrist;
-    public Servo relicGrabber;
+    private Servo relicWrist;
+    private Servo relicGrabber;
 
     public RelicGrabber(Hardware hardware) {
         //this.gamepad1 = gamepad1;

@@ -15,7 +15,7 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
     Hardware robot = new Hardware();
 
-    RelicRecoveryVuMark column = RelicRecoveryVuMark.CENTER;
+    RelicRecoveryVuMark column = RelicRecoveryVuMark.RIGHT;
 
     @Override
     public void runOpMode() {
@@ -35,9 +35,9 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
       /*  robot.drivetrain.turnAngle(30, 1);
         sleep(1000);*/
 
-        column = vumark.getColumn();
+/*        column = vumark.getColumn();
         telemetry.addData("Detected vumark", column);
-        telemetry.update();
+        telemetry.update();*/
 /*
 
         sleep(4000);
@@ -71,24 +71,29 @@ public class RedRightAutonomous extends LinearOpMode implements Utils.Autonomous
 
             case LEFT:
                 robot.drivetrain.turnAngle(47, 1);
-                robot.drivetrain.drive(-1000, 0, 0.6);
+                robot.drivetrain.drive(-400, 0, 0.6);
                 break;
 
             case CENTER:
-                robot.drivetrain.turnAngle(20, 1);
-                robot.drivetrain.drive(-600, 0, 0.6);
+                robot.drivetrain.turnAngle(33 , 1);
+                robot.drivetrain.drive(-200, 0, 0.6);
                 break;
+
             case RIGHT:
-                robot.drivetrain.turnAngle(20, 1);
-                robot.drivetrain.drive(-600, 0, 0.6);
+                robot.drivetrain.turnAngle(18, 1, 0.2);
+                robot.drivetrain.drive(-200, 0, 0.6);
                 break;
         }
 
         robot.dumpPan.centerPan();
 
-        robot.dumpPan.raisePanAuto();
+        robot.dumpPan.raisePanAuto(40);
 
-        robot.drivetrain.drive(800, 0, 1);
+        sleep(750);
+
+        robot.drivetrain.driveForTime(-0.4, 0, 1);
+
+        robot.drivetrain.drive(400, 0, 1);
 
         robot.dumpPan.lowerPan();
 

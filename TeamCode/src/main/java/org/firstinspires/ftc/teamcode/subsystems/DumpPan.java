@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.control.Constants;
+import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 /**
@@ -11,15 +12,17 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware;
 
 public class DumpPan implements Constants {
 
-    public Servo dumpLeft;
-    public Servo dumpRight;
-    public Servo panGripper;
+    private Servo dumpLeft;
+    private Servo dumpRight;
+    private Servo panGripper;
+    private Utils.AutonomousOpMode auto;
 
     //private double pos = 0;
     public DumpPan(Hardware hardware) {
-        this.dumpLeft = hardware.dumpLeft;
-        this.dumpRight = hardware.dumpRight;
-        this.panGripper = hardware.panGripper;
+        dumpLeft = hardware.dumpLeft;
+        dumpRight = hardware.dumpRight;
+        panGripper = hardware.panGripper;
+        auto = hardware.auto;
     }
 
 
@@ -38,11 +41,27 @@ public class DumpPan implements Constants {
 
     public void raisePanAuto() {
         for (double i = dumpRight.getPosition(); i < PAN_RAISE; i += 0.01) {
-
-        dumpRight.setPosition(PAN_RAISE);
-        dumpLeft.setPosition(PAN_RAISE);
+            if (!opModeIsActive()) {
+                break;
+            }
+            dumpRight.setPosition(PAN_RAISE);
+            dumpLeft.setPosition(PAN_RAISE);
             try {
-                Thread.sleep(25);
+                Thread.sleep(50);
+            } catch (InterruptedException e){}
+        }
+    }
+
+
+    public void raisePanAuto(int time) {
+        for (double i = dumpRight.getPosition(); i < PAN_RAISE; i += 0.01) {
+            if (!opModeIsActive()) {
+                break;
+            }
+            dumpRight.setPosition(i);
+            dumpLeft.setPosition(i);
+            try {
+                Thread.sleep(time);
             } catch (InterruptedException e){}
         }
     }
@@ -82,6 +101,10 @@ public class DumpPan implements Constants {
 
     public void openGripper() {
         panGripper.setPosition(PAN_OPEN);
+    }
+
+    public boolean opModeIsActive() {
+        return auto.getOpModeIsActive();
     }
 
 }

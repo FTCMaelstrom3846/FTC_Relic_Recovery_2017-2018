@@ -130,7 +130,7 @@ public class Drivetrain implements Constants {
         backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
 
         while (opModeIsActive() && (stopState <= 1000)) {
-            double PIDMultiplier = Math.abs(ticks) < 250 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
+            double PIDMultiplier = Math.abs(ticks) <= 600 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
                     : distancePIDController.power(-ticks, frontRight.getCurrentPosition());
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getRelativeYaw());
             speeds[0] = frontLeftPower * PIDMultiplier;
@@ -380,14 +380,27 @@ public class Drivetrain implements Constants {
         backRight.setPower(0);
     }
 
-    public void turnAngle(double angle, double speedMultiplier) {
+    public void turnAngle(double angle, double speedMultiplier, double minPower) {
 
         eReset();
         long startTime = System.nanoTime();
         long stopState = 0;
         while (opModeIsActive() && (stopState <= 1000)) {
+
             double power = speedMultiplier * Math.abs(angle) < 50 ? smallAngularTurnPIDController.power(angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 :
                     angle, imu.getRelativeYaw()) : angularTurnPIDController.power(angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 : angle, imu.getRelativeYaw());
+
+            if (Math.abs(imu.getRelativeYaw() - (angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 : angle)) <= ANGLE_TOLERANCE) {
+
+                stopState = (System.nanoTime() - startTime) / 1000000;
+            } else {
+                startTime = System.nanoTime();
+                if (power < 0) {
+                    power = Math.abs(power) < minPower ? -minPower : power;
+                } else {
+                    power = Math.abs(power) < minPower ? minPower : power;
+                }
+            }
             frontLeft.setPower(power);
             backLeft.setPower(power);
             frontRight.setPower(power);
@@ -396,8 +409,30 @@ public class Drivetrain implements Constants {
             telemetry.addData("i", angularTurnPIDController.getI());
             telemetry.update();
 
+        }
 
-            if (Math.abs(imu.getRelativeYaw()  - (angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 : angle)) <= ANGLE_TOLERANCE) {
+    }
+
+    public void turnAngle(double angle, double speedMultiplier) {
+
+        eReset();
+        long startTime = System.nanoTime();
+        long stopState = 0;
+        while (opModeIsActive() && (stopState <= 1000)) {
+
+            double power = speedMultiplier * Math.abs(angle) < 50 ? smallAngularTurnPIDController.power(angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 :
+                    angle, imu.getRelativeYaw()) : angularTurnPIDController.power(angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 : angle, imu.getRelativeYaw());
+
+            frontLeft.setPower(power);
+            backLeft.setPower(power);
+            frontRight.setPower(power);
+            backRight.setPower(power);
+            telemetry.addData("Angle", imu.getRelativeYaw());
+            telemetry.addData("i", angularTurnPIDController.getI());
+            telemetry.update();
+
+            if (Math.abs(imu.getRelativeYaw() - (angle >= 180 && imu.getRelativeYaw() < 0 ? angle - 360 : angle)) <= ANGLE_TOLERANCE) {
+
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();

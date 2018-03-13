@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.sensors.VumarkRecognition;
 
 @Autonomous(name="Blue Left Autonomous ")
 //@Disabled
-public class BlueLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode {
+public class BlueLeftAutonomous extends LinearOpMode implements Utils.AutonomousOpMode, Runnable {
 
     Hardware robot = new Hardware();
 
@@ -55,6 +55,48 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
 
         sleep(600);
         robot.jewelArmSystem.raise();
+
+        robot.drivetrain.drive(1500, 0, 0.6);
+
+        robot.drivetrain.driveForTime(-0.35, 0, 0.75);
+
+        robot.drivetrain.drive(400, 0, 0.6);
+
+        Thread extendo = new Thread(this);
+        extendo.start();
+
+        switch (column) {
+            case UNKNOWN:
+
+            case LEFT:
+                robot.drivetrain.turnAngle(163, 1, 0.2);
+                robot.drivetrain.drive(-300, 0, 0.6);
+                break;
+
+            case CENTER:
+                robot.drivetrain.turnAngle(147 , 1, 0.2);
+                robot.drivetrain.drive(-300, 0, 0.6);
+                break;
+
+            case RIGHT:
+                robot.drivetrain.turnAngle(130, 1, 0.2);
+                robot.drivetrain.drive(-550, 0, 0.6);
+                break;
+        }
+
+        robot.dumpPan.centerPan();
+
+        sleep(300);
+
+        robot.dumpPan.raisePanAuto(40);
+
+        sleep(750);
+
+        robot.drivetrain.driveForTime(-0.4, 0, 1);
+
+        robot.drivetrain.drive(200, 0, 1);
+
+        robot.dumpPan.lowerPan();
 /*
 *//*        robot.drivetrain.drive(700, 0, 0.6);
 
@@ -92,6 +134,14 @@ public class BlueLeftAutonomous extends LinearOpMode implements Utils.Autonomous
         sleep(500);*/
     }
 
+
+    public void run() {
+        robot.intakeSystem.extendDropper();
+
+        sleep(6750);
+
+        robot.intakeSystem.stopDropper();
+    }
 
     public boolean getOpModeIsActive() {
         return opModeIsActive();

@@ -116,23 +116,35 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         robot.drivetrain.driveForTime(-0.25, 0, 2);
 
-        robot.drivetrain.drive(200, 0, 1);
+        robot.drivetrain.drive(400, 0, 1);
 
         robot.dumpPan.centerPan();
 
-        robot.dumpPan.raisePanAuto();
+        robot.dumpPan.raisePanAuto(40);
 
-        robot.drivetrain.drive(200, 0, 1);
+        robot.drivetrain.drive(400, 0, 1);
 
         robot.dumpPan.lowerPan();
 
+        robot.drivetrain.driveForTime(-0.45, 0, 0.65);
+
+        robot.drivetrain.driveForTime(0.35, 0, 0.65);
+/*
         robot.intakeSystem.intake();
 
-        robot.drivetrain.drive(2000, 0, 1);
+        robot.drivetrain.drive(1900, 0, 1);
+
+        robot.intakeSystem.outtake();
+
+        robot.drivetrain.drive(-2100, 0, 1);
 
         robot.intakeSystem.stop();
 
-        robot.drivetrain.drive(-1950, 0, 1);
+        robot.lift.raise();
+
+        sleep(750);
+
+        robot.lift.stop();
 
         robot.dumpPan.centerPan();
 
@@ -140,9 +152,9 @@ public class BlueRightAutonomous extends LinearOpMode implements Utils.Autonomou
 
         robot.drivetrain.driveForTime(-0.25, 0, 0.65);
 
-        robot.drivetrain.drive(200, 0, 1);
+        robot.drivetrain.drive(400, 0, 1);
 
-        robot.dumpPan.lowerPan();
+        robot.dumpPan.lowerPan();*/
 
 /*        robot.lift.raise();
 
