@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.control.Constants;
 import org.firstinspires.ftc.teamcode.control.SpeedControlledMotor;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
+import org.firstinspires.ftc.teamcode.sensors.ExternalEncoder;
 import org.firstinspires.ftc.teamcode.sensors.MaxbotixUltrasonicSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.DumpPan;
@@ -67,6 +68,9 @@ public class Hardware implements Constants {
 
     public MaxbotixUltrasonicSensor rangeSensor;
 
+    public ExternalEncoder xPos;
+    public ExternalEncoder yPos;
+
     HardwareMap hwMap;
 
     public void init(HardwareMap hardwareMap) {
@@ -119,6 +123,9 @@ public class Hardware implements Constants {
 
         rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
         leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
+
+        xPos = new ExternalEncoder(rightIntake);
+        yPos = new ExternalEncoder(leftIntake);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK

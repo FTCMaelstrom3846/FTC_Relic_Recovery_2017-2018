@@ -446,7 +446,59 @@ public class Drivetrain implements Constants {
         driveForTime(speed, 0, time);
         drive(ticks + frontRight.getCurrentPosition(), 0, 1);
     }
+/*
 
+    public void driveToPos(int x, int y, double angle, double maxSpeed) {
+
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
+
+        eReset();
+
+        long startTime = System.nanoTime();
+        long stopState = 0;
+        double initialHeading = imu.getRelativeYaw();
+        angle = Math.toRadians(angle);
+        double adjustedAngle = angle + Math.PI/4;
+
+        frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+        backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+        backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+
+        while (opModeIsActive() && (stopState <= 1000)) {
+            double PIDMultiplier = Math.abs(ticks) <= 600 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
+                    : distancePIDController.power(-ticks, frontRight.getCurrentPosition());
+            double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getRelativeYaw());
+            speeds[0] = frontLeftPower * PIDMultiplier;
+            speeds[1] = backLeftPower * PIDMultiplier;
+            speeds[2] = frontRightPower * PIDMultiplier;
+            speeds[3] = backRightPower * PIDMultiplier;
+
+            Utils.normalizeSpeedsToMax(speeds, maxSpeed);
+
+            frontLeft.setPower(speeds[0] + angleCorrection);
+            backLeft.setPower(speeds[1] + angleCorrection);
+            frontRight.setPower(speeds[2] + angleCorrection);
+            backRight.setPower(speeds[3] + angleCorrection);
+
+            telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
+            telemetry.addData("StopState", stopState);
+            telemetry.update();
+
+
+            if (Math.abs(frontRight.getCurrentPosition() - -ticks) <= DISTANCE_TOLERANCE) {
+                stopState = (System.nanoTime() - startTime) / 1000000;
+            } else {
+                startTime = System.nanoTime();
+            }
+        }
+
+    }
+
+*/
 
 
     public int getPos() {
