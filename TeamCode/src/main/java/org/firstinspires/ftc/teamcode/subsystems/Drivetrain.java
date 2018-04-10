@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.teamcode.control.Utils;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.sensors.BNO055_IMU;
+import org.firstinspires.ftc.teamcode.sensors.ExternalEncoder;
 import org.firstinspires.ftc.teamcode.sensors.MaxbotixUltrasonicSensor;
 
 
@@ -26,6 +27,8 @@ public class Drivetrain implements Constants {
     private double desiredAngle = 0;
     //Gamepad gamepad1;
     private SpeedControlledMotor frontLeft, backLeft, frontRight, backRight;
+    private ExternalEncoder xPos;
+    private ExternalEncoder yPos;
     private boolean halfSpeed = false;
     private BNO055_IMU imu;
     private Utils.AutonomousOpMode auto;
@@ -51,6 +54,8 @@ public class Drivetrain implements Constants {
         backRight = hardware.backRight;
         frontRight = hardware.frontRight;
         rangeSensor = hardware.rangeSensor;
+        xPos = hardware.xPos;
+        yPos = hardware.yPos;
         imu = hardware.imu;
         /*this.halfSpeed = halfSpeed;*/
         auto = hardware.auto;
@@ -62,7 +67,7 @@ public class Drivetrain implements Constants {
         double x = -gamepadLeftYRaw;
         double y = gamepadLeftXRaw;
         double angle = Math.atan2(y, x);
-        double adjustedAngle = angle + Math.PI/4;
+        double adjustedAngle = angle + Math.PI / 4;
 
         this.angle = angle;
 
@@ -83,9 +88,9 @@ public class Drivetrain implements Constants {
 
         Utils.normalizeValues(speeds);
 
-        speeds[0] = (speeds[0] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
-        speeds[1] = (speeds[1] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
-        speeds[2] = (-speeds[2] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw* TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
+        speeds[0] = (speeds[0] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
+        speeds[1] = (speeds[1] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
+        speeds[2] = (-speeds[2] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
         speeds[3] = (-speeds[3] * speedMagnitude * TELEOP_SPEED_MULTIPLIER) + gamepadRightXRaw * TELEOP_TURNING_SPEED_MULTIPLIER + angleCorrection;
 
         this.speeds = speeds;
@@ -95,16 +100,11 @@ public class Drivetrain implements Constants {
             backLeft.setPower(speeds[1]);
             frontRight.setPower(speeds[2]);
             backRight.setPower(speeds[3]);
-        }
-        else {
+        } else {
             frontLeft.setPower(0.5 * speeds[0]);
             backLeft.setPower(0.5 * speeds[1]);
-            frontRight.setPower(0.5 * speeds[2]);
-            backRight.setPower(0.5 * speeds[3]);
         }
-
     }
-
 
     public void drive(/*int distance*//*Change to dirstance*/int ticks, double angle, double maxSpeed) {
 
@@ -137,6 +137,9 @@ public class Drivetrain implements Constants {
             speeds[1] = backLeftPower * PIDMultiplier;
             speeds[2] = frontRightPower * PIDMultiplier;
             speeds[3] = backRightPower * PIDMultiplier;
+            frontRight.setPower(0.5 * speeds[2]);
+            backRight.setPower(0.5 * speeds[3]);
+
 
             Utils.normalizeSpeedsToMax(speeds, maxSpeed);
 
@@ -446,9 +449,8 @@ public class Drivetrain implements Constants {
         driveForTime(speed, 0, time);
         drive(ticks + frontRight.getCurrentPosition(), 0, 1);
     }
-/*
 
-    public void driveToPos(int x, int y, double angle, double maxSpeed) {
+    public void driveToPos(int x, int y, double maxSpeed) {
 
         double frontLeftPower;
         double backLeftPower;
@@ -460,17 +462,20 @@ public class Drivetrain implements Constants {
         long startTime = System.nanoTime();
         long stopState = 0;
         double initialHeading = imu.getRelativeYaw();
-        angle = Math.toRadians(angle);
-        double adjustedAngle = angle + Math.PI/4;
-
-        frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
-        backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
-        frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
-        backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+        double distance = Math.hypot(x, y);
 
         while (opModeIsActive() && (stopState <= 1000)) {
-            double PIDMultiplier = Math.abs(ticks) <= 600 ? shortDistancePIDController.power(-ticks, frontRight.getCurrentPosition())
-                    : distancePIDController.power(-ticks, frontRight.getCurrentPosition());
+            int currX = x - xPos.getPosition();
+            int currY = y - yPos.getPosition();
+            angle = Math.atan2(currX, currY);
+            double adjustedAngle = angle + Math.PI/4;
+
+            frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+            backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+            frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
+            backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
+            double PIDMultiplier = Math.abs(distance) <= 600 ? shortDistancePIDController.power(-distance, Math.hypot(currX, currY))
+                    : distancePIDController.power(distance, Math.hypot(currX, currY));
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getRelativeYaw());
             speeds[0] = frontLeftPower * PIDMultiplier;
             speeds[1] = backLeftPower * PIDMultiplier;
@@ -489,7 +494,7 @@ public class Drivetrain implements Constants {
             telemetry.update();
 
 
-            if (Math.abs(frontRight.getCurrentPosition() - -ticks) <= DISTANCE_TOLERANCE) {
+            if (Math.abs(Math.hypot(currX, currY) - distance) <= DISTANCE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();
@@ -498,7 +503,6 @@ public class Drivetrain implements Constants {
 
     }
 
-*/
 
 
     public int getPos() {

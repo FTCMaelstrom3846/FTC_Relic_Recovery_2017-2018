@@ -8,7 +8,8 @@ public interface Constants {
 
     double NANOSECONDS_PER_MINUTE = 6e+10;
     int NEVEREST_20_MAX_RPM = 320;
-    double NEVEREST_20_COUNTS_PER_REV = 537.6;
+    double NEVEREST_20_COUNTS_PER_REV = 1440;
+    double E4T_COUNTS_PER_INCH = 537.6;
     double WHEEL_DIAMETER = 4;
 
     double ANGLE_TOLERANCE = 1.5;
