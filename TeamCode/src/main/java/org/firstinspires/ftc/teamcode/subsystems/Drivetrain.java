@@ -452,12 +452,17 @@ public class Drivetrain implements Constants {
 
     public void driveToPos(int x, int y, double maxSpeed) {
 
+        x = (int)((x/(Math.PI*2))*E4T_COUNTS_PER_REV);
+        y = (int)((y/(Math.PI*2))*E4T_COUNTS_PER_REV);
+
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
         double backRightPower;
 
         eReset();
+        xPos.reset();
+        yPos.reset();
 
         long startTime = System.nanoTime();
         long stopState = 0;
@@ -465,17 +470,15 @@ public class Drivetrain implements Constants {
         double distance = Math.hypot(x, y);
 
         while (opModeIsActive() && (stopState <= 1000)) {
-            int currX = x - xPos.getPosition();
-            int currY = y - yPos.getPosition();
-            angle = Math.atan2(currX, currY);
+            angle = Math.atan2(x - xPos.getPosition(), y - yPos.getPosition());
             double adjustedAngle = angle + Math.PI/4;
 
             frontLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
             backLeftPower = -AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
             frontRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.cos(adjustedAngle);
             backRightPower = AUTONOMOUS_GLOBAL_SPEED_MULTIPLIER * Math.sin(adjustedAngle);
-            double PIDMultiplier = Math.abs(distance) <= 600 ? shortDistancePIDController.power(-distance, Math.hypot(currX, currY))
-                    : distancePIDController.power(distance, Math.hypot(currX, currY));
+            double PIDMultiplier = Math.abs(distance) <= 3000 ? shortDistancePIDController.power(distance, Math.hypot(xPos.getPosition(), yPos.getPosition()))
+                    : distancePIDController.power(distance, Math.hypot(xPos.getPosition(), yPos.getPosition()));
             double angleCorrection = angularCorrectionPIDController.power(initialHeading, imu.getRelativeYaw());
             speeds[0] = frontLeftPower * PIDMultiplier;
             speeds[1] = backLeftPower * PIDMultiplier;
@@ -489,12 +492,14 @@ public class Drivetrain implements Constants {
             frontRight.setPower(speeds[2] + angleCorrection);
             backRight.setPower(speeds[3] + angleCorrection);
 
-            telemetry.addData("Right Front Encoder", frontRight.getCurrentPosition());
+            telemetry.addData("X Position", xPos.getPosition());
+            telemetry.addData("Y Position", yPos.getPosition());
+            telemetry.addData("Distance", distance);
             telemetry.addData("StopState", stopState);
             telemetry.update();
 
 
-            if (Math.abs(Math.hypot(currX, currY) - distance) <= DISTANCE_TOLERANCE) {
+            if (Math.abs(distance - Math.hypot(xPos.getPosition(), yPos.getPosition())) <= DISTANCE_TOLERANCE) {
                 stopState = (System.nanoTime() - startTime) / 1000000;
             } else {
                 startTime = System.nanoTime();

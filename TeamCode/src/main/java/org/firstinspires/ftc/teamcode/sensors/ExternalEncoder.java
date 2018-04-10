@@ -27,7 +27,7 @@ public class ExternalEncoder implements Constants{
         int deltaPos = motor.getCurrentPosition() - previousPos;
         double deltaTime = (System.nanoTime() - previousTime)/NANOSECONDS_PER_MINUTE;
         if (deltaTime*6e4 > 10) {
-            rpm = (deltaPos/ E4T_COUNTS_PER_INCH)/(deltaTime);
+            rpm = (deltaPos/ E4T_COUNTS_PER_REV)/(deltaTime);
             previousPos = motor.getCurrentPosition();
             previousTime = System.nanoTime();
         }

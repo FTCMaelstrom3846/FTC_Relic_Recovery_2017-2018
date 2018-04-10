@@ -9,11 +9,11 @@ public interface Constants {
     double NANOSECONDS_PER_MINUTE = 6e+10;
     int NEVEREST_20_MAX_RPM = 320;
     double NEVEREST_20_COUNTS_PER_REV = 1440;
-    double E4T_COUNTS_PER_INCH = 537.6;
+    double E4T_COUNTS_PER_REV = 537.6;
     double WHEEL_DIAMETER = 4;
 
     double ANGLE_TOLERANCE = 1.5;
-    double DISTANCE_TOLERANCE = 50;
+    double DISTANCE_TOLERANCE = /*50*/100;
     double ULTRASONIC_DISTANCE_TOLERANCE = 0.3;
 
     double OPTOSENSOR_DETECT_CRYPTOBOX_THRESHOLD = 1.395;
@@ -99,8 +99,8 @@ public interface Constants {
     double angleCorrectionKD = 0;
     double angleCorrectionMaxI = 0;
 
-    double distanceKP = 0.001;
-    double distanceKI = 0.09;
+    double distanceKP = /*0.001*/0.001/5;
+    double distanceKI = 0/*0.09*/;
     double distanceKD = 0.0000025;
     double distanceMaxI = 0;
 
@@ -109,8 +109,8 @@ public interface Constants {
     double ultrasonicDistanceKD = 0.00000;
     double ultrasonicDistanceMaxI = 0;*/
 
-    double shortDistanceKP = 0.0027;
-    double shortDistanceKI = 0.3;
+    double shortDistanceKP = /*0.0027*/0.0027/5;
+    double shortDistanceKI = 0/*0.3*/;
     double shortDistanceKD = 0.0000025;
     double shortDistanceMaxI = 0;
 

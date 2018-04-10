@@ -109,6 +109,9 @@ public class Hardware implements Constants {
 
         rangeSensor = new MaxbotixUltrasonicSensor(hardwareMap.analogInput.get("rangeSensor"));
 
+        xPos = new ExternalEncoder(rightIntake);
+        yPos = new ExternalEncoder(leftIntake);
+
         drivetrain = new Drivetrain(/*gamepad1,*/ this);
 
         intakeSystem = new Intake(this);
@@ -123,9 +126,6 @@ public class Hardware implements Constants {
 
         rightLiftDistance = hwMap.opticalDistanceSensor.get("rightLiftDistance");
         leftLiftDistance = hwMap.opticalDistanceSensor.get("leftLiftDistance");
-
-        xPos = new ExternalEncoder(rightIntake);
-        yPos = new ExternalEncoder(leftIntake);
 
         for(SpeedControlledMotor motor: drivetrainMotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //Change back to BREAK

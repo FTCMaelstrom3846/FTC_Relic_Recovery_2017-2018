@@ -25,14 +25,7 @@ public class AutonomousTesting extends LinearOpMode implements Utils.AutonomousO
 
         waitForStart();
 
-        /*robot.drivetrain.drive(3500, 0, 1);
-        robot.drivetrain.drive(-3500, 0, 0.5);
-        robot.drivetrain.drive(3500, 0, 0.25);*/
-
-        while (opModeIsActive()) {
-            telemetry.addData("Relative angle", robot.imu.getRelativeYaw());
-            telemetry.update();
-        }
+        robot.drivetrain.driveToPos(40, 40, 1);
     }
 
 
